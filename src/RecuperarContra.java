@@ -174,14 +174,13 @@ public class RecuperarContra extends javax.swing.JFrame {
                     InsertarDescargarEliminar.setData("update usuarios set contrasena='"+contra+"' where mail ='"+email+"'", "contrasena cambiada exitosamente");
                     setVisible(false);
                     new RecuperarContra().setVisible(true);
-                }else{
-                JOptionPane.showMessageDialog(null, "Datos incorrectos");
                 }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e);
             }
         }
         else
+        
             JOptionPane.showMessageDialog(null, "Datos incorrectos");
     }//GEN-LAST:event_jButton2ActionPerformed
 
