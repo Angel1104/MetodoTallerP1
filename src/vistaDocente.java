@@ -116,7 +116,7 @@ Connection con;
                 jButton6ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 290, 190, 30));
+        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 20, 190, 30));
 
         jButton5.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
         jButton5.setText("DETALLES");
@@ -153,7 +153,7 @@ Connection con;
                 jButton3ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 200, 280, 60));
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, 280, 60));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 3, 13)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
