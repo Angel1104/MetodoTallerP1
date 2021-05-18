@@ -1,6 +1,9 @@
 
-import javax.swing.JOptionPane;
 
+import javax.swing.JOptionPane;
+import java.sql.*;
+import javax.swing.table.DefaultTableModel;
+import proyecto.*;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -12,13 +15,16 @@ import javax.swing.JOptionPane;
  * @author flore
  */
 public class vistaRoot extends javax.swing.JFrame {
-
+Connection con;
+        Statement sent;
+        DefaultTableModel model;
     /**
      * Creates new form vistaRoot
      */
     public vistaRoot() {
         initComponents();
         this.setLocationRelativeTo(null);
+        
     }
 
     /**
@@ -69,22 +75,22 @@ public class vistaRoot extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Hora entrada", "Hora salida", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 260, 660, 160));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 250, 730, 160));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/unnamed.jpg"))); // NOI18N
         jLabel4.setText("jLabel4");
@@ -197,6 +203,31 @@ public class vistaRoot extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        try {
+            con = ProveedorConecciones.getConexion();
+            String[]titulos = {"Hora entrada", "Hora salida","Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"}; 
+            String sql = "select * from horario";
+            model = new DefaultTableModel(null, titulos);
+            sent= con.createStatement();
+            ResultSet rs=sent.executeQuery(sql);
+
+            String[]fila = new String[7];
+            while(rs.next()){
+                fila[0]=rs.getString("horaIngreso");
+                fila[1]=rs.getString("horaSalida");
+                fila[2]=rs.getString("lunes");
+                fila[3]=rs.getString("martes");
+                fila[4]=rs.getString("miercoles");
+                fila[5]=rs.getString("jueves");
+                fila[6]=rs.getString("viernes");
+                fila[7]=rs.getString("sabado");
+                model.addRow(fila);
+            }
+            jTable1.setModel(model);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed

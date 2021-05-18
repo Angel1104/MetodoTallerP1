@@ -132,7 +132,7 @@ ResultSet rs;
                 {
                     check=1;
                     setVisible(false);
-                    new vista1().setVisible(true);
+                    new vistaUsuario().setVisible(true);
                 }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null,"Error"+ e.getMessage());
