@@ -1,5 +1,9 @@
 
 import javax.swing.JOptionPane;
+import java.sql.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import proyecto.*;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -36,6 +40,7 @@ public class vistaUsuario extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jComboBox2 = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -43,7 +48,6 @@ public class vistaUsuario extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         UMSS = new javax.swing.JLabel();
         imagen = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -60,24 +64,17 @@ public class vistaUsuario extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+
             },
             new String [] {
-                "Horas", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"
+                "HoraIngreso", "HoraSalida", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 250, 660, 280));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 250, 880, 370));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Laboratorio 1", "Laboratorio 2", "Laboratorio 3", "Laboratorio 4", "Auditorio", "Laboratorio de Redes" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "labo1", "labo2", "labo3", "labo4", "labo5" }));
         getContentPane().add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 370, 250, 50));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/unknown-01.png"))); // NOI18N
@@ -87,6 +84,14 @@ public class vistaUsuario extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1270, 30, -1, -1));
+
+        jButton4.setText("cerrar sesion");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 20, 170, 40));
 
         jLabel5.setText("Nombre del labo");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 860, 210, 20));
@@ -111,7 +116,7 @@ public class vistaUsuario extends javax.swing.JFrame {
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fonds-01.png"))); // NOI18N
         jLabel3.setText("jLabel1");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 1350, 870));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 1350, 870));
 
         UMSS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/umss-01.png"))); // NOI18N
         UMSS.setText("jLabel1");
@@ -120,9 +125,6 @@ public class vistaUsuario extends javax.swing.JFrame {
         imagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/logo-01.png"))); // NOI18N
         imagen.setText("jLabel2");
         getContentPane().add(imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 420, 900));
-
-        jButton4.setText("cerrar sesion");
-        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 20, 170, 40));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/208453-P05HEP-165-01.png"))); // NOI18N
         jLabel1.setText("cerrar sesion");
@@ -139,6 +141,22 @@ public class vistaUsuario extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        Object labo = jComboBox2.getSelectedItem();
+        //ResultSet rs = seleccionar.getDatos("select *from laboratorio "+labo+" where '%"+labo+"%' ");
+        ResultSet rs = seleccionar.getDatos("select *from "+labo+"");       
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        
+        try {
+            while(rs.next())
+            {
+                // model.addRow(new Object[]{rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9)});
+                model.addRow(new Object[]{rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11)});
+            }
+            rs.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -147,6 +165,15 @@ public class vistaUsuario extends javax.swing.JFrame {
             System.exit(0);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        int a = JOptionPane.showConfirmDialog(null, "Quiere cerrar sesion ?","Select",JOptionPane.YES_NO_OPTION);
+        if (a == 0) {
+            setVisible(false);
+             new IniciarSesion().setVisible(true);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
