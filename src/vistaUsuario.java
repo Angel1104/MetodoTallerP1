@@ -142,16 +142,18 @@ public class vistaUsuario extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         Object labo = jComboBox2.getSelectedItem();
-        //ResultSet rs = seleccionar.getDatos("select *from laboratorio "+labo+" where '%"+labo+"%' ");
-        ResultSet rs = seleccionar.getDatos("select *from "+labo+"");       
+        ResultSet rs = seleccionar.getDatos("SELECT  horario.horaIngreso, laboratorio.nombre \n" +
+                                            "FROM horario,laboratorio \n" +
+                                            "WHERE horario.horarioID = laboratorio.horarioID");
+        //ResultSet rs = seleccionar.getDatos("select *from "+labo+"");       
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
         
         try {
             while(rs.next())
             {
-                // model.addRow(new Object[]{rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9)});
-                model.addRow(new Object[]{rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11)});
+                model.addRow(new Object[]{rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9)});
+                //model.addRow(new Object[]{rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11)});
             }
             rs.close();
         } catch (Exception e) {

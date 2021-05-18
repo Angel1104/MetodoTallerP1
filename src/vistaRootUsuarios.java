@@ -155,8 +155,8 @@ public class vistaRootUsuarios extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        String nombreOEmail = jTextField1.getText();
-        ResultSet rs = seleccionar.getDatos("select *from usuarios where Nombres like '%"+nombreOEmail+"%' or mail like '%"+nombreOEmail+"%'");
+        String nombreOID = jTextField1.getText();
+        ResultSet rs = seleccionar.getDatos("select *from usuarios where Nombres like '%"+nombreOID+"%' or ID like '%"+nombreOID+"%'");
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
         
