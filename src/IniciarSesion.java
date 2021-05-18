@@ -120,7 +120,7 @@ ResultSet rs;
         {
             check=1;
             setVisible(false);
-            new vistaRoot().setVisible(true);
+            new vistaDocente().setVisible(true);
         }
         else  {
             String Query = " select * from usuarios where mail='"+mail+"' and Contrasena = '"+contrasena+"' ";
