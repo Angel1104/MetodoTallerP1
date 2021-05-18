@@ -159,22 +159,7 @@ Statement sent;
             InsertarDescargarEliminar.setData(Query, "Registrado exitosamente");
             setVisible(false);
             new IniciarSesion().setVisible(true);
-//            try {
-//                String Query = " insert into usuarios (nombres, apellidos, mail, contrasena)"+
-//                    "values(?,?,?,?)";
-//                PreparedStatement ps = con.prepareCall(Query);
-//                ps.setString(1, nombres);
-//                ps.setString(2, apellidos);
-//                ps.setString(3, mail);
-//                ps.setString(4, contrasena);
-//                
-//                int n = ps.executeUpdate();
-//                if(n>0){
-//                    JOptionPane.showMessageDialog(null, "Datos guardados correctamente");
-//                }
-//            } catch (Exception e) {
-//                JOptionPane.showMessageDialog(null,"Error"+ e.getMessage());
-//            }
+
         }else{
             JOptionPane.showMessageDialog(null, "contrasenas diferentes");
             
