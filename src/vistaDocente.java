@@ -109,14 +109,14 @@ Connection con;
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Laboratorio 1", "Laboratorio 2", "Laboratorio 3", "Laboratorio 4", "Auditorio", "Laboratorio de Redes" }));
         getContentPane().add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 430, 160, -1));
 
-        jButton6.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jButton6.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
         jButton6.setText("cerrar sesión");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 20, 190, 30));
+        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, 210, 40));
 
         jButton5.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
         jButton5.setText("DETALLES");
@@ -146,14 +146,14 @@ Connection con;
         });
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 430, -1, -1));
 
-        jButton3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jButton3.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
         jButton3.setText("soporte");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, 280, 60));
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 210, 210, 40));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 3, 13)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -172,7 +172,7 @@ Connection con;
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fonds-01.png"))); // NOI18N
         jLabel3.setText("jLabel1");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 50, 1350, 870));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 1340, 870));
 
         UMSS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/umss-01.png"))); // NOI18N
         UMSS.setText("jLabel1");
