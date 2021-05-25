@@ -16,15 +16,26 @@ import proyecto.seleccionar;
  *
  * @author flore
  */
-public class vistaRootLabos extends javax.swing.JFrame {
+public class vistaRootLabosCrear extends javax.swing.JFrame {
 
     /**
      * Creates new form vistaRootLabos
      */
-    public vistaRootLabos() {
+    public vistaRootLabosCrear() {
         initComponents();
     }
-
+    Object labo;
+    
+    public void laboSelecionado(){
+       labo = jComboBox1.getSelectedItem(); 
+       
+       if(labo.equals("laboratorio1")){labo = 1;}
+        if(labo.equals("laboratorio2")){labo = 2;}
+        if(labo.equals("laboratorio3")){labo = 3;}
+        if(labo.equals("laboratorio4")){labo = 4;}
+        if(labo.equals("laboratorio5")){labo = 5;}
+        if(labo.equals("laboratorio6")){labo = 6;}
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -64,12 +75,14 @@ public class vistaRootLabos extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocation(new java.awt.Point(50, 118));
+        setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Buscar horario por ID");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(81, 25, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, 160, -1));
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -129,12 +142,12 @@ public class vistaRootLabos extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("horaingreso");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(953, 161, 76, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(953, 161, 90, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("horasalida");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(953, 201, -1, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(953, 201, 100, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -207,7 +220,7 @@ public class vistaRootLabos extends javax.swing.JFrame {
                 jButton5ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 530, 202, 66));
+        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 500, 202, 66));
         getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/new view 1-01-01.jpg"))); // NOI18N
@@ -257,7 +270,7 @@ public class vistaRootLabos extends javax.swing.JFrame {
             Query = "insert into horario( labo_id,horaIngreso, horaSalida, Lunes, Martes, Miercoles, Jueves, Viernes, Sabado)"+" values('"+labo+"','"+horaIngreso+"','"+horaSalida+"','"+lunes+"','"+martes+"','"+miercoles+"','"+jueves+"','"+viernes+"','"+sabado+"')";
             InsertarDescargarEliminar.setData(Query, "Registrado exitosamente");
             setVisible(false);
-            new vistaRootLabos().setVisible(true);
+            new vistaRootLabosCrear().setVisible(true);
             
         }
     }//GEN-LAST:event_jButton5ActionPerformed
@@ -300,7 +313,7 @@ public class vistaRootLabos extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         setVisible(false);
-        new vistaRootLabos().setVisible(true);
+        new vistaRootLabosCrear().setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -354,20 +367,21 @@ public class vistaRootLabos extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(vistaRootLabos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(vistaRootLabosCrear.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(vistaRootLabos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(vistaRootLabosCrear.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(vistaRootLabos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(vistaRootLabosCrear.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(vistaRootLabos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(vistaRootLabosCrear.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new vistaRootLabos().setVisible(true);
+                new vistaRootLabosCrear().setVisible(true);
             }
         });
     }
