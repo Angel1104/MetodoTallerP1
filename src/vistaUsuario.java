@@ -55,7 +55,7 @@ public class vistaUsuario extends javax.swing.JFrame {
         getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 670, 460, 120));
 
         jButton2.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
-        jButton2.setText("Actualizar");
+        jButton2.setText("BUSCAR");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -75,7 +75,7 @@ public class vistaUsuario extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 250, 880, 370));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "labo1", "labo2", "labo3", "labo4", "labo5" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "laboratorio1", "laboratorio2", "laboratorio3", "laboratorio4", "laboratorio5" }));
         getContentPane().add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 320, 50));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/unknown-01.png"))); // NOI18N
@@ -146,23 +146,32 @@ public class vistaUsuario extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         Object labo = jComboBox2.getSelectedItem();
-//        ResultSet rs = seleccionar.getDatos("SELECT  horario.horaIngreso, laboratorio.nombre \n" +
-//                                            "FROM horario,laboratorio \n" +
-//                                            "WHERE horario.horarioID = laboratorio.horarioID");
-        ResultSet rs = seleccionar.getDatos("select *from "+labo+"");       
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0);
-        
-        try {
-            while(rs.next())
-            {
-                //model.addRow(new Object[]{rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9)});
-                model.addRow(new Object[]{rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11)});
-            }
-            rs.close();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
+        if(labo.equals("laboratorio1")){labo = 1;}
+                if(labo.equals("laboratorio2")){labo = 2;}
+                if(labo.equals("laboratorio3")){labo = 3;}
+                if(labo.equals("laboratorio4")){labo = 4;}
+                if(labo.equals("laboratorio5")){labo = 5;}
+                if(labo.equals("laboratorio6")){labo = 6;}
+
+                ResultSet rs = seleccionar.getDatos("SELECT horaIngreso,horaSalida,lunes,martes, miercoles,jueves,viernes,sabado, laboratorio.nombre,descripcion\n" +
+                                                    "FROM horario,laboratorio \n" +
+                                                    "WHERE labo_id="+labo+" \n" +
+                                                    "AND horario.labo_id = laboratorio.ID");
+                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                model.setRowCount(0);
+
+                try {
+                    while(rs.next())
+                    {
+                        model.addRow(new Object[]{rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8)});
+
+                    }
+                    rs.close();
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, e);
+                }
+                
+        //String descripcion = jTextField1.getText();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

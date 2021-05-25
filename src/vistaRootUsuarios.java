@@ -170,6 +170,10 @@ public class vistaRootUsuarios extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        int a = JOptionPane.showConfirmDialog(null, "Quiere cerrar la aplicacion?","Select",JOptionPane.YES_NO_OPTION);
+        if (a == 0) {
+            System.exit(0);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
