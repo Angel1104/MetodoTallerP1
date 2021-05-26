@@ -34,8 +34,13 @@ public class vistaUsuario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTextField2 = new javax.swing.JTextField();
         jTextField1 = new javax.swing.JTextField();
+        jButton5 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jComboBox2 = new javax.swing.JComboBox<>();
@@ -52,7 +57,19 @@ public class vistaUsuario extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 670, 460, 120));
+        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 400, 110, -1));
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 670, 190, 120));
+
+        jButton5.setText("SELECCIONAR");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 430, -1, -1));
+
+        jLabel6.setText("ID DEL HORARIO");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, 120, 30));
 
         jButton2.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
         jButton2.setText("BUSCAR");
@@ -63,12 +80,18 @@ public class vistaUsuario extends javax.swing.JFrame {
         });
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, 320, 60));
 
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane2.setViewportView(jTextArea1);
+
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 670, 190, 120));
+
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "HoraIngreso", "HoraSalida", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"
+                "id", "HoraIngreso", "HoraSalida", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -120,7 +143,7 @@ public class vistaUsuario extends javax.swing.JFrame {
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fonds-01.png"))); // NOI18N
         jLabel3.setText("jLabel1");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 1350, 870));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 60, 1350, 870));
 
         UMSS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/umss-01.png"))); // NOI18N
         UMSS.setText("jLabel1");
@@ -153,7 +176,7 @@ public class vistaUsuario extends javax.swing.JFrame {
                 if(labo.equals("laboratorio5")){labo = 5;}
                 if(labo.equals("laboratorio6")){labo = 6;}
 
-                ResultSet rs = seleccionar.getDatos("SELECT horaIngreso,horaSalida,lunes,martes, miercoles,jueves,viernes,sabado, laboratorio.nombre,descripcion\n" +
+                ResultSet rs = seleccionar.getDatos("SELECT horaIngreso,horaSalida,lunes,martes, miercoles,jueves,viernes,sabado,horarioID, laboratorio.nombre,descripcion\n" +
                                                     "FROM horario,laboratorio \n" +
                                                     "WHERE labo_id="+labo+" \n" +
                                                     "AND horario.labo_id = laboratorio.ID");
@@ -163,8 +186,9 @@ public class vistaUsuario extends javax.swing.JFrame {
                 try {
                     while(rs.next())
                     {
-                        model.addRow(new Object[]{rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8)});
-
+                        model.addRow(new Object[]{rs.getString(9),rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8)});
+                        jTextField1.setText(rs.getString(11));
+                        jLabel5.setText(rs.getString(10));
                     }
                     rs.close();
                 } catch (Exception e) {
@@ -189,6 +213,21 @@ public class vistaUsuario extends javax.swing.JFrame {
              new IniciarSesion().setVisible(true);
         }
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        String id = jTextField2.getText();
+        
+        ResultSet rs = seleccionar.getDatos("SELECT horario.descripcionHorario FROM horario WHERE horarioID = '"+id+"' ");
+        
+        try {
+            if(rs.next())
+          {
+              jTextArea1.setText(rs.getString(1));
+          }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -232,14 +271,19 @@ public class vistaUsuario extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 }
