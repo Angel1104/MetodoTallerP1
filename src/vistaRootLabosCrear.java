@@ -251,6 +251,9 @@ public class vistaRootLabosCrear extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Hora de Ingreso y Salida Incorrectos");
 
         }else {
+                
+                         
+            try {
                 String Query;
                 
                 Query = "insert into estado( estado, descripcionHorario)"+" values('"+estado+"','"+descripcionHorario+"')";
@@ -259,19 +262,21 @@ public class vistaRootLabosCrear extends javax.swing.JFrame {
                 Query = "insert into fecha( fecha, ID_labo)"+" values('"+Fecha+"','"+labo+"')";
                 InsertarDescargarEliminar.setData(Query, "fecha si");
                 
-                ResultSet rs = seleccionar.getDatos("SELECT estado.IDestado, fecha.IDfecha\n" +
-                                                    "FROM estado , fecha \n" +
-                                                    "WHERE estado.estado='"+estado+"' and estado.descripcionHorario= '"+descripcionHorario+"' and fecha.fecha='"+Fecha+"' and fecha.ID_labo="+labo+"\n");
-                         
-            try {
+                ResultSet rs = seleccionar.getDatos("SELECT fecha.IDfecha, estado.IDestado\n" +
+                                                    "FROM fecha,estado \n" +
+                                                    "WHERE fecha.fecha='"+Fecha+"' and fecha.ID_labo="+labo+"\n"+
+                                                    "and estado.estado='"+estado+"' and estado.descripcionHorario= '"+descripcionHorario+"' \n");
+
+                if (rs.next())
+                {
                 Query = "insert into hora( horaIngreso, horaSalida, ID_estado, ID_fecha)"+" values('"+horaIngreso+"','"+horaSalida+"',"+rs.getString(1)+","+rs.getString(2)+")";
                 InsertarDescargarEliminar.setData(Query, "Registrado exitosamente");
-                
+                }
                 setVisible(false);
                 new vistaRootLabosCrear().setVisible(true);
                 
-            } catch (SQLException ex) {
-                //Logger.getLogger(vistaRootLabosCrear.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null,"Error"+ e.getMessage());
             }
             
         }
