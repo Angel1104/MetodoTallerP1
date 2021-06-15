@@ -231,9 +231,7 @@ public class vistaRootLabosCrear extends javax.swing.JFrame {
         String horaSalida = jTextField3.getText();
         String estado = jComboBox2.getSelectedItem().toString();
         String descripcionHorario = jTextArea2.getText();
-        
-        
-        
+         
         Date fecha = jDateChooser1.getDate(); 
         SimpleDateFormat  formato = new SimpleDateFormat("yyyy-MM-d");     
         String Fecha = formato.format(fecha);
@@ -298,17 +296,17 @@ public class vistaRootLabosCrear extends javax.swing.JFrame {
         if(labo.equals("laboratorio5")){labo = 5;}
         if(labo.equals("laboratorio6")){labo = 6;}
         
-        ResultSet rs = seleccionar.getDatos("SELECT horario.labo_id,horarioID, horaIngreso,horaSalida,lunes,martes, miercoles,jueves,viernes,sabado, laboratorio.nombre,descripcion\n" +
-                                            "FROM horario,laboratorio \n" +
-                                            "WHERE labo_id="+labo+" and horarioID="+ID+"\n" +
-                                            "AND horario.labo_id = laboratorio.ID");
+        ResultSet rs = seleccionar.getDatos("SELECT laboratorio.nombre,descripcion ,fecha.fecha, hora.horaIngreso,horaSalida,IDhora ,  estado.estado,descripcionHorario\n" +
+                                            "FROM hora,laboratorio,fecha,estado\n" +
+                                            "WHERE IDhora="+ID+" \n" +
+                                            "AND fecha.ID_labo = laboratorio.ID and hora.ID_fecha = fecha.IDfecha and hora.ID_estado=estado.IDestado");
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
-        
+
         try {
             while(rs.next())
             {
-                model.addRow(new Object[]{rs.getString(2),rs.getString(12),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10)});
+                model.addRow(new Object[]{rs.getString(6),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(7),rs.getString(8)});
 
             }
             rs.close();
