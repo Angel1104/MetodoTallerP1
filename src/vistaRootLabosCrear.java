@@ -232,6 +232,8 @@ public class vistaRootLabosCrear extends javax.swing.JFrame {
         String estado = jComboBox2.getSelectedItem().toString();
         String descripcionHorario = jTextArea2.getText();
         
+        
+        
         Date fecha = jDateChooser1.getDate(); 
         SimpleDateFormat  formato = new SimpleDateFormat("yyyy-MM-d");     
         String Fecha = formato.format(fecha);
@@ -249,37 +251,28 @@ public class vistaRootLabosCrear extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Hora de Ingreso y Salida Incorrectos");
 
         }else {
-            String Query;
-            
-            Query = "insert into estado( estado, descripcionHorario)"+" values('"+estado+"','"+descripcionHorario+"')";
-            InsertarDescargarEliminar.setData(Query, null);
-            
-            ResultSet rs = seleccionar.getDatos("SELECT IDestado\n" +
-                                                "FROM estado \n" +
-                                                "WHERE estado.estado='"+estado+"' and estado.descripcionHorario= '"+descripcionHorario+"'\n" );
-            
-            Query = "insert into fecha( fecha, ID_labo)"+" values('"+Fecha+"','"+labo+"')";
-            InsertarDescargarEliminar.setData(Query, null);
-            
-            ResultSet rs1 = seleccionar.getDatos("SELECT fecha.IDfecha\n" +
-                                                "FROM fecha \n" +
-                                                "WHERE fecha.fecha="+Fecha+" and fecha.ID_labo="+labo+"\n" );
-            
-            String ID_estado;
-            String ID_fecha;
-
-            try {
-                ID_estado = rs.getString(1);
-                ID_fecha = rs1.getString(1);
+                String Query;
                 
-                Query = "insert into hora( horaIngreso, horaSalida, ID_estado, ID_fecha)"+" values('"+horaIngreso+"','"+horaSalida+"','"+ID_estado+"','"+ID_fecha+"')";
+                Query = "insert into estado( estado, descripcionHorario)"+" values('"+estado+"','"+descripcionHorario+"')";
+                InsertarDescargarEliminar.setData(Query, "estado si");
+                
+                Query = "insert into fecha( fecha, ID_labo)"+" values('"+Fecha+"','"+labo+"')";
+                InsertarDescargarEliminar.setData(Query, "fecha si");
+                
+                ResultSet rs = seleccionar.getDatos("SELECT estado.IDestado, fecha.IDfecha\n" +
+                                                    "FROM estado , fecha \n" +
+                                                    "WHERE estado.estado='"+estado+"' and estado.descripcionHorario= '"+descripcionHorario+"' and fecha.fecha='"+Fecha+"' and fecha.ID_labo="+labo+"\n");
+                         
+            try {
+                Query = "insert into hora( horaIngreso, horaSalida, ID_estado, ID_fecha)"+" values('"+horaIngreso+"','"+horaSalida+"',"+rs.getString(1)+","+rs.getString(2)+")";
                 InsertarDescargarEliminar.setData(Query, "Registrado exitosamente");
+                
+                setVisible(false);
+                new vistaRootLabosCrear().setVisible(true);
+                
             } catch (SQLException ex) {
+                //Logger.getLogger(vistaRootLabosCrear.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            
-            setVisible(false);
-            new vistaRootLabosCrear().setVisible(true);
             
         }
     }//GEN-LAST:event_jButton5ActionPerformed
