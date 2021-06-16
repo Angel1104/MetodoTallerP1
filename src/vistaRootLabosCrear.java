@@ -1,4 +1,5 @@
 
+import com.toedter.calendar.JDateChooser;
 import java.util.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -48,6 +49,7 @@ public class vistaRootLabosCrear extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -64,7 +66,6 @@ public class vistaRootLabosCrear extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextArea2 = new javax.swing.JTextArea();
         jLabel5 = new javax.swing.JLabel();
@@ -80,6 +81,7 @@ public class vistaRootLabosCrear extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Buscar hora por ID");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, 160, -1));
+        getContentPane().add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 360, 160, -1));
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -177,7 +179,6 @@ public class vistaRootLabosCrear extends javax.swing.JFrame {
 
         jLabel14.setText("fecha");
         getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 360, -1, -1));
-        getContentPane().add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 360, 180, 30));
 
         jTextArea2.setColumns(20);
         jTextArea2.setRows(5);
@@ -217,7 +218,8 @@ public class vistaRootLabosCrear extends javax.swing.JFrame {
         String estado = jComboBox2.getSelectedItem().toString();
         String descripcionHorario = jTextArea2.getText();
          
-        Date fecha = jDateChooser1.getDate(); 
+        Date fecha; 
+        fecha = jDateChooser1.getDate();
         SimpleDateFormat  formato = new SimpleDateFormat("yyyy-MM-d");     
         String Fecha = formato.format(fecha);
         
