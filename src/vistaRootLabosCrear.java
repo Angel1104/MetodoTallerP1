@@ -1,6 +1,11 @@
 
 import java.io.Console;
+import java.util.Date;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import proyecto.InsertarDescargarEliminar;
@@ -55,26 +60,18 @@ public class vistaRootLabosCrear extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jLabel10 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
-        jComboBox4 = new javax.swing.JComboBox<>();
-        jComboBox5 = new javax.swing.JComboBox<>();
-        jComboBox6 = new javax.swing.JComboBox<>();
-        jComboBox7 = new javax.swing.JComboBox<>();
         jButton5 = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTextArea2 = new javax.swing.JTextArea();
+        jLabel5 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox<>();
         jLabel12 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -84,7 +81,7 @@ public class vistaRootLabosCrear extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Buscar horario por ID");
+        jLabel1.setText("Buscar hora por ID");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, 160, -1));
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -140,7 +137,7 @@ public class vistaRootLabosCrear extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Descripcion", "HoraIngreso", "HoraSalida", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"
+                "ID", "Descripcion", "Fecha", "Hora Ingreso", "Hora Salida", "Estado", "Descripcion Hora"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -152,49 +149,10 @@ public class vistaRootLabosCrear extends javax.swing.JFrame {
         jLabel3.setText("horaingreso");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(953, 161, 90, -1));
 
-        jLabel2.setText("descripcion");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 80, -1, -1));
-
         jLabel4.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("horasalida");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(953, 201, 100, -1));
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("lunes");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(953, 241, -1, -1));
-
-        jLabel6.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("martes");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(953, 278, -1, -1));
-
-        jLabel7.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("miercoles");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(953, 315, -1, -1));
-
-        jLabel8.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("jueves");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 350, -1, -1));
-
-        jLabel9.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("viernes");
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 390, -1, -1));
-
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
-
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 50, -1, -1));
-
-        jLabel10.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("sabado");
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 430, -1, -1));
 
         jTextField2.setText("00:00:00");
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
@@ -207,29 +165,6 @@ public class vistaRootLabosCrear extends javax.swing.JFrame {
         jTextField3.setText("00:00:00");
         getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1072, 198, 157, -1));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "vacio", "libre", "reservado" }));
-        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1072, 238, -1, -1));
-
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "vacio", "libre", "reservado" }));
-        getContentPane().add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1072, 272, -1, -1));
-
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "vacio", "libre", "reservado" }));
-        getContentPane().add(jComboBox4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1072, 312, -1, -1));
-
-        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "vacio", "libre", "reservado" }));
-        getContentPane().add(jComboBox5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 350, -1, -1));
-
-        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "vacio", "libre", "reservado" }));
-        getContentPane().add(jComboBox6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 390, -1, -1));
-
-        jComboBox7.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "vacio", "libre", "reservado" }));
-        getContentPane().add(jComboBox7, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 430, -1, -1));
-
         jButton5.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
         jButton5.setText("guardar");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -239,6 +174,25 @@ public class vistaRootLabosCrear extends javax.swing.JFrame {
         });
         getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 500, 202, 66));
         getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        jLabel13.setText("descripcion hora");
+        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 250, -1, -1));
+
+        jLabel14.setText("fecha");
+        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 360, -1, -1));
+        getContentPane().add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 360, 180, 30));
+
+        jTextArea2.setColumns(20);
+        jTextArea2.setRows(5);
+        jScrollPane3.setViewportView(jTextArea2);
+
+        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 240, -1, -1));
+
+        jLabel5.setText("estado");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 410, -1, -1));
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "libre", "reservado" }));
+        getContentPane().add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 410, -1, -1));
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/new view 1-01-01.jpg"))); // NOI18N
         getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 0, -1, 680));
@@ -263,12 +217,12 @@ public class vistaRootLabosCrear extends javax.swing.JFrame {
         
         String horaIngreso = jTextField2.getText();
         String horaSalida = jTextField3.getText();
-        String lunes = jComboBox2.getSelectedItem().toString();
-        String martes = jComboBox3.getSelectedItem().toString();
-        String miercoles = jComboBox4.getSelectedItem().toString();
-        String jueves = jComboBox5.getSelectedItem().toString();
-        String viernes = jComboBox6.getSelectedItem().toString();
-        String sabado = jComboBox7.getSelectedItem().toString();
+        String estado = jComboBox2.getSelectedItem().toString();
+        String descripcionHorario = jTextArea2.getText();
+         
+        Date fecha = jDateChooser1.getDate(); 
+        SimpleDateFormat  formato = new SimpleDateFormat("yyyy-MM-d");     
+        String Fecha = formato.format(fecha);
         
         Object labo = jComboBox1.getSelectedItem();
         
@@ -283,11 +237,33 @@ public class vistaRootLabosCrear extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Hora de Ingreso y Salida Incorrectos");
 
         }else {
-            String Query;
-            Query = "insert into horario( labo_id,horaIngreso, horaSalida, Lunes, Martes, Miercoles, Jueves, Viernes, Sabado)"+" values('"+labo+"','"+horaIngreso+"','"+horaSalida+"','"+lunes+"','"+martes+"','"+miercoles+"','"+jueves+"','"+viernes+"','"+sabado+"')";
-            InsertarDescargarEliminar.setData(Query, "Registrado exitosamente");
-            setVisible(false);
-            new vistaRootLabosCrear().setVisible(true);
+                
+                         
+            try {
+                String Query;
+                
+                Query = "insert into estado( estado, descripcionHorario)"+" values('"+estado+"','"+descripcionHorario+"')";
+                InsertarDescargarEliminar.setData(Query, "estado si");
+                
+                Query = "insert into fecha( fecha, ID_labo)"+" values('"+Fecha+"','"+labo+"')";
+                InsertarDescargarEliminar.setData(Query, "fecha si");
+                
+                ResultSet rs = seleccionar.getDatos("SELECT fecha.IDfecha, estado.IDestado\n" +
+                                                    "FROM fecha,estado \n" +
+                                                    "WHERE fecha.fecha='"+Fecha+"' and fecha.ID_labo="+labo+"\n"+
+                                                    "and estado.estado='"+estado+"' and estado.descripcionHorario= '"+descripcionHorario+"' \n");
+
+                if (rs.next())
+                {
+                Query = "insert into hora( horaIngreso, horaSalida, ID_estado, ID_fecha)"+" values('"+horaIngreso+"','"+horaSalida+"',"+rs.getString(1)+","+rs.getString(2)+")";
+                InsertarDescargarEliminar.setData(Query, "Registrado exitosamente");
+                }
+                setVisible(false);
+                new vistaRootLabosCrear().setVisible(true);
+                
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null,"Error"+ e.getMessage());
+            }
             
         }
     }//GEN-LAST:event_jButton5ActionPerformed
@@ -308,17 +284,17 @@ public class vistaRootLabosCrear extends javax.swing.JFrame {
         if(labo.equals("laboratorio5")){labo = 5;}
         if(labo.equals("laboratorio6")){labo = 6;}
         
-        ResultSet rs = seleccionar.getDatos("SELECT horario.labo_id,horarioID, horaIngreso,horaSalida,lunes,martes, miercoles,jueves,viernes,sabado, laboratorio.nombre,descripcion\n" +
-                                            "FROM horario,laboratorio \n" +
-                                            "WHERE labo_id="+labo+" and horarioID="+ID+"\n" +
-                                            "AND horario.labo_id = laboratorio.ID");
+        ResultSet rs = seleccionar.getDatos("SELECT laboratorio.nombre,descripcion ,fecha.fecha, hora.horaIngreso,horaSalida,IDhora ,  estado.estado,descripcionHorario\n" +
+                                            "FROM hora,laboratorio,fecha,estado\n" +
+                                            "WHERE IDhora="+ID+" \n" +
+                                            "AND fecha.ID_labo = laboratorio.ID and hora.ID_fecha = fecha.IDfecha and hora.ID_estado=estado.IDestado");
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
-        
+
         try {
             while(rs.next())
             {
-                model.addRow(new Object[]{rs.getString(2),rs.getString(12),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10)});
+                model.addRow(new Object[]{rs.getString(6),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(7),rs.getString(8)});
 
             }
             rs.close();
@@ -344,17 +320,17 @@ public class vistaRootLabosCrear extends javax.swing.JFrame {
         if(labo.equals("laboratorio5")){labo = 5;}
         if(labo.equals("laboratorio6")){labo = 6;}
         
-        ResultSet rs = seleccionar.getDatos("SELECT horario.labo_id,horarioID, horaIngreso,horaSalida,lunes,martes, miercoles,jueves,viernes,sabado, laboratorio.nombre,descripcion\n" +
-                                            "FROM horario,laboratorio \n" +
-                                            "WHERE labo_id="+labo+" \n" +
-                                            "AND horario.labo_id = laboratorio.ID");
+        ResultSet rs = seleccionar.getDatos("SELECT laboratorio.nombre,descripcion ,fecha.fecha, hora.horaIngreso,horaSalida,IDhora ,  estado.estado,descripcionHorario\n" +
+                                            "FROM hora,laboratorio,fecha,estado\n" +
+                                            "WHERE laboratorio.ID=1\n" +
+                                            "AND fecha.ID_labo = laboratorio.ID and hora.ID_fecha = fecha.IDfecha and hora.ID_estado=estado.IDestado");
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
 
         try {
             while(rs.next())
             {
-                model.addRow(new Object[]{rs.getString(2),rs.getString(12),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10)});
+                model.addRow(new Object[]{rs.getString(6),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(7),rs.getString(8)});
 
             }
             rs.close();
@@ -362,10 +338,6 @@ public class vistaRootLabosCrear extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox2ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
@@ -415,27 +387,19 @@ public class vistaRootLabosCrear extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JComboBox<String> jComboBox4;
-    private javax.swing.JComboBox<String> jComboBox5;
-    private javax.swing.JComboBox<String> jComboBox6;
-    private javax.swing.JComboBox<String> jComboBox7;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
