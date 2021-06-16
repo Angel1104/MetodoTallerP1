@@ -1,11 +1,8 @@
 
-import java.io.Console;
 import java.util.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import proyecto.InsertarDescargarEliminar;
@@ -224,14 +221,14 @@ public class vistaRootLabosCrear extends javax.swing.JFrame {
         SimpleDateFormat  formato = new SimpleDateFormat("yyyy-MM-d");     
         String Fecha = formato.format(fecha);
         
-        Object labo = jComboBox1.getSelectedItem();
+        Object laboratorio = jComboBox1.getSelectedItem();
         
-        if(labo.equals("laboratorio1")){labo = 1;}
-        if(labo.equals("laboratorio2")){labo = 2;}
-        if(labo.equals("laboratorio3")){labo = 3;}
-        if(labo.equals("laboratorio4")){labo = 4;}
-        if(labo.equals("laboratorio5")){labo = 5;}
-        if(labo.equals("laboratorio6")){labo = 6;}
+        if(laboratorio.equals("laboratorio1")){laboratorio = 1;}
+        if(laboratorio.equals("laboratorio2")){laboratorio = 2;}
+        if(laboratorio.equals("laboratorio3")){laboratorio = 3;}
+        if(laboratorio.equals("laboratorio4")){laboratorio = 4;}
+        if(laboratorio.equals("laboratorio5")){laboratorio = 5;} 
+        if(laboratorio.equals("laboratorio6")){laboratorio = 6;}
         
         if (horaIngreso.equals (horaSalida)) {
             JOptionPane.showMessageDialog(null, "Hora de Ingreso y Salida Incorrectos");
@@ -245,12 +242,12 @@ public class vistaRootLabosCrear extends javax.swing.JFrame {
                 Query = "insert into estado( estado, descripcionHorario)"+" values('"+estado+"','"+descripcionHorario+"')";
                 InsertarDescargarEliminar.setData(Query, "estado si");
                 
-                Query = "insert into fecha( fecha, ID_labo)"+" values('"+Fecha+"','"+labo+"')";
+                Query = "insert into fecha( fecha, ID_labo)"+" values('"+Fecha+"','"+laboratorio+"')";
                 InsertarDescargarEliminar.setData(Query, "fecha si");
                 
                 ResultSet rs = seleccionar.getDatos("SELECT fecha.IDfecha, estado.IDestado\n" +
                                                     "FROM fecha,estado \n" +
-                                                    "WHERE fecha.fecha='"+Fecha+"' and fecha.ID_labo="+labo+"\n"+
+                                                    "WHERE fecha.fecha='"+Fecha+"' and fecha.ID_labo="+laboratorio+"\n"+
                                                     "and estado.estado='"+estado+"' and estado.descripcionHorario= '"+descripcionHorario+"' \n");
 
                 if (rs.next())
@@ -261,7 +258,7 @@ public class vistaRootLabosCrear extends javax.swing.JFrame {
                 setVisible(false);
                 new vistaRootLabosCrear().setVisible(true);
                 
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null,"Error"+ e.getMessage());
             }
             
@@ -275,14 +272,14 @@ public class vistaRootLabosCrear extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         String ID = jTextField1.getText();
-        Object labo = jComboBox1.getSelectedItem();
+        Object laboratorio = jComboBox1.getSelectedItem();
         
-        if(labo.equals("laboratorio1")){labo = 1;}
-        if(labo.equals("laboratorio2")){labo = 2;}
-        if(labo.equals("laboratorio3")){labo = 3;}
-        if(labo.equals("laboratorio4")){labo = 4;}
-        if(labo.equals("laboratorio5")){labo = 5;}
-        if(labo.equals("laboratorio6")){labo = 6;}
+        if(laboratorio.equals("laboratorio1")){laboratorio = 1;}
+        if(laboratorio.equals("laboratorio2")){laboratorio = 2;}
+        if(laboratorio.equals("laboratorio3")){laboratorio = 3;}
+        if(laboratorio.equals("laboratorio4")){laboratorio = 4;}
+        if(laboratorio.equals("laboratorio5")){laboratorio = 5;}
+        if(laboratorio.equals("laboratorio6")){laboratorio = 6;}
         
         ResultSet rs = seleccionar.getDatos("SELECT laboratorio.nombre,descripcion ,fecha.fecha, hora.horaIngreso,horaSalida,IDhora ,  estado.estado,descripcionHorario\n" +
                                             "FROM hora,laboratorio,fecha,estado\n" +
@@ -298,7 +295,7 @@ public class vistaRootLabosCrear extends javax.swing.JFrame {
 
             }
             rs.close();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -311,14 +308,14 @@ public class vistaRootLabosCrear extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        Object labo = jComboBox1.getSelectedItem();
+        Object laboratorio = jComboBox1.getSelectedItem();
         
-        if(labo.equals("laboratorio1")){labo = 1;}
-        if(labo.equals("laboratorio2")){labo = 2;}
-        if(labo.equals("laboratorio3")){labo = 3;}
-        if(labo.equals("laboratorio4")){labo = 4;}
-        if(labo.equals("laboratorio5")){labo = 5;}
-        if(labo.equals("laboratorio6")){labo = 6;}
+        if(laboratorio.equals("laboratorio1")){laboratorio = 1;}
+        if(laboratorio.equals("laboratorio2")){laboratorio = 2;}
+        if(laboratorio.equals("laboratorio3")){laboratorio = 3;}
+        if(laboratorio.equals("laboratorio4")){laboratorio = 4;}
+        if(laboratorio.equals("laboratorio5")){laboratorio = 5;}
+        if(laboratorio.equals("laboratorio6")){laboratorio = 6;}
         
         ResultSet rs = seleccionar.getDatos("SELECT laboratorio.nombre,descripcion ,fecha.fecha, hora.horaIngreso,horaSalida,IDhora ,  estado.estado,descripcionHorario\n" +
                                             "FROM hora,laboratorio,fecha,estado\n" +
@@ -334,7 +331,7 @@ public class vistaRootLabosCrear extends javax.swing.JFrame {
 
             }
             rs.close();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e);
         }
     }//GEN-LAST:event_jButton4ActionPerformed
