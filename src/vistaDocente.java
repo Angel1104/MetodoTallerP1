@@ -26,7 +26,17 @@ Connection con;
         this.setLocationRelativeTo(null);
         
     }
+Object laboratorio;
+    private Object laboSeleccionado(){
+       laboratorio = jComboBox2.getSelectedItem(); 
 
+       if(laboratorio.equals("laboratorio1")){laboratorio = 1;}
+        if(laboratorio.equals("laboratorio2")){laboratorio = 2;}
+        if(laboratorio.equals("laboratorio3")){laboratorio = 3;}
+        if(laboratorio.equals("laboratorio4")){laboratorio = 4;}
+        if(laboratorio.equals("auditorio")){laboratorio = 5;}
+       return laboratorio;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -186,13 +196,8 @@ Connection con;
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        Object laboratorio = jComboBox2.getSelectedItem();
-        
-        if(laboratorio.equals("laboratorio1")){laboratorio = 1;}
-        if(laboratorio.equals("laboratorio2")){laboratorio = 2;}
-        if(laboratorio.equals("laboratorio3")){laboratorio = 3;}
-        if(laboratorio.equals("laboratorio4")){laboratorio = 4;}
-        if(laboratorio.equals("auditorio")){laboratorio = 5;}
+        laboratorio = laboSeleccionado();
+
         
         ResultSet rs = seleccionar.getDatos("SELECT laboratorio.nombre,descripcion ,fecha.fecha, hora.horaIngreso,horaSalida ,  estado.IDestado,estado,descripcionHorario\n" +
                                             "FROM hora,laboratorio,fecha,estado\n" +
@@ -228,13 +233,8 @@ Connection con;
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        Object laboratorio = jComboBox2.getSelectedItem();
-        
-        if(laboratorio.equals("laboratorio1")){laboratorio = 1;}
-        if(laboratorio.equals("laboratorio2")){laboratorio = 2;}
-        if(laboratorio.equals("laboratorio3")){laboratorio = 3;}
-        if(laboratorio.equals("laboratorio4")){laboratorio = 4;}
-        if(laboratorio.equals("auditorio")){laboratorio = 5;}
+        laboratorio = laboSeleccionado();
+
         
         String IDestado = jTextField4.getText();
         String descripcion = jTextField2.getText();
