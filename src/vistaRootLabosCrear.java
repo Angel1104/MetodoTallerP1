@@ -243,7 +243,7 @@ public class vistaRootLabosCrear extends javax.swing.JFrame {
                                                     "and estado.estado='"+estado+"' and estado.descripcionHorario= '"+descripcionHorario+"' \n");
                 if (rs.next())
                 {  
-                    //JOptionPane.showMessageDialog(null, rs.getString(1) + "" + rs.getString(2));
+                 //JOptionPane.showMessageDialog(null, rs.getString(1) + "" + rs.getString(2));
                 Query = "insert into hora( horaIngreso, horaSalida, IDestado, IDfecha)"+" values('"+horaIngreso+"','"+horaSalida+"',"+rs.getString(1)+","+rs.getString(2)+")";
                 InsertarDescargarEliminar.setData(Query, "Registrado exitosamente");
                 }

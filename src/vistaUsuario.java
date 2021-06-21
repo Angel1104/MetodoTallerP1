@@ -110,7 +110,7 @@ public class vistaUsuario extends javax.swing.JFrame {
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1270, 30, -1, -1));
 
         jButton4.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
-        jButton4.setText("cerrar sesion");
+        jButton4.setText("iniciar sesion");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -207,7 +207,7 @@ public class vistaUsuario extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        int a = JOptionPane.showConfirmDialog(null, "Quiere cerrar sesion ?","Select",JOptionPane.YES_NO_OPTION);
+        int a = JOptionPane.showConfirmDialog(null, "Quiere iniciar sesion ?","Select",JOptionPane.YES_NO_OPTION);
         if (a == 0) {
             setVisible(false);
              new IniciarSesion().setVisible(true);
