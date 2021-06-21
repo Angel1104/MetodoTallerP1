@@ -42,6 +42,7 @@ public class vistaRootLabosCrear extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jButton3 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
         jButton4 = new javax.swing.JButton();
@@ -55,7 +56,6 @@ public class vistaRootLabosCrear extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextArea2 = new javax.swing.JTextArea();
         jLabel5 = new javax.swing.JLabel();
@@ -94,6 +94,7 @@ public class vistaRootLabosCrear extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(574, 21, -1, -1));
+        getContentPane().add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 360, -1, -1));
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/unknown-01.png"))); // NOI18N
         jButton3.setToolTipText("");
@@ -168,7 +169,6 @@ public class vistaRootLabosCrear extends javax.swing.JFrame {
 
         jLabel14.setText("fecha");
         getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 360, -1, -1));
-        getContentPane().add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 360, 180, 30));
 
         jTextArea2.setColumns(20);
         jTextArea2.setRows(5);
