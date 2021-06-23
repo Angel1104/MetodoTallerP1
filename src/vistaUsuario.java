@@ -16,12 +16,15 @@ import proyecto.*;
  * @author flore
  */
 public class vistaUsuario extends javax.swing.JFrame {
-
+Connection con;
+Statement st;
+ResultSet rs;
     /**
      * Creates new form vista1
      */
     public vistaUsuario() {
         initComponents();
+        con = ProveedorConecciones.getConexion();
         this.setLocationRelativeTo(null);
     }
 

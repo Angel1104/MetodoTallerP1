@@ -1,4 +1,7 @@
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
 import proyecto.ProveedorConecciones;
 
@@ -13,14 +16,19 @@ import proyecto.ProveedorConecciones;
  * @author DESTOCK
  */
 public class Soporte extends javax.swing.JFrame {
-
+Connection con;
+Statement st;
+ResultSet rs;
     /**
      * Creates new form Soporte
      */
     public Soporte() {
         initComponents();
         
+        con = ProveedorConecciones.getConexion();
         this.setLocationRelativeTo(null);
+        
+        
     }
 
     /**

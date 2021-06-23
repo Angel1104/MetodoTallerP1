@@ -12,13 +12,17 @@ import proyecto.*;
  * @author flore
  */
 public class vistaRootLaboEditar extends javax.swing.JFrame {
-
+Connection con;
+Statement st;
+ResultSet rs;
     /**
      * Creates new form vistaRootLaboEditar
      */
     public vistaRootLaboEditar() {
         initComponents();
      
+        con = ProveedorConecciones.getConexion();
+        this.setLocationRelativeTo(null);
     }
 
     int id=0;

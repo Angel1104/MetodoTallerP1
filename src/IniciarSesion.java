@@ -16,6 +16,8 @@ public class IniciarSesion extends javax.swing.JFrame {
 Connection con;
 Statement st;
 ResultSet rs;
+protected String correo;
+protected String contra;
     /**
      * Creates new form IniciarSesion
      */
@@ -23,8 +25,23 @@ ResultSet rs;
         initComponents();
         con = ProveedorConecciones.getConexion();
         this.setLocationRelativeTo(null);
+        correo = "";
+        contra = "";
     }
-
+    private String getCorreo(){
+        return correo;
+    }
+    private String getContra(){
+        return contra;
+    }
+    
+    //private String setCorreo(String correo){
+        //this.correo = correo;
+    //}
+    
+    //private String setContra(String Contra){
+        
+    //}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -112,6 +129,7 @@ ResultSet rs;
         String mail =jTextField1.getText();
         String contrasena =jPasswordField1.getText();
         
+        
         if ( mail.equals("")|| contrasena.equals("")) {
             JOptionPane.showMessageDialog(null, "DEBE LLENAR TODOS LOS CAMPOS");
             check = 1;
@@ -130,9 +148,13 @@ ResultSet rs;
                 
                 if (rs.next())
                 {
+                    correo = rs.getString(5);
+                    contra = rs.getString(4);
+                    JOptionPane.showMessageDialog(null, correo+","+contra);
                     check=1;
+                    
                     setVisible(false);
-                    new vistaUsuario().setVisible(true);
+                    new vistaDocente().setVisible(true);
                 }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null,"Error"+ e.getMessage());

@@ -13,12 +13,17 @@ import proyecto.*;
  * @author flore
  */
 public class vistaRoot extends javax.swing.JFrame {
-
+Connection con;
+Statement st;
+ResultSet rs;
     /**
      * Creates new form vistaRoot
      */
     public vistaRoot() {
         initComponents();
+        
+        con = ProveedorConecciones.getConexion();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -108,8 +113,10 @@ public class vistaRoot extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        IniciarSesion sesion3 = new IniciarSesion();
         int a = JOptionPane.showConfirmDialog(null, "Quiere cerrar sesion ?","Select",JOptionPane.YES_NO_OPTION);
         if (a == 0) {
+            
             setVisible(false);
             new IniciarSesion().setVisible(true);
         }

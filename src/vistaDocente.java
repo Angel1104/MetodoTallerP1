@@ -197,20 +197,18 @@ Object laboratorio;
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         laboratorio = laboSeleccionado();
-
-        
-        ResultSet rs = seleccionar.getDatos("SELECT laboratorio.nombre,descripcion ,fecha.fecha, hora.horaIngreso,horaSalida ,  estado.IDestado,estado,descripcionHorario\n" +
-                                            "FROM hora,laboratorio,fecha,estado\n" +
-                                            "WHERE laboratorio.ID="+laboratorio+"\n" +
-                                            "AND fecha.IDlabo = laboratorio.ID and hora.IDfecha = fecha.IDfecha and hora.IDestado=estado.IDestado");
+        ResultSet rs = seleccionar.getDatos("SELECT laboratorio.descripcion ,ambientes.IDambiente,fecha,horaIngreso,horaSalida,estado,descripcionhora\n" +
+                                            "FROM laboratorio,ambientes\n" +
+                                            "WHERE laboratorio.ID="+laboratorio+"");
+                                            
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
 
         try {
             while(rs.next())
             {
-                model.addRow(new Object[]{rs.getString(6),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(7),rs.getString(8)});
-                jTextField1.setText(rs.getString(2));    
+                model.addRow(new Object[]{rs.getString(2),rs.getString(1),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7)});
+
             }
             rs.close();
         } catch (SQLException e) {
@@ -224,8 +222,10 @@ Object laboratorio;
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
+        IniciarSesion sesion2 = new IniciarSesion();
         int a = JOptionPane.showConfirmDialog(null, "Quiere cerrar sesion ?","Select",JOptionPane.YES_NO_OPTION);
         if (a == 0) {
+            JOptionPane.showMessageDialog(null, sesion2.correo+","+sesion2.contra);
             setVisible(false);
              new IniciarSesion().setVisible(true);
         }
@@ -242,7 +242,7 @@ Object laboratorio;
                 
                 
             if(!descripcion.equals("")){
-                InsertarDescargarEliminar.setData("update estado set estado='reservado' , descripcionHorario='"+descripcion+"' where IDestado ='"+IDestado+"'", "reservado exitosamente");
+                InsertarDescargarEliminar.setData("update ambientes set estado='reservado' , descripcionhora='"+descripcion+"' where ID ='"+IDestado+"'", "reservado exitosamente");
                 setVisible(false);
                 new vistaDocente().setVisible(true);
             }else{JOptionPane.showMessageDialog(null,"debe llenar la descripcion del hroario");}

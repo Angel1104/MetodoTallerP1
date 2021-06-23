@@ -1,11 +1,14 @@
 
+import java.sql.Connection;
 import java.util.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import proyecto.InsertarDescargarEliminar;
+import proyecto.ProveedorConecciones;
 import proyecto.seleccionar;
 
 /*
@@ -19,12 +22,17 @@ import proyecto.seleccionar;
  * @author flore
  */
 public class vistaRootLabosCrear extends javax.swing.JFrame {
-
+Connection con;
+Statement st;
+ResultSet rs;
     /**
      * Creates new form vistaRootLabos
      */
     public vistaRootLabosCrear() {
         initComponents();
+        
+        con = ProveedorConecciones.getConexion();
+        this.setLocationRelativeTo(null);
     }
     Object laboratorio;
     private Object laboSeleccionado(){
@@ -227,50 +235,9 @@ public class vistaRootLabosCrear extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
+        setVisible(false);
+        new VistaRootClasesCrear().setVisible(true);
         
-        String horaIngreso = jTextField2.getText();
-        String horaSalida = jTextField3.getText();
-        String estado = jComboBox2.getSelectedItem().toString();
-        String descripcionHorario = jTextArea2.getText();
-         
-        Date fecha = jDateChooser1.getDate(); 
-        SimpleDateFormat  formato = new SimpleDateFormat("yyyy-MM-d");     
-        String Fecha = formato.format(fecha);
-        
-        laboratorio = laboSeleccionado();
-        
-        if (horaIngreso.equals (horaSalida)) {
-            JOptionPane.showMessageDialog(null, "Hora de Ingreso y Salida Incorrectos");
-
-        }else {
-                String Query;
-                         
-            try { 
-                
-                Query = "insert into estado( estado, descripcionHorario)"+" values('"+estado+"','"+descripcionHorario+"')";
-                InsertarDescargarEliminar.setData(Query, "si");
-                
-                Query = "insert into fecha( fecha, IDlabo)"+" values('"+Fecha+"','"+laboratorio+"')";
-                InsertarDescargarEliminar.setData(Query, "si");
-                
-                ResultSet rs = seleccionar.getDatos("SELECT fecha.IDfecha, estado.IDestado\n" +
-                                                    "FROM fecha,estado \n" +
-                                                    "WHERE fecha.fecha='"+Fecha+"' and fecha.IDlabo="+laboratorio+"\n"+
-                                                    "and estado.estado='"+estado+"' and estado.descripcionHorario= '"+descripcionHorario+"' \n");
-                if (rs.next())
-                {  
-                 //JOptionPane.showMessageDialog(null, rs.getString(1) + "" + rs.getString(2));
-                Query = "insert into hora( horaIngreso, horaSalida, IDestado, IDfecha)"+" values('"+horaIngreso+"','"+horaSalida+"',"+rs.getString(1)+","+rs.getString(2)+")";
-                InsertarDescargarEliminar.setData(Query, "Registrado exitosamente");
-                }
-                setVisible(false);
-                new vistaRootLabosCrear().setVisible(true);
-                
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null,"Error"+ e.getMessage());
-            }
-            
-        }
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -308,17 +275,17 @@ public class vistaRootLabosCrear extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         laboratorio = laboSeleccionado();
-        ResultSet rs = seleccionar.getDatos("SELECT laboratorio.nombre,descripcion ,fecha.fecha, hora.horaIngreso,horaSalida,IDhora ,  estado.estado,descripcionHorario\n" +
-                                            "FROM hora,laboratorio,fecha,estado\n" +
-                                            "WHERE laboratorio.ID="+laboratorio+"\n" +
-                                            "AND fecha.IDlabo = laboratorio.ID and hora.IDfecha = fecha.IDfecha and hora.IDestado=estado.IDestado");
+        ResultSet rs = seleccionar.getDatos("SELECT laboratorio.descripcion ,ambientes.IDambiente,fecha,horaIngreso,horaSalida,estado,descripcionhora\n" +
+                                            "FROM laboratorio,ambientes\n" +
+                                            "WHERE laboratorio.ID="+laboratorio+"");
+                                            
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
 
         try {
             while(rs.next())
             {
-                model.addRow(new Object[]{rs.getString(6),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(7),rs.getString(8)});
+                model.addRow(new Object[]{rs.getString(2),rs.getString(1),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7)});
 
             }
             rs.close();
@@ -333,6 +300,28 @@ public class vistaRootLabosCrear extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
+        
+        String horaIngreso = jTextField2.getText();
+        String horaSalida = jTextField3.getText();
+        String estado = jComboBox2.getSelectedItem().toString();
+        String descripcionHorario = jTextArea2.getText();
+         
+        Date fecha = jDateChooser1.getDate(); 
+        SimpleDateFormat  formato = new SimpleDateFormat("yyyy-MM-d");     
+        String Fecha = formato.format(fecha);
+        
+        laboratorio = laboSeleccionado();
+        
+        if (horaIngreso.equals (horaSalida)) {
+            JOptionPane.showMessageDialog(null, "Hora de Ingreso y Salida Incorrectos");
+
+        }else {
+                String Query;
+                Query = "insert into ambientes(IDambiente, fecha, horaIngreso, horaSalida, estado, descripcionhora)" + "values('"+laboratorio+"', '"+Fecha+"', '"+horaIngreso+"', '"+horaSalida+"', '"+estado+"', '"+descripcionHorario+"')";
+                     InsertarDescargarEliminar.setData(Query, "Registrado exitosamente");    
+          
+            
+        }
     }//GEN-LAST:event_jButton6ActionPerformed
 
     /**

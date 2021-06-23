@@ -1,3 +1,16 @@
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import proyecto.InsertarDescargarEliminar;
+import proyecto.ProveedorConecciones;
+import proyecto.seleccionar;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -9,14 +22,28 @@
  * @author DESTOCK
  */
 public class VistaRootClasesCrear extends javax.swing.JFrame {
-
+Connection con;
+Statement st;
+ResultSet rs;
     /**
      * Creates new form VistaRootClasesCrear
      */
     public VistaRootClasesCrear() {
-        initComponents();
+        initComponents(); 
+        con = ProveedorConecciones.getConexion();
+        this.setLocationRelativeTo(null);
     }
+Object laboratorio;
+    private Object laboSeleccionado(){
+       laboratorio = jComboBox1.getSelectedItem(); 
 
+       if(laboratorio.equals("laboratorio1")){laboratorio = 1;}
+        if(laboratorio.equals("laboratorio2")){laboratorio = 2;}
+        if(laboratorio.equals("laboratorio3")){laboratorio = 3;}
+        if(laboratorio.equals("laboratorio4")){laboratorio = 4;}
+        if(laboratorio.equals("auditorio")){laboratorio = 5;}
+       return laboratorio;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -159,7 +186,7 @@ public class VistaRootClasesCrear extends javax.swing.JFrame {
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("D1escripcion");
+        jLabel13.setText("Descripcion");
         getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 240, 90, -1));
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -170,6 +197,11 @@ public class VistaRootClasesCrear extends javax.swing.JFrame {
 
         jButton6.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
         jButton6.setText("Ambientes de Reserva");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 90, 300, 40));
         getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, 400, 170, -1));
 
@@ -238,17 +270,17 @@ public class VistaRootClasesCrear extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         laboratorio = laboSeleccionado();
-        ResultSet rs = seleccionar.getDatos("SELECT laboratorio.nombre,descripcion ,fecha.fecha, hora.horaIngreso,horaSalida,IDhora ,  estado.estado,descripcionHorario\n" +
-            "FROM hora,laboratorio,fecha,estado\n" +
-            "WHERE laboratorio.ID="+laboratorio+"\n" +
-            "AND fecha.IDlabo = laboratorio.ID and hora.IDfecha = fecha.IDfecha and hora.IDestado=estado.IDestado");
+        ResultSet rs = seleccionar.getDatos("SELECT claseregular.IDdocente, docente, dia, horaIngreso, horaSalida, laboratorio, descripcion \n" +
+            "FROM claseregular"); 
+            
+            
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
 
         try {
             while(rs.next())
             {
-                model.addRow(new Object[]{rs.getString(6),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(7),rs.getString(8)});
+                model.addRow(new Object[]{rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7)});
 
             }
             rs.close();
@@ -263,15 +295,15 @@ public class VistaRootClasesCrear extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-
+        String IDdocente = jTextField6.getText();
+        String docente = jTextField4.getText();
+        String dia = jTextField5.getText();
         String horaIngreso = jTextField2.getText();
         String horaSalida = jTextField3.getText();
-        String estado = jComboBox2.getSelectedItem().toString();
-        String descripcionHorario = jTextArea2.getText();
+        String descripcion = jTextArea2.getText();
 
-        Date fecha = jDateChooser1.getDate();
-        SimpleDateFormat  formato = new SimpleDateFormat("yyyy-MM-d");
-        String Fecha = formato.format(fecha);
+        
+        
 
         laboratorio = laboSeleccionado();
 
@@ -281,33 +313,17 @@ public class VistaRootClasesCrear extends javax.swing.JFrame {
         }else {
             String Query;
 
-            try {
-
-                Query = "insert into estado( estado, descripcionHorario)"+" values('"+estado+"','"+descripcionHorario+"')";
-                InsertarDescargarEliminar.setData(Query, "si");
-
-                Query = "insert into fecha( fecha, IDlabo)"+" values('"+Fecha+"','"+laboratorio+"')";
-                InsertarDescargarEliminar.setData(Query, "si");
-
-                ResultSet rs = seleccionar.getDatos("SELECT fecha.IDfecha, estado.IDestado\n" +
-                    "FROM fecha,estado \n" +
-                    "WHERE fecha.fecha='"+Fecha+"' and fecha.IDlabo="+laboratorio+"\n"+
-                    "and estado.estado='"+estado+"' and estado.descripcionHorario= '"+descripcionHorario+"' \n");
-                if (rs.next())
-                {
-                    //JOptionPane.showMessageDialog(null, rs.getString(1) + "" + rs.getString(2));
-                    Query = "insert into hora( horaIngreso, horaSalida, IDestado, IDfecha)"+" values('"+horaIngreso+"','"+horaSalida+"',"+rs.getString(1)+","+rs.getString(2)+")";
-                    InsertarDescargarEliminar.setData(Query, "Registrado exitosamente");
-                }
-                setVisible(false);
-                new vistaRootLabosCrear().setVisible(true);
-
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null,"Error"+ e.getMessage());
-            }
-
+           Query = "insert into claseregular(IDdocente, docente, dia, horaIngreso, horaSalida, laboratorio, descripcion)" + "values('"+IDdocente+"', '"+docente+"', '"+dia+"', '"+horaIngreso+"','"+horaSalida+"','"+laboratorio+"','"+descripcion+"')";
+           InsertarDescargarEliminar.setData(Query, "Registrado con exito");
         }
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        setVisible(false);
+        new vistaRootLabosCrear().setVisible(true);
+        
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -13,13 +13,16 @@ import proyecto.*;
  * @author flore
  */
 public class RecuperarContra extends javax.swing.JFrame {
-    
+Connection con;
+Statement st;
+ResultSet rs; 
     /**
      * Creates new form RecuperarContra
      */
     public RecuperarContra() {
-        initComponents();
         
+        initComponents();
+        con = ProveedorConecciones.getConexion();
         this.setLocationRelativeTo(null);
     }
     String email;

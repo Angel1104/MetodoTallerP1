@@ -1,3 +1,13 @@
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import proyecto.ProveedorConecciones;
+import proyecto.seleccionar;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -9,12 +19,28 @@
  * @author DESTOCK
  */
 public class VistaClasesRegulares extends javax.swing.JFrame {
-
+Connection con;
+Statement st;
+ResultSet rs;
     /**
      * Creates new form VistaAuditorio
      */
     public VistaClasesRegulares() {
         initComponents();
+        
+        con = ProveedorConecciones.getConexion();
+        this.setLocationRelativeTo(null);
+    }
+    Object laboratorio;
+    private Object laboSeleccionado(){
+       laboratorio = jComboBox2.getSelectedItem(); 
+
+       if(laboratorio.equals("laboratorio1")){laboratorio = 1;}
+        if(laboratorio.equals("laboratorio2")){laboratorio = 2;}
+        if(laboratorio.equals("laboratorio3")){laboratorio = 3;}
+        if(laboratorio.equals("laboratorio4")){laboratorio = 4;}
+        if(laboratorio.equals("auditorio")){laboratorio = 5;}
+       return laboratorio;
     }
 
     /**
@@ -28,7 +54,6 @@ public class VistaClasesRegulares extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
-        jTextField1 = new javax.swing.JTextField();
         jButton5 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
@@ -37,6 +62,9 @@ public class VistaClasesRegulares extends javax.swing.JFrame {
         jComboBox2 = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
         jLabel5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -51,7 +79,6 @@ public class VistaClasesRegulares extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 400, 110, -1));
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 670, 460, 120));
 
         jButton5.setText("SELECCIONAR");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -104,6 +131,13 @@ public class VistaClasesRegulares extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 600, 170, 40));
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 670, 210, 120));
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane2.setViewportView(jTextArea1);
+
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(846, 670, 210, 120));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 2, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -149,9 +183,9 @@ public class VistaClasesRegulares extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        String id = jTextField2.getText();
+       String id = jTextField2.getText();
 
-        ResultSet rs = seleccionar.getDatos("SELECT horario.descripcionHorario FROM horario WHERE horarioID = '"+id+"' ");
+        ResultSet rs = seleccionar.getDatos("SELECT claseregular.descripcion FROM claseregular WHERE ID = '"+id+"' ");
 
         try {
             if(rs.next())
@@ -164,30 +198,22 @@ public class VistaClasesRegulares extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        Object labo = jComboBox2.getSelectedItem();
-        if(labo.equals("laboratorio1")){labo = 1;}
-        if(labo.equals("laboratorio2")){labo = 2;}
-        if(labo.equals("laboratorio3")){labo = 3;}
-        if(labo.equals("laboratorio4")){labo = 4;}
-        if(labo.equals("laboratorio5")){labo = 5;}
-        if(labo.equals("laboratorio6")){labo = 6;}
-
-        ResultSet rs = seleccionar.getDatos("SELECT horaIngreso,horaSalida,lunes,martes, miercoles,jueves,viernes,sabado,horarioID, laboratorio.nombre,descripcion\n" +
-            "FROM horario,laboratorio \n" +
-            "WHERE labo_id="+labo+" \n" +
-            "AND horario.labo_id = laboratorio.ID");
+         laboratorio = laboSeleccionado();
+        ResultSet rs = seleccionar.getDatos("SELECT claseregular.docente, dia, horaIngreso, horaSalida, laboratorio, descripcion \n" +
+            "FROM claseregular"); 
+            
+            
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
 
         try {
             while(rs.next())
             {
-                model.addRow(new Object[]{rs.getString(9),rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8)});
-                jTextField1.setText(rs.getString(11));
-                jLabel5.setText(rs.getString(10));
+                model.addRow(new Object[]{rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(1)});
+
             }
             rs.close();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e);
         }
 
@@ -269,7 +295,9 @@ public class VistaClasesRegulares extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
