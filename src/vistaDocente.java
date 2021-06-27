@@ -222,12 +222,11 @@ Object laboratorio;
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        IniciarSesion sesion2 = new IniciarSesion();
         int a = JOptionPane.showConfirmDialog(null, "Quiere cerrar sesion ?","Select",JOptionPane.YES_NO_OPTION);
         if (a == 0) {
-            JOptionPane.showMessageDialog(null, sesion2.correo+","+sesion2.contra);
-            setVisible(false);
-             new IniciarSesion().setVisible(true);
+        InsertarDescargarEliminar.setData("update inicio set IDdocente= '' , correo='' , contra = '', sesion = 'NO' where ID ='1'", "Sesion Cerrada");
+        setVisible(false);
+        new IniciarSesion().setVisible(true);
         }
     }//GEN-LAST:event_jButton6ActionPerformed
 

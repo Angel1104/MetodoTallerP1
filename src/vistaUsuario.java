@@ -26,6 +26,20 @@ ResultSet rs;
         initComponents();
         con = ProveedorConecciones.getConexion();
         this.setLocationRelativeTo(null);
+        
+    }
+    
+    Object laboratorio;
+    private Object laboSeleccionado(){
+       laboratorio = jComboBox2.getSelectedItem(); 
+
+       if(laboratorio.equals("laboratorio1")){laboratorio = 1;}
+        if(laboratorio.equals("laboratorio2")){laboratorio = 2;}
+        if(laboratorio.equals("laboratorio3")){laboratorio = 3;}
+        if(laboratorio.equals("laboratorio4")){laboratorio = 4;}
+        if(laboratorio.equals("auditorio")){laboratorio = 5;}
+       return laboratorio;
+    
     }
 
     /**
@@ -37,16 +51,13 @@ ResultSet rs;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField2 = new javax.swing.JTextField();
         jTextField1 = new javax.swing.JTextField();
-        jButton5 = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jComboBox2 = new javax.swing.JComboBox<>();
+        jButton7 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
@@ -60,19 +71,7 @@ ResultSet rs;
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 400, 110, -1));
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 670, 190, 120));
-
-        jButton5.setText("SELECCIONAR");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 430, -1, -1));
-
-        jLabel6.setText("ID DEL HORARIO");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, 120, 30));
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 670, 440, 120));
 
         jButton2.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
         jButton2.setText("BUSCAR");
@@ -83,18 +82,12 @@ ResultSet rs;
         });
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, 320, 60));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
-
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 670, 190, 120));
-
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "id", "HoraIngreso", "HoraSalida", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"
+                "Ambiente", "Fecha", "HoraIngreso", "HoraSalida", "Estado", "Descripcion"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -103,6 +96,24 @@ ResultSet rs;
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "laboratorio1", "laboratorio2", "laboratorio3", "laboratorio4", "laboratorio5" }));
         getContentPane().add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 320, 50));
+
+        jButton7.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        jButton7.setText("Reserva Auditorio");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 480, 170, 40));
+
+        jButton6.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        jButton6.setText("Clases Regulares");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 480, 170, 40));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/unknown-01.png"))); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -171,32 +182,25 @@ ResultSet rs;
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        Object labo = jComboBox2.getSelectedItem();
-        if(labo.equals("laboratorio1")){labo = 1;}
-                if(labo.equals("laboratorio2")){labo = 2;}
-                if(labo.equals("laboratorio3")){labo = 3;}
-                if(labo.equals("laboratorio4")){labo = 4;}
-                if(labo.equals("laboratorio5")){labo = 5;}
-                if(labo.equals("laboratorio6")){labo = 6;}
+      laboratorio = laboSeleccionado();
+        ResultSet rs = seleccionar.getDatos("SELECT laboratorio.descripcion,nombre ,ambientes.IDambiente,fecha,horaIngreso,horaSalida,estado,descripcionhora\n" +
+                                            "FROM laboratorio,ambientes\n" +
+                                            "WHERE laboratorio.ID='"+laboratorio+"' and ambientes.estado='reservado'");
+                                            
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
 
-                ResultSet rs = seleccionar.getDatos("SELECT horaIngreso,horaSalida,lunes,martes, miercoles,jueves,viernes,sabado,horarioID, laboratorio.nombre,descripcion\n" +
-                                                    "FROM horario,laboratorio \n" +
-                                                    "WHERE labo_id="+labo+" \n" +
-                                                    "AND horario.labo_id = laboratorio.ID");
-                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-                model.setRowCount(0);
-
-                try {
-                    while(rs.next())
-                    {
-                        model.addRow(new Object[]{rs.getString(9),rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8)});
-                        jTextField1.setText(rs.getString(11));
-                        jLabel5.setText(rs.getString(10));
-                    }
-                    rs.close();
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, e);
-                }
+        try {
+            while(rs.next())
+            {
+                model.addRow(new Object[]{rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8)});
+                        jTextField1.setText(rs.getString(1));
+                        jLabel5.setText(rs.getString(2));
+            }
+            rs.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
                 
         //String descripcion = jTextField1.getText();
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -217,20 +221,17 @@ ResultSet rs;
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        String id = jTextField2.getText();
-        
-        ResultSet rs = seleccionar.getDatos("SELECT horario.descripcionHorario FROM horario WHERE horarioID = '"+id+"' ");
-        
-        try {
-            if(rs.next())
-          {
-              jTextArea1.setText(rs.getString(1));
-          }
-        } catch (Exception e) {
-        }
-    }//GEN-LAST:event_jButton5ActionPerformed
+        setVisible(false);
+        new VistaClasesRegulares().setVisible(true);
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        setVisible(false);
+        new VistaAuditori().setVisible(true);
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -274,19 +275,16 @@ ResultSet rs;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 }

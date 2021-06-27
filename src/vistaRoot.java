@@ -99,7 +99,7 @@ ResultSet rs;
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        setVisible(false);
+        setVisible(true);
         new vistaRootLabosCrear().setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -113,18 +113,17 @@ ResultSet rs;
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        IniciarSesion sesion3 = new IniciarSesion();
         int a = JOptionPane.showConfirmDialog(null, "Quiere cerrar sesion ?","Select",JOptionPane.YES_NO_OPTION);
         if (a == 0) {
-            
+            InsertarDescargarEliminar.setData("update inicio set IDdocente= '' , correo='' , contra = '', sesion = 'NO' where ID ='1'", "Sesion Cerrada");
             setVisible(false);
-            new IniciarSesion().setVisible(true);
+            new vistaUsuario().setVisible(true);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        setVisible(false);
+        setVisible(true);
         new vistaRootUsuarios().setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 

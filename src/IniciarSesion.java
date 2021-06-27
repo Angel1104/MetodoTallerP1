@@ -6,6 +6,7 @@
 import com.sun.org.apache.bcel.internal.generic.Select;
 import java.sql.*;
 import javax.swing.JOptionPane;
+import proyecto.InsertarDescargarEliminar;
 import proyecto.seleccionar;
 import proyecto.ProveedorConecciones;
 /**
@@ -16,8 +17,7 @@ public class IniciarSesion extends javax.swing.JFrame {
 Connection con;
 Statement st;
 ResultSet rs;
-protected String correo;
-protected String contra;
+
     /**
      * Creates new form IniciarSesion
      */
@@ -25,23 +25,11 @@ protected String contra;
         initComponents();
         con = ProveedorConecciones.getConexion();
         this.setLocationRelativeTo(null);
-        correo = "";
-        contra = "";
-    }
-    private String getCorreo(){
-        return correo;
-    }
-    private String getContra(){
-        return contra;
-    }
-    
-    //private String setCorreo(String correo){
-        //this.correo = correo;
-    //}
-    
-    //private String setContra(String Contra){
         
-    //}
+    }
+    
+    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -136,6 +124,7 @@ protected String contra;
         }
         else if (mail.equals("root")&& contrasena.equals("root"))
         {
+            InsertarDescargarEliminar.setData("update inicio set IDdocente= '0' , correo='"+mail+"' , contra = '"+contrasena+"', sesion = 'SI' where ID ='1'", "Sesion Iniciada");
             check=1;
             setVisible(false);
             new vistaRoot().setVisible(true);
@@ -144,15 +133,10 @@ protected String contra;
             String Query = " select * from usuarios where mail='"+mail+"' and Contrasena = '"+contrasena+"' ";
             ResultSet rs = seleccionar.getDatos(Query);
             try {
-                
-                
                 if (rs.next())
-                {
-                    correo = rs.getString(5);
-                    contra = rs.getString(4);
-                    JOptionPane.showMessageDialog(null, correo+","+contra);
+                { 
+                    InsertarDescargarEliminar.setData("update inicio set IDdocente= '"+rs.getString(1)+"' , correo='"+mail+"' , contra = '"+contrasena+"', sesion = 'SI' where ID ='1'", "Sesion Iniciada");
                     check=1;
-                    
                     setVisible(false);
                     new vistaDocente().setVisible(true);
                 }

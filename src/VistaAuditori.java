@@ -188,11 +188,22 @@ ResultSet rs;
             JOptionPane.showMessageDialog(null, "Hora de Ingreso y Salida Incorrectos");
 
         }else {
-                String Query;
-                
-                Query = "insert into formulario(nombre, apellido, ci, celular, fecha, horaIngreso, horaSalida, carta)" + " values('"+nombre+"','"+apellido+"','"+ci+"','"+celular+"','"+Fecha+"', '"+horaIngreso+"','"+horaSalida+"', '"+carta+"')";
-                InsertarDescargarEliminar.setData(Query, "Registrado con exito");
-            
+            String sesion = "select * from inicio";
+            ResultSet rs = seleccionar.getDatos(sesion);
+            try{
+            if(rs.next()){
+                if(rs.getString(5).equals("SI")){
+                    String Query;
+                    Query = "insert into formulario(ID_docente,nombre, apellido, ci, celular, fecha, horaIngreso, horaSalida, carta)" + " values('"+rs.getString(2)+"','"+nombre+"','"+apellido+"','"+ci+"','"+celular+"','"+Fecha+"', '"+horaIngreso+"','"+horaSalida+"', '"+carta+"')";
+                    InsertarDescargarEliminar.setData(Query, "Registrado con exito");
+                }else{
+                    String Query;
+                    Query = "insert into formulario(nombre, apellido, ci, celular, fecha, horaIngreso, horaSalida, carta)" + " values('"+nombre+"','"+apellido+"','"+ci+"','"+celular+"','"+Fecha+"', '"+horaIngreso+"','"+horaSalida+"', '"+carta+"')";
+                    InsertarDescargarEliminar.setData(Query, "Registrado con exito");
+                }
+            }
+            } catch (Exception e) {}
+        
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed

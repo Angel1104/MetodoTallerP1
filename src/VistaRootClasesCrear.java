@@ -257,10 +257,7 @@ Object laboratorio;
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        int a = JOptionPane.showConfirmDialog(null, "Quiere cerrar la aplicacion?","Select",JOptionPane.YES_NO_OPTION);
-        if (a == 0) {
-            System.exit(0);
-        }
+        setVisible(false);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
@@ -313,7 +310,7 @@ Object laboratorio;
         }else {
             String Query;
 
-           Query = "insert into claseregular(IDdocente, docente, dia, horaIngreso, horaSalida, laboratorio, descripcion)" + "values('"+IDdocente+"', '"+docente+"', '"+dia+"', '"+horaIngreso+"','"+horaSalida+"','"+laboratorio+"','"+descripcion+"')";
+           Query = "insert into claseregular(IDdocente, docente, dia, horaIngreso, horaSalida, laboratorio, descripcioncl)" + "values('"+IDdocente+"', '"+docente+"', '"+dia+"', '"+horaIngreso+"','"+horaSalida+"','"+laboratorio+"','"+descripcion+"')";
            InsertarDescargarEliminar.setData(Query, "Registrado con exito");
         }
     }//GEN-LAST:event_jButton5ActionPerformed
