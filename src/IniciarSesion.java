@@ -43,7 +43,8 @@ ResultSet rs;
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
@@ -65,14 +66,24 @@ ResultSet rs;
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 450, 120, -1));
         getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 380, 430, 40));
 
-        jButton1.setBackground(new java.awt.Color(86, 10, 10));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/unknown-01.png"))); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButton5.setBackground(new java.awt.Color(86, 10, 10));
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/unknown-01.png"))); // NOI18N
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButton5ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 30, -1, -1));
+        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 30, -1, -1));
+
+        jButton6.setBackground(new java.awt.Color(255, 255, 255));
+        jButton6.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
+        jButton6.setText("Volver");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 820, 120, -1));
 
         jButton2.setBackground(new java.awt.Color(255, 255, 255));
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -124,10 +135,10 @@ ResultSet rs;
         }
         else if (mail.equals("root")&& contrasena.equals("root"))
         {
-            InsertarDescargarEliminar.setData("update inicio set IDdocente= '0' , correo='"+mail+"' , contra = '"+contrasena+"', sesion = 'SI' where ID ='1'", "Sesion Iniciada");
-            check=1;
-            setVisible(false);
-            new vistaRoot().setVisible(true);
+           InsertarDescargarEliminar.setData("update inicio set IDdocente= '0' , correo='"+mail+"' , contra = '"+contrasena+"', sesion = 'SI' where ID ='1'", "Sesion Iniciada");
+           check=1;
+           setVisible(false);
+           new vistaRoot().setVisible(true);
         }
         else  {
             String Query = " select * from usuarios where mail='"+mail+"' and Contrasena = '"+contrasena+"' ";
@@ -155,19 +166,21 @@ ResultSet rs;
         new Registrarse().setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        int a = JOptionPane.showConfirmDialog(null, "Quiere cerrar la aplicacion?","Select",JOptionPane.YES_NO_OPTION);
-        if (a == 0) {
-            System.exit(0);
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         setVisible(false);
         new RecuperarContra().setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        setVisible(false);
+        new vistaUsuario().setVisible(true);
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -205,10 +218,11 @@ ResultSet rs;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;

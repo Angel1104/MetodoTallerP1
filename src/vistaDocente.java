@@ -46,6 +46,7 @@ Object laboratorio;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton8 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
@@ -57,6 +58,7 @@ Object laboratorio;
         jTextField4 = new javax.swing.JTextField();
         jComboBox2 = new javax.swing.JComboBox<>();
         jTextField2 = new javax.swing.JTextField();
+        jButton7 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -70,6 +72,15 @@ Object laboratorio;
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jButton8.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
+        jButton8.setText("Reserva Auditorio");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 360, 210, 50));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -105,6 +116,12 @@ Object laboratorio;
 
         jLabel9.setText("DETALLES");
         getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 840, 190, 50));
+
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 670, 460, 120));
 
         jTextField4.addActionListener(new java.awt.event.ActionListener() {
@@ -123,6 +140,15 @@ Object laboratorio;
             }
         });
         getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 510, 200, 90));
+
+        jButton7.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
+        jButton7.setText("Mi perfil");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 310, 210, 40));
 
         jButton6.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
         jButton6.setText("cerrar sesión");
@@ -226,7 +252,7 @@ Object laboratorio;
         if (a == 0) {
         InsertarDescargarEliminar.setData("update inicio set IDdocente= '' , correo='' , contra = '', sesion = 'NO' where ID ='1'", "Sesion Cerrada");
         setVisible(false);
-        new IniciarSesion().setVisible(true);
+        new vistaUsuario().setVisible(true);
         }
     }//GEN-LAST:event_jButton6ActionPerformed
 
@@ -237,11 +263,10 @@ Object laboratorio;
         
         String IDestado = jTextField4.getText();
         String descripcion = jTextField2.getText();
-        try { 
-                
-                
+        ResultSet rs = seleccionar.getDatos("SELECT * FROM inicio"); 
+        try {   
             if(!descripcion.equals("")){
-                InsertarDescargarEliminar.setData("update ambientes set estado='reservado' , descripcionhora='"+descripcion+"' where ID ='"+IDestado+"'", "reservado exitosamente");
+                InsertarDescargarEliminar.setData("update ambientes set IDdocentea = '"+rs.getString(2)+"', estado='reservado' , descripcionhora='"+descripcion+"' where ID ='"+IDestado+"'", "reservado exitosamente");
                 setVisible(false);
                 new vistaDocente().setVisible(true);
             }else{JOptionPane.showMessageDialog(null,"debe llenar la descripcion del hroario");}
@@ -254,6 +279,22 @@ Object laboratorio;
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    setVisible(false);
+    new informacion().setVisible(true);
+    // TODO add your handling code here:
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+        setVisible(false);
+        new VistaAuditori().setVisible(true);
+    }//GEN-LAST:event_jButton8ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -299,6 +340,8 @@ Object laboratorio;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
