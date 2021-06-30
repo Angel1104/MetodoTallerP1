@@ -240,7 +240,7 @@ return suma;
             int a = JOptionPane.showConfirmDialog(null, "Quiere Habilitar el sistema?","selecionar", JOptionPane.YES_NO_OPTION);
             if (a==0)
             {
-                InsertarDescargarEliminar.setData("update sistema set Sistema= 'On', fechaInicio = '"+Fecha1+"', fechaCierre = '"+Fecha2+"'", "Sistema habilitado");
+                InsertarDescargarEliminar.setData("update sistema set Sistema= 'ON', fechaInicio = '"+Fecha1+"', fechaCierre = '"+Fecha2+"'", "Sistema habilitado");
                 setVisible(false);
                 new vistaRoot().setVisible(true);
             }
