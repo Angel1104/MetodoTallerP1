@@ -55,7 +55,7 @@ ResultSet rs;
                 jButton3ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 70, 170, 40));
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 60, 170, 40));
 
         jButton4.setText("CREAR LABORATORIOS ");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -63,7 +63,7 @@ ResultSet rs;
                 jButton4ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 210, 40));
+        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 210, 40));
 
         jButton5.setText("EDITAR LABORATORIOS");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -71,7 +71,7 @@ ResultSet rs;
                 jButton5ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 70, 200, 40));
+        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 60, 200, 40));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -92,7 +92,7 @@ ResultSet rs;
                 jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1400, 70, 170, 40));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1400, 60, 170, 40));
 
         jButton6.setText("HABILITAR SISTEMA");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -100,7 +100,7 @@ ResultSet rs;
                 jButton6ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 70, 190, 40));
+        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 60, 190, 40));
 
         jButton7.setText("DESHABILITAR SISTEMA");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
@@ -108,7 +108,7 @@ ResultSet rs;
                 jButton7ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 70, 190, 40));
+        getContentPane().add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 60, 190, 40));
 
         jButton8.setText("PETICIONES FORMULARIO");
         jButton8.addActionListener(new java.awt.event.ActionListener() {
@@ -116,7 +116,7 @@ ResultSet rs;
                 jButton8ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 70, 170, 40));
+        getContentPane().add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 60, 170, 40));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo 1-01_1.jpg"))); // NOI18N
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-210, 0, 1970, -1));
