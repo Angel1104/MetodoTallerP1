@@ -205,9 +205,10 @@ ResultSet rs;
       if(laboratorio.equals(6)){
           auditorio();
       }else{
+          String reservado = "reservado";
          ResultSet rs = seleccionar.getDatos("SELECT laboratorio.descripcion,nombre ,ambientes.IDambiente,fecha,horaIngreso,horaSalida,estado,descripcionhora\n" +
                   "FROM laboratorio,ambientes\n" +
-                  "WHERE laboratorio.ID = '"+laboratorio+" and ambientes.IDambiente = '"+laboratorio+"' and ambientes.estado = 'reservado'");
+                  "WHERE laboratorio.ID = '"+laboratorio+"' and ambientes.IDambiente = '"+laboratorio+"' and ambientes.estado = '"+reservado+"' ");
           
           DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
           model.setRowCount(0);
