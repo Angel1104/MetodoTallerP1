@@ -133,7 +133,7 @@ ResultSet rs;
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         String nombreOID = jTextField1.getText();
-        ResultSet rs = seleccionar.getDatos("select *from formulario where nombre like '%"+nombreOID+"%' or IDform like '%"+nombreOID+"%'");
+        ResultSet rs = seleccionar.getDatos("select *from formulario where nombref like '%"+nombreOID+"%' or IDform like '%"+nombreOID+"%'");
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
         
@@ -163,7 +163,7 @@ ResultSet rs;
             int a = JOptionPane.showConfirmDialog(null, "Quiere aceptar el formulario a "+nombres+"", "selecionar", JOptionPane.YES_NO_OPTION);
             if (a==0)
             {
-                InsertarDescargarEliminar.setData("update formulario set secretaria='"+docente+"' where nombre='"+nombres+"'", "Formulario aceptado");
+                InsertarDescargarEliminar.setData("update formulario set secretaria='"+docente+"' where nombref='"+nombres+"'", "Formulario aceptado");
                 setVisible(false);
                 new VistaConfirmacionFormulario().setVisible(true);
             }

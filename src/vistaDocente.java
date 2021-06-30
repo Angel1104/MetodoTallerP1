@@ -37,6 +37,17 @@ Object laboratorio;
         if(laboratorio.equals("auditorio")){laboratorio = 5;}
        return laboratorio;
     }
+    private void aumentarhoras(){
+    ResultSet rso = seleccionar.getDatos("SELECT * FROM laboratorio WHERE laboratorio.ID = '"+laboratorio+"' ");
+        try {
+             if(rso.next()){
+                 int HoraReloj = rso.getInt(5)+90;
+                 int HoraAcademica = rso.getInt(4)+45;
+                 InsertarDescargarEliminar.setData("update laboratorio set horaReloj ='"+HoraReloj+"',horaAcademica = '"+HoraAcademica+"' WHERE laboratorio.ID = '"+laboratorio+"'", "reserva");
+            }
+        } catch (Exception e) {
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -93,10 +104,12 @@ Object laboratorio;
                 jButton4ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 540, 130, -1));
+        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 430, 130, -1));
 
+        jLabel7.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("razon de reserva con descipcion");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 510, -1, -1));
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 470, 190, 30));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/unnamed.jpg"))); // NOI18N
         jLabel4.setText("jLabel4");
@@ -129,17 +142,17 @@ Object laboratorio;
                 jTextField4ActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 460, 120, -1));
+        getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 430, 120, -1));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "laboratorio1", "laboratorio2", "laboratorio3", "laboratorio4", "auditorio" }));
-        getContentPane().add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 430, 160, -1));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "laboratorio1", "laboratorio2", "laboratorio3", "laboratorio4", " " }));
+        getContentPane().add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 420, 160, -1));
 
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 510, 200, 90));
+        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 500, 200, 90));
 
         jButton7.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
         jButton7.setText("Mi perfil");
@@ -173,7 +186,7 @@ Object laboratorio;
                 jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 430, -1, -1));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 420, -1, -1));
 
         jButton3.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
         jButton3.setText("soporte");
@@ -187,7 +200,7 @@ Object laboratorio;
         jLabel6.setFont(new java.awt.Font("Tahoma", 3, 13)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("ID:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 460, 50, -1));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 430, 50, -1));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fonds-01.png"))); // NOI18N
         jLabel3.setText("jLabel1");
@@ -234,7 +247,8 @@ Object laboratorio;
             while(rs.next())
             {
                 model.addRow(new Object[]{rs.getString(2),rs.getString(1),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7)});
-
+                jTextField1.setText(rs.getString(1));
+                jLabel9.setText(rs.getString(2));
             }
             rs.close();
         } catch (SQLException e) {
@@ -258,21 +272,41 @@ Object laboratorio;
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        ResultSet rsp = seleccionar.getDatos("SELECT * FROM sistema");
         laboratorio = laboSeleccionado();
-
-        
-        String IDestado = jTextField4.getText();
-        String descripcion = jTextField2.getText();
-        ResultSet rs = seleccionar.getDatos("SELECT * FROM inicio"); 
-        try {   
-            if(!descripcion.equals("")){
-                InsertarDescargarEliminar.setData("update ambientes set IDdocentea = '"+rs.getString(2)+"', estado='reservado' , descripcionhora='"+descripcion+"' where ID ='"+IDestado+"'", "reservado exitosamente");
-                setVisible(false);
-                new vistaDocente().setVisible(true);
-            }else{JOptionPane.showMessageDialog(null,"debe llenar la descripcion del hroario");}
+        try {
+            if(rsp.next())
+            if(rsp.getString(2).equals("ON")){
+                String IDestado = jTextField4.getText();
+                String descripcion = jTextField2.getText();
+                ResultSet rs = seleccionar.getDatos("SELECT * FROM inicio"); 
+                try {
+                    if(rs.next()){
+                    ResultSet rsl = seleccionar.getDatos("SELECT * FROM ambientes");
+                    try {
+                        if(rsl.next()){
+                            if(!descripcion.equals("")){
+                                if(rsl.getString(7).equals("libre")){
+                                    InsertarDescargarEliminar.setData("update ambientes set IDdocentea = '"+rs.getString(2)+"', estado='reservado' , descripcionhora='"+descripcion+"' where ambientes.ID ='"+IDestado+"'", "reservado exitosamente");
+                                    aumentarhoras();
+                                    setVisible(false);
+                                    new vistaDocente().setVisible(true);
+                                }else{
+                                    JOptionPane.showMessageDialog(null, "ambiente ocupado");
+                                }
+                            }else{JOptionPane.showMessageDialog(null,"debe llenar la descripcion del hroario");}
+                        }
+                    } catch (Exception e) {}
+                    }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null,"Error"+ e.getMessage());
             }
+            }else{
+                JOptionPane.showMessageDialog(null,"El sistema no esta abierto");
+            }
+        } catch (Exception e) {
+        }
+        
         
     }//GEN-LAST:event_jButton4ActionPerformed
 

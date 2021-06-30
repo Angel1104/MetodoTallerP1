@@ -39,7 +39,7 @@ ResultSet rs;
         if(laboratorio.equals("laboratorio2")){laboratorio = 2;}
         if(laboratorio.equals("laboratorio3")){laboratorio = 3;}
         if(laboratorio.equals("laboratorio4")){laboratorio = 4;}
-        if(laboratorio.equals("auditorio")){laboratorio = 5;}
+        if(laboratorio.equals("laboratorio5")){laboratorio = 5;}
        return laboratorio;
     }
 
@@ -175,7 +175,7 @@ ResultSet rs;
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-         laboratorio = laboSeleccionado();
+        laboratorio = laboSeleccionado();
         ResultSet rs = seleccionar.getDatos("SELECT laboratorio.descripcion,nombre, claseregular.docente, dia, horaIngreso, horaSalida,descripcioncl \n"+
             "FROM claseregular,laboratorio WHERE laboratorio.ID="+laboratorio+""); 
             

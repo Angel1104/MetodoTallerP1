@@ -37,9 +37,28 @@ ResultSet rs;
         if(laboratorio.equals("laboratorio2")){laboratorio = 2;}
         if(laboratorio.equals("laboratorio3")){laboratorio = 3;}
         if(laboratorio.equals("laboratorio4")){laboratorio = 4;}
-        if(laboratorio.equals("auditorio")){laboratorio = 5;}
+        if(laboratorio.equals("laboratorio5")){laboratorio = 5;}
+        if(laboratorio.equals("auditorio")){laboratorio = 6;}
        return laboratorio;
     
+    }
+    private void auditorio(){
+    ResultSet rs = seleccionar.getDatos("SELECT laboratorio.descripcion,nombre, formulario.carta, fecha, horaIngreso, horaSalida\n "+
+                                          "FROM laboratorio,formulario\n"+  
+                                           "WHERE laboratorio.ID = '6' and formulario.Secretaria = 'true' ");
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        try {
+            while(rs.next())
+            {
+                model.addRow(new Object[]{"6",rs.getString(4),rs.getString(5),rs.getString(6),"reservado",rs.getString(1)});
+                        jTextField1.setText(rs.getString(3));
+                        jLabel5.setText(rs.getString(2));
+            }
+            rs.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
     }
 
     /**
@@ -94,7 +113,7 @@ ResultSet rs;
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 250, 880, 370));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "laboratorio1", "laboratorio2", "laboratorio3", "laboratorio4", "auditorio" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "laboratorio1", "laboratorio2", "laboratorio3", "laboratorio4", "laboratorio5", "auditorio" }));
         getContentPane().add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 320, 50));
 
         jButton7.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
@@ -183,24 +202,30 @@ ResultSet rs;
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
       laboratorio = laboSeleccionado();
-        ResultSet rs = seleccionar.getDatos("SELECT laboratorio.descripcion,nombre ,ambientes.IDambiente,fecha,horaIngreso,horaSalida,estado,descripcionhora\n" +
-                                            "FROM laboratorio,ambientes\n" +
-                                            "WHERE laboratorio.ID='"+laboratorio+"' and ambientes.estado='reservado'");
-                                            
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0);
-
-        try {
-            while(rs.next())
-            {
-                model.addRow(new Object[]{rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8)});
-                        jTextField1.setText(rs.getString(1));
-                        jLabel5.setText(rs.getString(2));
-            }
-            rs.close();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
+      if(laboratorio.equals(6)){
+          auditorio();
+      }else{
+         ResultSet rs = seleccionar.getDatos("SELECT laboratorio.descripcion,nombre ,ambientes.IDambiente,fecha,horaIngreso,horaSalida,estado,descripcionhora\n" +
+                  "FROM laboratorio,ambientes\n" +
+                  "WHERE laboratorio.ID = '"+laboratorio+" and ambientes.IDambiente = '"+laboratorio+"' and ambientes.estado = 'reservado'");
+          
+          DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+          model.setRowCount(0);
+          
+          try {
+              while(rs.next())
+              {
+                  model.addRow(new Object[]{rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8)});
+                  jTextField1.setText(rs.getString(1));
+                  jLabel5.setText(rs.getString(2));
+              }
+              rs.close();
+          } catch (SQLException e) {
+              JOptionPane.showMessageDialog(null, e);
+          } 
+      }
+      
+      
                 
         //String descripcion = jTextField1.getText();
     }//GEN-LAST:event_jButton2ActionPerformed

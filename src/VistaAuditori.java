@@ -33,7 +33,17 @@ ResultSet rs;
         con = ProveedorConecciones.getConexion();
         this.setLocationRelativeTo(null);
     }
-    
+    private void aumentarhoras(){
+    ResultSet rso = seleccionar.getDatos("SELECT * FROM laboratorio WHERE laboratorio.ID = '6' ");
+        try {
+             if(rso.next()){
+                 int HoraReloj = rso.getInt(5)+90;
+                 int HoraAcademica = rso.getInt(4)+45;
+                 InsertarDescargarEliminar.setData("update laboratorio set horaReloj ='"+HoraReloj+"',horaAcademica = '"+HoraAcademica+"' WHERE laboratorio.ID = '6'", "reserva");
+            }
+        } catch (Exception e) {
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -116,7 +126,7 @@ ResultSet rs;
         jLabel6.setText("FECHA RESERVA");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 90, 170, 20));
         getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 180, 240, -1));
-        getContentPane().add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 90, -1, -1));
+        getContentPane().add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 90, 240, -1));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
@@ -181,40 +191,53 @@ ResultSet rs;
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String horaIngreso = jTextField5.getText();
-        String horaSalida = jTextField6.getText();
-        String nombre = jTextField1.getText();
-        String apellido = jTextField2.getText();
-        String celular = jTextField3.getText();
-        String ci = jTextField4.getText();
-        String carta = jTextArea1.getText();
+        ResultSet rsp = seleccionar.getDatos("SELECT * FROM sistema");
+        try {
+            if(rsp.next()){
+                if(rsp.getString(2).equals("ON")){
+                String horaIngreso = jTextField5.getText();
+                String horaSalida = jTextField6.getText();
+                String nombre = jTextField1.getText();
+                String apellido = jTextField2.getText();
+                String celular = jTextField3.getText();
+                String ci = jTextField4.getText();
+                String carta = jTextArea1.getText();
          
-        Date fecha = jDateChooser1.getDate(); 
-        SimpleDateFormat  formato = new SimpleDateFormat("yyyy-MM-d");     
-        String Fecha = formato.format(fecha);
+                Date fecha = jDateChooser1.getDate(); 
+                SimpleDateFormat  formato = new SimpleDateFormat("yyyy-MM-d");     
+                String Fecha = formato.format(fecha);
         
         
-        if (horaIngreso.equals (horaSalida)) {
-            JOptionPane.showMessageDialog(null, "Hora de Ingreso y Salida Incorrectos");
+                if (horaIngreso.equals (horaSalida)) {
+                    JOptionPane.showMessageDialog(null, "Hora de Ingreso y Salida Incorrectos");
 
-        }else {
-            String sesion = "select * from inicio";
-            ResultSet rs = seleccionar.getDatos(sesion);
-            try{
-            if(rs.next()){
-                if(rs.getString(5).equals("SI")){
-                    String Query;
-                    Query = "insert into formulario(ID_docente,nombre, apellido, ci, celular, fecha, horaIngreso, horaSalida, carta)" + " values('"+rs.getString(2)+"','"+nombre+"','"+apellido+"','"+ci+"','"+celular+"','"+Fecha+"', '"+horaIngreso+"','"+horaSalida+"', '"+carta+"')";
-                    InsertarDescargarEliminar.setData(Query, "Registrado con exito");
-                }else{
-                    String Query;
-                    Query = "insert into formulario(nombre, apellido, ci, celular, fecha, horaIngreso, horaSalida, carta)" + " values('"+nombre+"','"+apellido+"','"+ci+"','"+celular+"','"+Fecha+"', '"+horaIngreso+"','"+horaSalida+"', '"+carta+"')";
-                    InsertarDescargarEliminar.setData(Query, "Registrado con exito");
-                }
-            }
-            } catch (Exception e) {}
+                }else {
+                    String sesion = "select * from inicio";
+                    ResultSet rs = seleccionar.getDatos(sesion);
+                    try{
+                    if(rs.next()){
+                        if(rs.getString(5).equals("SI")){
+                            String Query;
+                            Query = "insert into formulario(ID_docente,nombref, apellido, ci, celular, fecha, horaIngreso, horaSalida, carta)" + " values('"+rs.getString(2)+"','"+nombre+"','"+apellido+"','"+ci+"','"+celular+"','"+Fecha+"', '"+horaIngreso+"','"+horaSalida+"', '"+carta+"')";
+                            InsertarDescargarEliminar.setData(Query, "Registrado con exito");
+                            aumentarhoras();
+                        }else{
+                            String Query;
+                            Query = "insert into formulario(nombref, apellido, ci, celular, fecha, horaIngreso, horaSalida, carta)" + " values('"+nombre+"','"+apellido+"','"+ci+"','"+celular+"','"+Fecha+"', '"+horaIngreso+"','"+horaSalida+"', '"+carta+"')";
+                            InsertarDescargarEliminar.setData(Query, "Registrado con exito");
+                            aumentarhoras();
+                        }
+                    }
+                    } catch (Exception e) {}
         
+                }
+            }else{
+                JOptionPane.showMessageDialog(null,"El sistema no esta abierto");
+            }
         }
+        } catch (Exception e) {
+        }
+        
         
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -5,6 +5,7 @@
  */
 import javax.swing.JOptionPane;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import proyecto.*;
@@ -25,6 +26,23 @@ ResultSet rs;
         con = ProveedorConecciones.getConexion();
         this.setLocationRelativeTo(null);
     }
+   
+public int suma1(){
+int contar = jTable1.getRowCount();
+int suma= 0 ;
+for(int i =0; i< contar; i++){
+  suma = suma+Integer.parseInt(jTable1.getValueAt(i,2).toString());
+}
+return suma;
+}
+public int suma2(){
+int contar = jTable1.getRowCount();
+int suma= 0 ;
+for(int i =0; i< contar; i++){
+  suma = suma+Integer.parseInt(jTable1.getValueAt(i,1).toString());
+}
+return suma;
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -35,7 +53,16 @@ ResultSet rs;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel6 = new javax.swing.JLabel();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -49,6 +76,39 @@ ResultSet rs;
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Laboratorio", "Horas Academicas", "Horas Reloj"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 510, 510));
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        jLabel6.setText(" ");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 270, 130, 20));
+        getContentPane().add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 30, -1, -1));
+        getContentPane().add(jDateChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 10, -1, -1));
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Fecha de Cierre");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 30, -1, -1));
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Fecha de Inicio");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 10, -1, -1));
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Total de Ambientes : ");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, -1, -1));
+
         jButton3.setText("USUARIOS");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -56,6 +116,15 @@ ResultSet rs;
             }
         });
         getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 60, 170, 40));
+
+        jButton9.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        jButton9.setText("Actualizar");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 220, -1, -1));
 
         jButton4.setText("CREAR LABORATORIOS ");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -161,11 +230,17 @@ ResultSet rs;
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here: 
+        java.util.Date fecha1 = jDateChooser1.getDate(); 
+                SimpleDateFormat  formato = new SimpleDateFormat("yyyy-MM-d");     
+                String Fecha1 = formato.format(fecha1);
+        java.util.Date fecha2 = jDateChooser1.getDate(); 
+            SimpleDateFormat  formato2 = new SimpleDateFormat("yyyy-MM-d");     
+            String Fecha2 = formato.format(fecha2);
         try {
             int a = JOptionPane.showConfirmDialog(null, "Quiere Habilitar el sistema?","selecionar", JOptionPane.YES_NO_OPTION);
             if (a==0)
             {
-                InsertarDescargarEliminar.setData("update sistema set Sistema= 'On'", "Sistema habilitado");
+                InsertarDescargarEliminar.setData("update sistema set Sistema= 'On', fechaInicio = '"+Fecha1+"', fechaCierre = '"+Fecha2+"'", "Sistema habilitado");
                 setVisible(false);
                 new vistaRoot().setVisible(true);
             }
@@ -177,6 +252,7 @@ ResultSet rs;
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
+        
         try {
             int a = JOptionPane.showConfirmDialog(null, "Quiere desHabilitar el sistema?","selecionar", JOptionPane.YES_NO_OPTION);
             if (a==0)
@@ -195,6 +271,24 @@ ResultSet rs;
         
         new VistaConfirmacionFormulario().setVisible(true);
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+        ResultSet rs = seleccionar.getDatos("SELECT * FROM laboratorio");     
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        
+        try {
+            while(rs.next())
+            {
+                model.addRow(new Object[]{rs.getString(2),rs.getString(4),rs.getString(5)});
+                jLabel6.setText(String.valueOf(suma1()+suma2()));
+            }
+            rs.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_jButton9ActionPerformed
    
     
     /**
@@ -241,7 +335,16 @@ ResultSet rs;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
