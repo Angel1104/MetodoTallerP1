@@ -135,7 +135,7 @@ ResultSet rs;
             if (a==0)
             {
                 InsertarDescargarEliminar.setData("update formularioauditorioyredes set estadoForm='"+estado+"' where nombreForm='"+nombres+"'", "Formulario aceptado");
-                InsertarDescargarEliminar.setData("update reservaperiodo set estadoRP ='"+estado+"' where formularioRP='"+id+"'", "hora aceptada");
+                InsertarDescargarEliminar.setData("update reservaperiodo set estadoRP ='reservado' where formularioRP='"+id+"'", "hora aceptada");
                 setVisible(false);
                 new VistaConfirmacionFormulario().setVisible(true);
             }

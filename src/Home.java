@@ -52,7 +52,7 @@ ResultSet rs;
 
         Calendar calendario = Calendar.getInstance(); 
         calendario.setTime(date);
-        mes = calendario.get(Calendar.MONTH);
+        mes = calendario.get(Calendar.MONTH)+1;
         
         return mes;
     }
@@ -892,8 +892,8 @@ ResultSet rs;
             }
         });
         getContentPane().add(auditorio, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 350, 170, 40));
-        getContentPane().add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 60, -1, -1));
-        getContentPane().add(jDateChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 120, -1, -1));
+        getContentPane().add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 60, 170, -1));
+        getContentPane().add(jDateChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 120, 170, -1));
         getContentPane().add(jCalendar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 410, -1, -1));
 
         salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/unknown-01.png"))); // NOI18N
@@ -953,6 +953,7 @@ ResultSet rs;
 
     private void busarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_busarActionPerformed
         // TODO add your handling code here:
+        
         semana();
         mes();
         diaDeSemana();
@@ -1328,6 +1329,7 @@ ResultSet rs;
         diaDeSemana();
         vaciar();
         laboSeleccionado();
+        JOptionPane.showConfirmDialog(null, mes);
         //hora1
         for(int i = 1 ; i <= 10; i = i + 1)
         {
@@ -1492,7 +1494,7 @@ ResultSet rs;
         {
             rs = seleccionar.getDatos("SELECT reservaperiodo.docenteRP, diaRP\n" +
                                         "FROM reservaperiodo\n" +
-                                        "WHERE laboRP='"+laboratorio+"' AND( horaIniRP='"+i+"' or horaFinRP='"+i+"') AND mesRP= '"+mes+"' AND semanaRP='"+semana+"'");
+                                        "WHERE estadoRP='reservado' AND laboRP='"+laboratorio+"' AND( horaIniRP='"+i+"' or horaFinRP='"+i+"') AND mesRP= '"+mes+"' AND semanaRP='"+semana+"'");
             try {
                 while(rs.next())    
                 {

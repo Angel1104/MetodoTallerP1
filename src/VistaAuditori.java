@@ -81,7 +81,7 @@ ResultSet rs;
 
         Calendar calendario = Calendar.getInstance(); 
         calendario.setTime(date);
-        mes = calendario.get(Calendar.MONTH);
+        mes = calendario.get(Calendar.MONTH)+1;
         
         return mes;
     }
