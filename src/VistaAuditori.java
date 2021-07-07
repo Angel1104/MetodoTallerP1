@@ -270,7 +270,7 @@ ResultSet rs;
                     ResultSet rs = seleccionar.getDatos(sesion);
                     try{
                     if(rs.next()){
-                        if(rs.getString(2).equals("SI")){
+                        if(rs.getString(2).equals("activo")){
                             String Query;
                             Query = "insert into formularioauditorioyredes (nombreForm, apellidoForm, ci, celular, carta, idDocenteF)" + " values('"+nombre+"','"+apellido+"','"+ci+"','"+celular+"', '"+carta+"','"+rs.getString(3)+"')";
                             InsertarDescargarEliminar.setData(Query, "Registrado con exito");
