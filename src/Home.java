@@ -971,15 +971,15 @@ ResultSet rs;
         
         for(int i = 1 ; i <= 10; i = i + 1)
         {
-            ResultSet rs0 = seleccionar.getDatos("SELECT reservaasignada.docente, diaRA\n" +
+            ResultSet rs0 = seleccionar.getDatos("SELECT reservaasignada.descripcionRA, diaRA, docente\n" +
                                         "FROM reservaasignada\n" +
                                         "WHERE  laboRA='"+laboratorio+"' AND( horaIngresoRA='"+i+"' or horaFinRA='"+i+"')");
             try {
                 while(rs0.next())    
                 {
-                    ResultSet rs1 = seleccionar.getDatos("SELECT usuarios.nombreUser\n" +
-                                        "FROM usuarios\n" +
-                                        "WHERE idUser='"+rs0.getString(1)+"' ");
+                    ResultSet rs1 = seleccionar.getDatos("SELECT reservaasignada.descripcionRA\n" +
+                                        "FROM reservaasignada\n" +
+                                        "WHERE docente='"+rs0.getString(3)+"' ");
                     while(rs1.next()){
                         //lunes
                         if(rs0.getString(2).equals("1")){
@@ -1136,9 +1136,9 @@ ResultSet rs;
             try {
                 while(rs.next())    
                 {
-                    ResultSet rs1 = seleccionar.getDatos("SELECT usuarios.nombreUser\n" +
-                                        "FROM usuarios\n" +
-                                        "WHERE idUser='"+rs.getString(1)+"' ");
+                    ResultSet rs1 = seleccionar.getDatos("SELECT descripcionRP\n" +
+                                        "FROM reservaperiodo\n" +
+                                        "WHERE docenteRP='"+rs.getString(1)+"' ");
                     while(rs1.next()){
                         //lunes
                         if(rs.getString(2).equals("1")){
@@ -1337,9 +1337,9 @@ ResultSet rs;
             try {
                 while(rs0.next())    
                 {
-                    ResultSet rs1 = seleccionar.getDatos("SELECT usuarios.nombreUser\n" +
-                                        "FROM usuarios\n" +
-                                        "WHERE idUser='"+rs0.getString(1)+"' ");
+                    ResultSet rs1 = seleccionar.getDatos("SELECT descripcionRA\n" +
+                                        "FROM reservaasignada\n" +
+                                        "WHERE docente='"+rs0.getString(1)+"' ");
                     while(rs1.next()){
                         //lunes
                         if(rs0.getString(2).equals("1")){
@@ -1496,9 +1496,9 @@ ResultSet rs;
             try {
                 while(rs.next())    
                 {
-                    ResultSet rs1 = seleccionar.getDatos("SELECT usuarios.nombreUser\n" +
-                                        "FROM usuarios\n" +
-                                        "WHERE idUser='"+rs.getString(1)+"' ");
+                    ResultSet rs1 = seleccionar.getDatos("SELECT descripcionRP\n" +
+                                        "FROM reservaperiodo\n" +
+                                        "WHERE docenteRP='"+rs.getString(1)+"' ");
                     while(rs1.next()){
                         //lunes
                         if(rs.getString(2).equals("1")){
