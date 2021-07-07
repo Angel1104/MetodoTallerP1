@@ -56,6 +56,7 @@ return suma;
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jDateChooser2 = new com.toedter.calendar.JDateChooser();
         jLabel3 = new javax.swing.JLabel();
@@ -90,7 +91,11 @@ return suma;
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         jLabel6.setText(" ");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 270, 130, 20));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 270, 130, 20));
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        jLabel7.setText(" ");
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 270, 130, 20));
         getContentPane().add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 30, -1, -1));
         getContentPane().add(jDateChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 10, -1, -1));
 
@@ -124,7 +129,7 @@ return suma;
                 jButton9ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 220, -1, -1));
+        getContentPane().add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, -1, -1));
 
         jButton4.setText("CREAR LABORATORIOS ");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -211,9 +216,9 @@ return suma;
         // TODO add your handling code here:
         int a = JOptionPane.showConfirmDialog(null, "Quiere cerrar sesion ?","Select",JOptionPane.YES_NO_OPTION);
         if (a == 0) {
-            InsertarDescargarEliminar.setData("update inicio set IDdocente= '' , correo='' , contra = '', sesion = 'NO' where ID ='1'", "Sesion Cerrada");
+            InsertarDescargarEliminar.setData("update usuarioactivo set estadoUA= 'desconectado' , idUsuario = '0'  where idUserA ='1'", "Sesion Cerrada");
             setVisible(false);
-            new vistaUsuario().setVisible(true);
+            new Home().setVisible(true);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -240,7 +245,7 @@ return suma;
             int a = JOptionPane.showConfirmDialog(null, "Quiere Habilitar el sistema?","selecionar", JOptionPane.YES_NO_OPTION);
             if (a==0)
             {
-                InsertarDescargarEliminar.setData("update sistema set Sistema= 'ON', fechaInicio = '"+Fecha1+"', fechaCierre = '"+Fecha2+"'", "Sistema habilitado");
+                InsertarDescargarEliminar.setData("update sistema set estadoSistema= 'ON', fechaInicioSis = '"+Fecha1+"', fechaFinSis = '"+Fecha2+"'", "Sistema habilitado");
                 setVisible(false);
                 new vistaRoot().setVisible(true);
             }
@@ -257,7 +262,7 @@ return suma;
             int a = JOptionPane.showConfirmDialog(null, "Quiere desHabilitar el sistema?","selecionar", JOptionPane.YES_NO_OPTION);
             if (a==0)
             {
-                InsertarDescargarEliminar.setData("update sistema set Sistema= 'Off'", "Sistema deshabilitado");
+                InsertarDescargarEliminar.setData("update sistema set estadoSistema= 'OFF'", "Sistema deshabilitado");
                 setVisible(false);
                 new vistaRoot().setVisible(true);
             }
@@ -282,7 +287,8 @@ return suma;
             while(rs.next())
             {
                 model.addRow(new Object[]{rs.getString(2),rs.getString(4),rs.getString(5)});
-                jLabel6.setText(String.valueOf(suma1()+suma2()));
+                jLabel6.setText(String.valueOf(suma1()/60));
+                jLabel7.setText(String.valueOf(suma2()/60));
             }
             rs.close();
         } catch (SQLException e) {
@@ -344,6 +350,7 @@ return suma;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

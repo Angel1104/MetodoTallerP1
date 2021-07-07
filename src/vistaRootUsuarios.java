@@ -133,7 +133,7 @@ ResultSet rs;
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         String nombreOID = jTextField1.getText();
-        ResultSet rs = seleccionar.getDatos("select *from usuarios where Nombres like '%"+nombreOID+"%' or ID like '%"+nombreOID+"%'");
+        ResultSet rs = seleccionar.getDatos("select *from usuarios where nombreUser like '%"+nombreOID+"%' or idUser like '%"+nombreOID+"%'");
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
         
@@ -163,7 +163,7 @@ ResultSet rs;
             int a = JOptionPane.showConfirmDialog(null, "Quiere cambiar el estado de docente a "+nombres+"", "selecionar", JOptionPane.YES_NO_OPTION);
             if (a==0)
             {
-                InsertarDescargarEliminar.setData("update usuarios set docente='"+docente+"' where Nombres='"+nombres+"'", "Estado de docente cambiado exitosamente");
+                InsertarDescargarEliminar.setData("update usuarios set estadoUser='"+docente+"' where nombreUser='"+nombres+"'", "Estado de docente cambiado exitosamente");
                 setVisible(false);
                 new vistaRootUsuarios().setVisible(true);
             }

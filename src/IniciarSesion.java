@@ -57,8 +57,8 @@ ResultSet rs;
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("E-MAIL");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 360, 80, -1));
+        jLabel1.setText("cod SIS");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 350, 80, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -125,28 +125,28 @@ ResultSet rs;
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         int check = 0 ;
-        String mail =jTextField1.getText();
+        String sis =jTextField1.getText();
         String contrasena =jPasswordField1.getText();
         
         
-        if ( mail.equals("")|| contrasena.equals("")) {
+        if ( sis.equals("")|| contrasena.equals("")) {
             JOptionPane.showMessageDialog(null, "DEBE LLENAR TODOS LOS CAMPOS");
             check = 1;
         }
-        else if (mail.equals("root")&& contrasena.equals("root"))
+        else if (sis.equals("root")&& contrasena.equals("root"))
         {
-           InsertarDescargarEliminar.setData("update inicio set IDdocente= '0' , correo='"+mail+"' , contra = '"+contrasena+"', sesion = 'SI' where ID ='1'", "Sesion Iniciada");
+           InsertarDescargarEliminar.setData("update usuarioActivo set idUsuario='0', estadoUA = 'activo' where idUserA= '1'", "Sesion Iniciada");
            check=1;
            setVisible(false);
            new vistaRoot().setVisible(true);
         }
         else  {
-            String Query = " select * from usuarios where mail='"+mail+"' and Contrasena = '"+contrasena+"' ";
+            String Query = " select * from usuarios where codSIS='"+sis+"' and contrasena = '"+contrasena+"' and estadoUser = 'true'";
             ResultSet rs = seleccionar.getDatos(Query);
             try {
                 if (rs.next())
                 { 
-                    InsertarDescargarEliminar.setData("update inicio set IDdocente= '"+rs.getString(1)+"' , correo='"+mail+"' , contra = '"+contrasena+"', sesion = 'SI' where ID ='1'", "Sesion Iniciada");
+                    InsertarDescargarEliminar.setData("update usuarioActivo set idUsuario='"+rs.getString(1)+"', estadoUA = 'activo' where idUserA= '1'", "Sesion Iniciada");
                     check=1;
                     setVisible(false);
                     new vistaDocente().setVisible(true);
@@ -156,7 +156,7 @@ ResultSet rs;
             }
         }
         if(check ==0){
-            JOptionPane.showMessageDialog(null, "email o password incorrectos");
+            JOptionPane.showMessageDialog(null, "sis o password incorrectos");
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -183,7 +183,7 @@ ResultSet rs;
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
         setVisible(false);
-        new vistaUsuario().setVisible(true);
+        new Home().setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     /**

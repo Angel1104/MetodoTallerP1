@@ -5,6 +5,7 @@
  */
 import java.sql.*;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import proyecto.*;
@@ -25,23 +26,43 @@ ResultSet rs;
         con = ProveedorConecciones.getConexion();
         this.setLocationRelativeTo(null);
     }
-    int id = 0;
-    String Query;
-    String descripcionlabo;
-    String descripcionhorario;
-    String horaIngreso;
-    String horaSalida;
     Object laboratorio;
     private Object laboSeleccionado(){
-       laboratorio = jComboBox1.getSelectedItem(); 
-
-       if(laboratorio.equals("laboratorio1")){laboratorio = 1;}
-       if(laboratorio.equals("laboratorio2")){laboratorio = 2;}
-       if(laboratorio.equals("laboratorio3")){laboratorio = 3;}
-       if(laboratorio.equals("laboratorio4")){laboratorio = 4;}
-       if(laboratorio.equals("laboratorio5")){laboratorio = 5;}
+       laboratorio = jComboBox1.getSelectedIndex()+1; 
        return laboratorio;
     
+    }
+    int semana;
+    private int semana(){
+       java.util.Date date = jDateChooser1.getDate();
+
+        Calendar calendario = Calendar.getInstance(); 
+        calendario.setTime(date);
+        semana = calendario.get(Calendar.WEEK_OF_MONTH);
+        
+        return semana;
+        
+    }
+    int mes;
+    private int mes(){
+        java.util.Date date = jDateChooser1.getDate();
+
+        Calendar calendario = Calendar.getInstance(); 
+        calendario.setTime(date);
+        mes = calendario.get(Calendar.MONTH);
+        
+        return mes;
+    }
+    
+    int diaDeSemana;
+    private int diaDeSemana (){
+       java.util.Date date = jDateChooser1.getDate();
+
+        Calendar calendario = Calendar.getInstance(); 
+        calendario.setTime(date);
+        diaDeSemana = calendario.get(Calendar.DAY_OF_WEEK) -1;
+        
+        return diaDeSemana; 
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -63,16 +84,16 @@ ResultSet rs;
         jComboBox1 = new javax.swing.JComboBox<>();
         jButton3 = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
+        jComboBox3 = new javax.swing.JComboBox<>();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jLabel16 = new javax.swing.JLabel();
+        jComboBox4 = new javax.swing.JComboBox<>();
         jTextField4 = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -92,7 +113,7 @@ ResultSet rs;
 
             },
             new String [] {
-                "ID", "ID Docente", "Ambiente", "Fecha", "Hora Ingreso", "Hora Salida", "Estado", "Descripcionhora"
+                "ID", "dia", "mes", "semana", "Hora Ingreso", "Hora Salida", "id docente", "laboratorio", "estado", "descripcion", "formulario id"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -134,7 +155,7 @@ ResultSet rs;
         });
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1320, 20, 59, 63));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "laboratorio1", "laboratorio2", "laboratorio3", "laboratorio4", "laboratorio5" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "laboratorio1", "laboratorio2", "laboratorio3", "laboratorio4", "laboratorio5", "auditorio" }));
         getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, 180, -1));
 
         jButton3.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
@@ -150,12 +171,18 @@ ResultSet rs;
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Estado");
         getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 200, -1, -1));
+
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "6:45", "8:15", "9:45", "11:15", "12:45", "14:15", "15:45", "17:15", "18:45", "20:15", " ", " " }));
+        getContentPane().add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 120, 150, -1));
         getContentPane().add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 230, 160, -1));
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
         jLabel16.setText("Ambiente");
         getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 280, -1, -1));
+
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "6:45", "8:15", "9:45", "11:15", "12:45", "14:15", "15:45", "17:15", "18:45", "20:15", " ", " " }));
+        getContentPane().add(jComboBox4, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 160, 150, -1));
         getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 240, 120, -1));
 
         jTextField5.addActionListener(new java.awt.event.ActionListener() {
@@ -185,22 +212,6 @@ ResultSet rs;
         jLabel10.setText("horasalida");
         getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 160, -1, -1));
 
-        jTextField2.setText("00:00:00");
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 120, 120, -1));
-
-        jTextField3.setText("00:00:00");
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 160, 120, -1));
-
         jButton4.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
         jButton4.setText("actualizar");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -227,10 +238,6 @@ ResultSet rs;
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
-
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         // TODO add your handling code here:
         //ResulSet rs= seleccionar.getDatos("select *from ")
@@ -238,10 +245,11 @@ ResultSet rs;
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        laboratorio = laboSeleccionado();
-        ResultSet rs = seleccionar.getDatos("SELECT ambientes.ID,IDdocentea,IDambiente,fecha,horaIngreso,horaSalida,estado,descripcionhora\n" +
-                                            "FROM ambientes\n" +
-                                            "WHERE ambientes.IDambiente = '"+laboratorio+"'");
+        laboSeleccionado();
+        ResultSet rs = seleccionar.getDatos("SELECT reservaperiodo.idRP, DIA,mes, semanaRP,  HORA, HORAFIN,docenteRP, laboRP, estadoRP, descripcionRP,  formularioRP\n"
+                + "FROM reservaperiodo\n"
+                + "INNER JOIN dia ON diaRP = idDIa INNER JOIN mes ON mesRP = idmes INNER JOIN hora ON horaIniRP = idHora INNER JOIN horafin ON horaFinRP = idHoraFin\n"
+                + "WHERE reservaperiodo.laboRP = '" + laboratorio + "'");
                                             
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
@@ -249,7 +257,7 @@ ResultSet rs;
         try {
             while(rs.next())
             {
-                model.addRow(new Object[]{rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8)});
+                model.addRow(new Object[]{rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11)});
 
             }
             rs.close();
@@ -266,26 +274,22 @@ ResultSet rs;
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
        Object laboratorio2;
-       laboratorio2 = jComboBox2.getSelectedItem(); 
-       if(laboratorio2.equals("laboratorio1")){laboratorio2 = 1;}
-       if(laboratorio2.equals("laboratorio2")){laboratorio2 = 2;}
-       if(laboratorio2.equals("laboratorio3")){laboratorio2 = 3;}
-       if(laboratorio2.equals("laboratorio4")){laboratorio2 = 4;}
-       if(laboratorio2.equals("laboratorio5")){laboratorio2 = 5;}
+       laboratorio2 = jComboBox2.getSelectedIndex()+1; 
         
         String ID = jTextField1.getText();
         String Estado = jTextField5.getText();
-        horaIngreso=jTextField2.getText();
-        horaSalida=jTextField3.getText();
-        descripcionhorario=jTextArea2.getText();
+        int horaIngreso=jComboBox3.getSelectedIndex()+1;
+        int horaSalida=jComboBox4.getSelectedIndex()+1;
+        String descripcionhorario=jTextArea2.getText();
         String IDdocente = jTextField4.getText();
-        java.util.Date fecha = jDateChooser1.getDate(); 
-        SimpleDateFormat  formato = new SimpleDateFormat("yyyy-MM-d");     
-        String Fecha = formato.format(fecha);
+        
+        diaDeSemana();
+        mes();
+        semana();
         
         try {
-         InsertarDescargarEliminar.setData("update ambientes set IDdocentea = '"+IDdocente+"', IDambiente = '"+laboratorio2+"', fecha = '"+Fecha+"', horaIngreso = '"+horaIngreso+"', horaSalida = '"+horaSalida+"', estado = '"+Estado+"', descripcionhora= '"+descripcionhorario+"'\n"+
-                                           "where ambientes.ID ='"+ID+"'", "horario actualizado exitosamente");
+         InsertarDescargarEliminar.setData("update reservaperiodo set diaRP = '"+diaDeSemana+"', mesRP = '"+mes+"', semanaRP = '"+semana+"', horaIniRP = '"+horaIngreso+"', horaFinRP = '"+horaSalida+"', docenteRP = '"+IDdocente+"', laboRP= '"+laboratorio2+"', estadoRP= '"+Estado+"', descripcionRP= '"+descripcionhorario+"'\n"+
+                                           "where idRP ='"+ID+"'", "horario actualizado exitosamente");
                     
          
                 
@@ -299,23 +303,18 @@ ResultSet rs;
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField5ActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
-
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         String ID = jTextField1.getText();
-        ResultSet rs = seleccionar.getDatos("SELECT * FROM ambientes where ambientes.ID = '"+ID+"'");
+        ResultSet rs = seleccionar.getDatos("SELECT * FROM reservaperiodo where idRP = '"+ID+"'");
         
         try {
             if(rs.next()){
-                jTextField2.setText(rs.getString(5));
-                jTextField3.setText(rs.getString(6));
-                jTextField4.setText(rs.getString(2));
-                jTextField5.setText(rs.getString(7));
-                jDateChooser1.setDate(rs.getDate(4));
-                jTextArea2.setText(rs.getString(8));
+                jComboBox3.setSelectedIndex(rs.getInt(5)-1);
+                jComboBox4.setSelectedIndex(rs.getInt(6)-1);
+                jTextField4.setText(rs.getString(7));
+                jTextField5.setText(rs.getString(9));
+                jTextArea2.setText(rs.getString(10));
             }
         } catch (Exception e) {
         }
@@ -371,6 +370,8 @@ ResultSet rs;
     private javax.swing.JButton jButton5;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JComboBox<String> jComboBox4;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -386,8 +387,6 @@ ResultSet rs;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     // End of variables declaration//GEN-END:variables

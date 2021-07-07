@@ -37,9 +37,6 @@ ResultSet rs;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -54,34 +51,20 @@ ResultSet rs;
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("BUSCAR USUARIO POR NOMBRE O ID");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 40, 320, 26));
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 280, 30));
-
-        jButton5.setText("BUSCAR");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 70, 120, 30));
-
         jButton6.setText("VACIAR");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 70, 120, 30));
+        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 70, 120, 30));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID_form", "ID_docente", "Nombre", "Apellido", "Ci", "Celular", "Fecha", "HoraIngreso", "HoraSalida", "Carta", "Aceptacion"
+                "idFormAudi", "nombreForm", "apellidoForm", "celular", "cartai", "ci", "idDocente", "estadoForm"
             }
         ));
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -91,7 +74,7 @@ ResultSet rs;
         });
         jScrollPane1.setViewportView(jTable1);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 120, 1212, 395));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, 1280, 395));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/unknown-01.png"))); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -115,14 +98,14 @@ ResultSet rs;
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         // TODO add your handling code here:
-        ResultSet rs = seleccionar.getDatos("select *from formulario");
+        ResultSet rs = seleccionar.getDatos("select *from formularioauditorioyredes");
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
         
         try {
             while(rs.next())
             {
-                 model.addRow(new Object[]{rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11)});
+                 model.addRow(new Object[]{rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8)});
             }
             rs.close();
         } catch (Exception e) {
@@ -130,40 +113,24 @@ ResultSet rs;
         }
     }//GEN-LAST:event_formComponentShown
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-        String nombreOID = jTextField1.getText();
-        ResultSet rs = seleccionar.getDatos("select *from formulario where nombref like '%"+nombreOID+"%' or IDform like '%"+nombreOID+"%'");
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0);
-        
-        try {
-            while(rs.next())
-            {
-                 model.addRow(new Object[]{rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11)});
-            }
-            rs.close();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-    }//GEN-LAST:event_jButton5ActionPerformed
-
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
         int index = jTable1.getSelectedRow();
         TableModel model=jTable1.getModel();
-        String nombres=model.getValueAt(index, 2).toString();
-        String docente=model.getValueAt(index, 10).toString();
-        if(docente.equals("true"))
-            docente="false";
+        String nombres=model.getValueAt(index, 1).toString();
+        String estado=model.getValueAt(index, 7).toString();
+        String id=model.getValueAt(index, 0).toString();
+        if(estado.equals("true"))
+            estado="false";
         else
-            docente="true";
+            estado="true";
         
         try {
             int a = JOptionPane.showConfirmDialog(null, "Quiere aceptar el formulario a "+nombres+"", "selecionar", JOptionPane.YES_NO_OPTION);
             if (a==0)
             {
-                InsertarDescargarEliminar.setData("update formulario set secretaria='"+docente+"' where nombref='"+nombres+"'", "Formulario aceptado");
+                InsertarDescargarEliminar.setData("update formularioauditorioyredes set estadoForm='"+estado+"' where nombreForm='"+nombres+"'", "Formulario aceptado");
+                InsertarDescargarEliminar.setData("update reservaperiodo set estadoRP ='"+estado+"' where formularioRP='"+id+"'", "hora aceptada");
                 setVisible(false);
                 new VistaConfirmacionFormulario().setVisible(true);
             }
@@ -215,12 +182,9 @@ ResultSet rs;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

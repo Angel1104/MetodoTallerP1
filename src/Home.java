@@ -1,14 +1,9 @@
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-import proyecto.ProveedorConecciones;
-import proyecto.seleccionar;
+import proyecto.*;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -18,24 +13,31 @@ import proyecto.seleccionar;
 
 /**
  *
- * @author DESTOCK
+ * @author flore
  */
-public class informacion extends javax.swing.JFrame {
+public class Home extends javax.swing.JFrame {
 Connection con;
 Statement st;
 ResultSet rs;
     /**
-     * Creates new form informacion
+     * Creates new form vista1
      */
-    public informacion() {
+    public Home() {
         initComponents();
-        
         con = ProveedorConecciones.getConexion();
         this.setLocationRelativeTo(null);
+        
+    }
+    
+    Object laboratorio;
+    private Object laboSeleccionado(){
+       laboratorio = jComboBox2.getSelectedIndex()+1; 
+       return laboratorio;
+    
     }
     int semana;
     private int semana(){
-       Date date = jCalendar1.getDate();
+       Date date = jCalendar2.getDate();
 
         Calendar calendario = Calendar.getInstance(); 
         calendario.setTime(date);
@@ -46,7 +48,7 @@ ResultSet rs;
     }
     int mes;
     private int mes(){
-        Date date = jCalendar1.getDate();
+        Date date = jCalendar2.getDate();
 
         Calendar calendario = Calendar.getInstance(); 
         calendario.setTime(date);
@@ -57,7 +59,7 @@ ResultSet rs;
     
     int diaDeSemana;
     private int diaDeSemana (){
-       Date date = jCalendar1.getDate();
+       Date date = jCalendar2.getDate();
 
         Calendar calendario = Calendar.getInstance(); 
         calendario.setTime(date);
@@ -127,8 +129,6 @@ ResultSet rs;
         jButton79.setText("");
         jButton86.setText("");
     }
-    
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -138,7 +138,12 @@ ResultSet rs;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        salir = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        busar = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jButton30 = new javax.swing.JButton();
         jButton31 = new javax.swing.JButton();
@@ -217,29 +222,56 @@ ResultSet rs;
         jButton79 = new javax.swing.JButton();
         jButton80 = new javax.swing.JButton();
         jButton82 = new javax.swing.JButton();
-        volver = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox<>();
+        jCalendar2 = new com.toedter.calendar.JCalendar();
+        auditorio = new javax.swing.JButton();
+        salir = new javax.swing.JButton();
+        jDateChooser3 = new com.toedter.calendar.JDateChooser();
+        jDateChooser4 = new com.toedter.calendar.JDateChooser();
+        sesion = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        actualizar = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        UMSS = new javax.swing.JLabel();
+        imagen = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jCalendar1 = new com.toedter.calendar.JCalendar();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(51, 153, 255));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 710, 440, 120));
 
-        salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/unknown-01.png"))); // NOI18N
-        salir.addActionListener(new java.awt.event.ActionListener() {
+        jLabel6.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Sistema abierto desde:");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 40, 160, -1));
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("hasta:");
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 40, 110, -1));
+
+        busar.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
+        busar.setText("BUSCAR");
+        busar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                salirActionPerformed(evt);
+                busarActionPerformed(evt);
             }
         });
-        getContentPane().add(salir, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 20, -1, -1));
+        getContentPane().add(busar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 320, 60));
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "semana 1", "semana 2", "semana 3", "semana 4", "semana 5" }));
+        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 140, 40));
+
+        jButton1.setText("buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 300, 110, 50));
 
         jPanel1.setBackground(new java.awt.Color(0, 255, 255));
 
@@ -775,99 +807,107 @@ ResultSet rs;
                 .addGap(26, 26, 26))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 480, -1, -1));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 130, -1, -1));
 
-        volver.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
-        volver.setText("Volver");
-        volver.addActionListener(new java.awt.event.ActionListener() {
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "laboratorio1", "laboratorio2", "laboratorio3", "laboratorio4", "laboratorio5", "auditorio" }));
+        getContentPane().add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 320, 50));
+        getContentPane().add(jCalendar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 450, -1, -1));
+
+        auditorio.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        auditorio.setText("Reserva Auditorio");
+        auditorio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                volverActionPerformed(evt);
+                auditorioActionPerformed(evt);
             }
         });
-        getContentPane().add(volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 410, -1, -1));
+        getContentPane().add(auditorio, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 390, 170, 40));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/person-01.png"))); // NOI18N
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 220, 180, 150));
+        salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/unknown-01.png"))); // NOI18N
+        salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salirActionPerformed(evt);
+            }
+        });
+        getContentPane().add(salir, new org.netbeans.lib.awtextra.AbsoluteConstraints(1270, 30, -1, -1));
+        getContentPane().add(jDateChooser3, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 40, -1, -1));
+        getContentPane().add(jDateChooser4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 40, -1, -1));
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 3, 36)); // NOI18N
+        sesion.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        sesion.setText("iniciar sesion");
+        sesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sesionActionPerformed(evt);
+            }
+        });
+        getContentPane().add(sesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 390, 170, 40));
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 2, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("INFORMACION");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 70, 360, -1));
+        jLabel5.setText("Nombre del labo");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 900, 210, 20));
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Cod SIS:");
-        jLabel6.setToolTipText("");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 310, -1, -1));
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/unnamed.jpg"))); // NOI18N
+        jLabel4.setText("jLabel4");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, 710, 150, 120));
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Nombre: ");
-        jLabel7.setToolTipText("");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 250, -1, -1));
+        jLabel2.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("HORARIO LABORATORIOS");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 90, 400, 40));
 
-        actualizar.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
-        actualizar.setText("Actualizar");
-        actualizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                actualizarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 420, -1, -1));
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fonds-01.png"))); // NOI18N
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, 1320, 840));
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 250, 180, -1));
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 310, 180, -1));
+        UMSS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/umss-01.png"))); // NOI18N
+        UMSS.setText("jLabel1");
+        getContentPane().add(UMSS, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 380, 870));
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("HORARIOS ");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 420, 360, -1));
+        imagen.setBackground(new java.awt.Color(51, 153, 255));
+        imagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/logo-01.png"))); // NOI18N
+        imagen.setText("jLabel2");
+        getContentPane().add(imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 420, 900));
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/FONFO FONFO-01.png"))); // NOI18N
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 180, -1, -1));
+        jLabel1.setBackground(new java.awt.Color(51, 153, 255));
+        jLabel1.setForeground(new java.awt.Color(102, 153, 255));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/208453-P05HEP-165-01.png"))); // NOI18N
+        jLabel1.setMaximumSize(new java.awt.Dimension(900, 900));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -190, 1370, 1330));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/amina 1-01-01.jpg"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 1010));
-        getContentPane().add(jCalendar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 180, -1, -1));
+        jLabel7.setText("jLabel7");
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 120, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarActionPerformed
+    private void busarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_busarActionPerformed
         // TODO add your handling code here:
-        ResultSet rs3 = seleccionar.getDatos("SELECT * FROM usuarioactivo");
-        try {
-             if(rs3.next()){
-                semana();
+        semana();
         mes();
         diaDeSemana();
         vaciar();
+        laboSeleccionado();
         //hora1
-        ResultSet rs4 =seleccionar.getDatos("SELECT * FROM usuarios WHERE idUser='"+rs3.getString(3)+"'");
-                 try {
-                     while(rs4.next()){
-                         jTextField1.setText(rs4.getString(2));
-                         jTextField2.setText(rs4.getString(4));
-                     }rs4.close();
-                 } catch (Exception e) {
-                 }
+        ResultSet rs3 = seleccionar.getDatos("SELECT laboratorio.descripcionLabo, nombreLabo FROM laboratorio WHERE idLabo='"+laboratorio+"'");
+        try {
+            while (rs3.next()) {
+               jTextField1.setText(rs3.getString(1));
+               jLabel5.setText(rs3.getString(2));
+            }
+            rs3.close();
+        } catch (Exception e) {
+        }
         
         for(int i = 1 ; i <= 10; i = i + 1)
         {
-            ResultSet rs0 = seleccionar.getDatos("SELECT reservaasignada.laboRA, diaRA\n" +
+            ResultSet rs0 = seleccionar.getDatos("SELECT reservaasignada.docente, diaRA\n" +
                                         "FROM reservaasignada\n" +
-                                        "WHERE  docente='"+rs3.getString(3)+"' AND( horaIngresoRA='"+i+"' or horaFinRA='"+i+"')");
+                                        "WHERE  laboRA='"+laboratorio+"' AND( horaIngresoRA='"+i+"' or horaFinRA='"+i+"')");
             try {
                 while(rs0.next())    
                 {
-                    ResultSet rs1 = seleccionar.getDatos("SELECT laboratorio.nombreLabo\n" +
-                                        "FROM laboratorio\n" +
-                                        "WHERE idLabo='"+rs0.getString(1)+"' ");
+                    ResultSet rs1 = seleccionar.getDatos("SELECT usuarios.nombreUser\n" +
+                                        "FROM usuarios\n" +
+                                        "WHERE idUser='"+rs0.getString(1)+"' ");
                     while(rs1.next()){
                         //lunes
                         if(rs0.getString(2).equals("1")){
@@ -1018,15 +1058,15 @@ ResultSet rs;
         }
         for(int i = 1 ; i <= 10; i = i + 1) 
         {
-            rs = seleccionar.getDatos("SELECT reservaperiodo.laboRP, diaRP\n" +
+            rs = seleccionar.getDatos("SELECT reservaperiodo.docenteRP, diaRP\n" +
                                         "FROM reservaperiodo\n" +
-                                        "WHERE estadoRP='true' AND docenteRP='"+rs3.getString(3)+"' AND( horaIniRP='"+i+"' or horaFinRP='"+i+"') AND mesRP= '"+mes+"' AND semanaRP='"+semana+"'");
+                                        "WHERE estadoRP='reservado' AND laboRP='"+laboratorio+"' AND( horaIniRP='"+i+"' or horaFinRP='"+i+"') AND mesRP= '"+mes+"' AND semanaRP='"+semana+"'");
             try {
                 while(rs.next())    
                 {
-                    ResultSet rs1 = seleccionar.getDatos("SELECT laboratorio.nombreLabo\n" +
-                                        "FROM laboratorio\n" +
-                                        "WHERE idLabo='"+rs.getString(1)+"' ");
+                    ResultSet rs1 = seleccionar.getDatos("SELECT usuarios.nombreUser\n" +
+                                        "FROM usuarios\n" +
+                                        "WHERE idUser='"+rs.getString(1)+"' ");
                     while(rs1.next()){
                         //lunes
                         if(rs.getString(2).equals("1")){
@@ -1176,33 +1216,38 @@ ResultSet rs;
             }
         }
         ResultSet rsp = seleccionar.getDatos("SELECT * FROM sistema");
-             
-            }rs3.close();
-            
-        
-        } catch (SQLException e){
-            JOptionPane.showMessageDialog(null, e);
+        try {
+            while(rsp.next()){
+                if(rsp.getString(2).equals("ON")){
+                jDateChooser3.setDate(rsp.getDate(3));
+                jDateChooser4.setDate(rsp.getDate(4));
+                }
+            }rsp.close();
+        } catch (Exception e) {
         }
-        
-    }//GEN-LAST:event_actualizarActionPerformed
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_busarActionPerformed
 
     private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
-        // TODO add your handling code here:
         int a = JOptionPane.showConfirmDialog(null, "Quiere cerrar la aplicacion?","Select",JOptionPane.YES_NO_OPTION);
         if (a == 0) {
             System.exit(0);
         }
     }//GEN-LAST:event_salirActionPerformed
 
-    private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
+    private void sesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sesionActionPerformed
+        // TODO add your handling code here:
+        int a = JOptionPane.showConfirmDialog(null, "Quiere iniciar sesion ?","Select",JOptionPane.YES_NO_OPTION);
+        if (a == 0) {
+            setVisible(false);
+             new IniciarSesion().setVisible(true);
+        }
+    }//GEN-LAST:event_sesionActionPerformed
+
+    private void auditorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_auditorioActionPerformed
         // TODO add your handling code here:
         setVisible(false);
-        new vistaDocente().setVisible(true);
-    }//GEN-LAST:event_volverActionPerformed
+        new VistaAuditori().setVisible(true);
+    }//GEN-LAST:event_auditorioActionPerformed
 
     private void jButton35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton35ActionPerformed
         // TODO add your handling code here:
@@ -1232,10 +1277,6 @@ ResultSet rs;
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton58ActionPerformed
 
-    private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton16ActionPerformed
-
     private void jButton66ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton66ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton66ActionPerformed
@@ -1256,6 +1297,338 @@ ResultSet rs;
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton76ActionPerformed
 
+    private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton16ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        int semana = jComboBox1.getSelectedIndex()+1;
+        mes();
+        diaDeSemana();
+        vaciar();
+        laboSeleccionado();
+        //hora1
+        for(int i = 1 ; i <= 10; i = i + 1)
+        {
+            ResultSet rs0 = seleccionar.getDatos("SELECT reservaasignada.docente, diaRA\n" +
+                                        "FROM reservaasignada\n" +
+                                        "WHERE laboRA='"+laboratorio+"' AND( horaIngresoRA='"+i+"' or horaFinRA='"+i+"')");
+            try {
+                while(rs0.next())    
+                {
+                    ResultSet rs1 = seleccionar.getDatos("SELECT usuarios.nombreUser\n" +
+                                        "FROM usuarios\n" +
+                                        "WHERE idUser='"+rs0.getString(1)+"' ");
+                    while(rs1.next()){
+                        //lunes
+                        if(rs0.getString(2).equals("1")){
+                            if(i==1){
+                                jButton16.setText(rs1.getString(1));
+                            }if(i==2){
+                                jButton24.setText(rs1.getString(1));
+                            }if(i==3){
+                                jButton33.setText(rs1.getString(1));
+                            }if(i==4){
+                                jButton41.setText(rs1.getString(1));
+                            }if(i==5){
+                                jButton48.setText(rs1.getString(1));
+                            }if(i==6){
+                                jButton56.setText(rs1.getString(1));
+                            }if(i==7){
+                                jButton64.setText(rs1.getString(1));
+                            }if(i==8){
+                                jButton73.setText(rs1.getString(1));
+                            }if(i==9){
+                                jButton82.setText(rs1.getString(1));
+                            }if(i==10){
+                                jButton89.setText(rs1.getString(1));
+                            }
+                        }
+                        //martes
+                            if(rs0.getString(2).equals("2")){
+                            if(i==1){
+                                jButton17.setText(rs1.getString(1));
+                            }if(i==2){
+                                jButton25.setText(rs1.getString(1));
+                            }if(i==3){
+                                jButton44.setText(rs1.getString(1));
+                            }if(i==4){
+                                jButton42.setText(rs1.getString(1));
+                            }if(i==5){
+                                jButton49.setText(rs1.getString(1));
+                            }if(i==6){
+                                jButton57.setText(rs1.getString(1));
+                            }if(i==7){
+                                jButton65.setText(rs1.getString(1));
+                            }if(i==8){
+                                jButton74.setText(rs1.getString(1));
+                            }if(i==9){
+                                jButton83.setText(rs1.getString(1));
+                            }if(i==10){
+                                jButton75.setText(rs1.getString(1));
+                            }
+                            }
+                        //miercoles
+                            if(rs0.getString(2).equals("3")){
+                            if(i==1){
+                                jButton11.setText(rs1.getString(1));
+                            }if(i==2){
+                                jButton18.setText(rs1.getString(1));
+                            }if(i==3){
+                                jButton26.setText(rs1.getString(1));
+                            }if(i==4){
+                                jButton35.setText(rs1.getString(1));
+                            }if(i==5){
+                                jButton43.setText(rs1.getString(1));
+                            }if(i==6){
+                                jButton50.setText(rs1.getString(1));
+                            }if(i==7){
+                                jButton58.setText(rs1.getString(1));
+                            }if(i==8){
+                                jButton66.setText(rs1.getString(1));
+                            }if(i==9){
+                                jButton76.setText(rs1.getString(1));
+                            }if(i==10){
+                                jButton84.setText(rs1.getString(1));
+                            }}
+                          //jueves
+                            if(rs0.getString(2).equals("4")){
+                            if(i==1){
+                                jButton14.setText(rs1.getString(1));
+                            }if(i==2){
+                                jButton22.setText(rs1.getString(1));
+                            }if(i==3){
+                                jButton31.setText(rs1.getString(1));
+                            }if(i==4){
+                                jButton39.setText(rs1.getString(1));
+                            }if(i==5){
+                                jButton46.setText(rs1.getString(1));
+                            }if(i==6){
+                                jButton54.setText(rs1.getString(1));
+                            }if(i==7){
+                                jButton62.setText(rs1.getString(1));
+                            }if(i==8){
+                                jButton71.setText(rs1.getString(1));
+                            }if(i==9){
+                                jButton80.setText(rs1.getString(1));
+                            }if(i==10){
+                                jButton87.setText(rs1.getString(1));
+                            }}
+                        //viernes
+                            if(rs0.getString(2).equals("5")){
+                            if(i==1){
+                                jButton6.setText(rs1.getString(1));
+                            }if(i==2){
+                                jButton20.setText(rs1.getString(1));
+                            }if(i==3){
+                                jButton28.setText(rs1.getString(1));
+                            }if(i==4){
+                                jButton36.setText(rs1.getString(1));
+                            }if(i==5){
+                                jButton44.setText(rs1.getString(1));
+                            }if(i==6){
+                                jButton52.setText(rs1.getString(1));
+                            }if(i==7){
+                                jButton60.setText(rs1.getString(1));
+                            }if(i==8){
+                                jButton68.setText(rs1.getString(1));
+                            }if(i==9){
+                                jButton78.setText(rs1.getString(1));
+                            }if(i==10){
+                                jButton85.setText(rs1.getString(1));
+                            }}
+                        //sabado
+                            if(rs0.getString(2).equals("6")){
+                            if(i==1){
+                                jButton13.setText(rs1.getString(1));
+                            }if(i==2){
+                                jButton21.setText(rs1.getString(1));
+                            }if(i==3){
+                                jButton30.setText(rs1.getString(1));
+                            }if(i==4){
+                                jButton38.setText(rs1.getString(1));
+                            }if(i==5){
+                                jButton45.setText(rs1.getString(1));
+                            }if(i==6){
+                                jButton53.setText(rs1.getString(1));
+                            }if(i==7){
+                                jButton61.setText(rs1.getString(1));
+                            }if(i==8){
+                                jButton70.setText(rs1.getString(1));
+                            }if(i==9){
+                                jButton79.setText(rs1.getString(1));
+                            }if(i==10){
+                                jButton86.setText(rs1.getString(1));
+                            }}
+                    }rs1.close();
+                }
+                rs0.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+        for(int i = 1 ; i <= 10; i = i + 1)
+        {
+            rs = seleccionar.getDatos("SELECT reservaperiodo.docenteRP, diaRP\n" +
+                                        "FROM reservaperiodo\n" +
+                                        "WHERE laboRP='"+laboratorio+"' AND( horaIniRP='"+i+"' or horaFinRP='"+i+"') AND mesRP= '"+mes+"' AND semanaRP='"+semana+"'");
+            try {
+                while(rs.next())    
+                {
+                    ResultSet rs1 = seleccionar.getDatos("SELECT usuarios.nombreUser\n" +
+                                        "FROM usuarios\n" +
+                                        "WHERE idUser='"+rs.getString(1)+"' ");
+                    while(rs1.next()){
+                        //lunes
+                        if(rs.getString(2).equals("1")){
+                            if(i==1){
+                                jButton16.setText(rs1.getString(1));
+                            }if(i==2){
+                                jButton24.setText(rs1.getString(1));
+                            }if(i==3){
+                                jButton33.setText(rs1.getString(1));
+                            }if(i==4){
+                                jButton41.setText(rs1.getString(1));
+                            }if(i==5){
+                                jButton48.setText(rs1.getString(1));
+                            }if(i==6){
+                                jButton56.setText(rs1.getString(1));
+                            }if(i==7){
+                                jButton64.setText(rs1.getString(1));
+                            }if(i==8){
+                                jButton73.setText(rs1.getString(1));
+                            }if(i==9){
+                                jButton82.setText(rs1.getString(1));
+                            }if(i==10){
+                                jButton89.setText(rs1.getString(1));
+                            }
+                        }
+                        //martes
+                            if(rs.getString(2).equals("2")){
+                            if(i==1){
+                                jButton17.setText(rs1.getString(1));
+                            }if(i==2){
+                                jButton25.setText(rs1.getString(1));
+                            }if(i==3){
+                                jButton44.setText(rs1.getString(1));
+                            }if(i==4){
+                                jButton42.setText(rs1.getString(1));
+                            }if(i==5){
+                                jButton49.setText(rs1.getString(1));
+                            }if(i==6){
+                                jButton57.setText(rs1.getString(1));
+                            }if(i==7){
+                                jButton65.setText(rs1.getString(1));
+                            }if(i==8){
+                                jButton74.setText(rs1.getString(1));
+                            }if(i==9){
+                                jButton83.setText(rs1.getString(1));
+                            }if(i==10){
+                                jButton75.setText(rs1.getString(1));
+                            }
+                            }
+                        //miercoles
+                            if(rs.getString(2).equals("3")){
+                            if(i==1){
+                                jButton11.setText(rs1.getString(1));
+                            }if(i==2){
+                                jButton18.setText(rs1.getString(1));
+                            }if(i==3){
+                                jButton26.setText(rs1.getString(1));
+                            }if(i==4){
+                                jButton35.setText(rs1.getString(1));
+                            }if(i==5){
+                                jButton43.setText(rs1.getString(1));
+                            }if(i==6){
+                                jButton50.setText(rs1.getString(1));
+                            }if(i==7){
+                                jButton58.setText(rs1.getString(1));
+                            }if(i==8){
+                                jButton66.setText(rs1.getString(1));
+                            }if(i==9){
+                                jButton76.setText(rs1.getString(1));
+                            }if(i==10){
+                                jButton84.setText(rs1.getString(1));
+                            }}
+                          //jueves
+                            if(rs.getString(2).equals("4")){
+                            if(i==1){
+                                jButton14.setText(rs1.getString(1));
+                            }if(i==2){
+                                jButton22.setText(rs1.getString(1));
+                            }if(i==3){
+                                jButton31.setText(rs1.getString(1));
+                            }if(i==4){
+                                jButton39.setText(rs1.getString(1));
+                            }if(i==5){
+                                jButton46.setText(rs1.getString(1));
+                            }if(i==6){
+                                jButton54.setText(rs1.getString(1));
+                            }if(i==7){
+                                jButton62.setText(rs1.getString(1));
+                            }if(i==8){
+                                jButton71.setText(rs1.getString(1));
+                            }if(i==9){
+                                jButton80.setText(rs1.getString(1));
+                            }if(i==10){
+                                jButton87.setText(rs1.getString(1));
+                            }}
+                        //viernes
+                            if(rs.getString(2).equals("5")){
+                            if(i==1){
+                                jButton6.setText(rs1.getString(1));
+                            }if(i==2){
+                                jButton20.setText(rs1.getString(1));
+                            }if(i==3){
+                                jButton28.setText(rs1.getString(1));
+                            }if(i==4){
+                                jButton36.setText(rs1.getString(1));
+                            }if(i==5){
+                                jButton44.setText(rs1.getString(1));
+                            }if(i==6){
+                                jButton52.setText(rs1.getString(1));
+                            }if(i==7){
+                                jButton60.setText(rs1.getString(1));
+                            }if(i==8){
+                                jButton68.setText(rs1.getString(1));
+                            }if(i==9){
+                                jButton78.setText(rs1.getString(1));
+                            }if(i==10){
+                                jButton85.setText(rs1.getString(1));
+                            }}
+                        //sabado
+                            if(rs.getString(2).equals("6")){
+                            if(i==1){
+                                jButton13.setText(rs1.getString(1));
+                            }if(i==2){
+                                jButton21.setText(rs1.getString(1));
+                            }if(i==3){
+                                jButton30.setText(rs1.getString(1));
+                            }if(i==4){
+                                jButton38.setText(rs1.getString(1));
+                            }if(i==5){
+                                jButton45.setText(rs1.getString(1));
+                            }if(i==6){
+                                jButton53.setText(rs1.getString(1));
+                            }if(i==7){
+                                jButton61.setText(rs1.getString(1));
+                            }if(i==8){
+                                jButton70.setText(rs1.getString(1));
+                            }if(i==9){
+                                jButton79.setText(rs1.getString(1));
+                            }if(i==10){
+                                jButton86.setText(rs1.getString(1));
+                            }}
+                    }rs1.close();
+                }
+                rs.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1273,27 +1646,30 @@ ResultSet rs;
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(informacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(informacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(informacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(informacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new informacion().setVisible(true);
-                
+                new Home().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton actualizar;
+    private javax.swing.JLabel UMSS;
+    private javax.swing.JButton auditorio;
+    private javax.swing.JButton busar;
+    private javax.swing.JLabel imagen;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
@@ -1371,8 +1747,13 @@ ResultSet rs;
     private javax.swing.JButton jButton87;
     private javax.swing.JButton jButton89;
     private javax.swing.JButton jButton9;
-    private com.toedter.calendar.JCalendar jCalendar1;
+    private com.toedter.calendar.JCalendar jCalendar2;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
+    private com.toedter.calendar.JDateChooser jDateChooser3;
+    private com.toedter.calendar.JDateChooser jDateChooser4;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1381,8 +1762,7 @@ ResultSet rs;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JButton salir;
-    private javax.swing.JButton volver;
+    private javax.swing.JButton sesion;
     // End of variables declaration//GEN-END:variables
 }

@@ -25,7 +25,7 @@ ResultSet rs;
         con = ProveedorConecciones.getConexion();
         this.setLocationRelativeTo(null);
     }
-    String email;
+    String sis;
     String nombres;
     String apellidos;
     String contra;
@@ -159,22 +159,22 @@ ResultSet rs;
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        email=jTextField3.getText();
+        sis=jTextField3.getText();
         nombres=jTextField1.getText();
         apellidos=jTextField2.getText();
         contra=jPasswordField1.getText();
         contra2=jPasswordField2.getText();
         
-        if(email.equals("") || nombres.equals("") || apellidos.equals(""))
+        if(sis.equals("") || nombres.equals("") || apellidos.equals(""))
         {
             JOptionPane.showMessageDialog(null, "Datos obligatorios");
         }
         else if (contra.equals(contra2)){
-               ResultSet rs=seleccionar.getDatos("select *from usuarios where mail='"+email+"' and nombres='"+nombres+"' and apellidos='"+apellidos+"'");
+               ResultSet rs=seleccionar.getDatos("select *from usuarios where codSIS='"+sis+"' and nombresUser='"+nombres+"' and apellidoUser='"+apellidos+"'");
                try {
                 if(rs.next())
                 {
-                    InsertarDescargarEliminar.setData("update usuarios set contrasena='"+contra+"' where mail ='"+email+"'", "contrasena cambiada exitosamente");
+                    InsertarDescargarEliminar.setData("update usuarios set contrasena='"+contra+"' where codSIS ='"+sis+"'", "contrasena cambiada exitosamente");
                     setVisible(false);
                     new RecuperarContra().setVisible(true);
                 }

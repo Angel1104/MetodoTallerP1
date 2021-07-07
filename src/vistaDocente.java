@@ -26,24 +26,18 @@ Connection con;
         this.setLocationRelativeTo(null);
         
     }
-Object laboratorio;
-    private Object laboSeleccionado(){
-       laboratorio = jComboBox2.getSelectedItem(); 
-
-       if(laboratorio.equals("laboratorio1")){laboratorio = 1;}
-        if(laboratorio.equals("laboratorio2")){laboratorio = 2;}
-        if(laboratorio.equals("laboratorio3")){laboratorio = 3;}
-        if(laboratorio.equals("laboratorio4")){laboratorio = 4;}
-        if(laboratorio.equals("auditorio")){laboratorio = 5;}
-       return laboratorio;
+ Object laboratorio;
+    private Object laboSeleccionado() {
+        laboratorio = jComboBox2.getSelectedIndex()+ 1;
+        return laboratorio;
     }
     private void aumentarhoras(){
-    ResultSet rso = seleccionar.getDatos("SELECT * FROM laboratorio WHERE laboratorio.ID = '"+laboratorio+"' ");
+    ResultSet rso = seleccionar.getDatos("SELECT * FROM laboratorio WHERE laboratorio.idlabo = '"+laboratorio+"' ");
         try {
              if(rso.next()){
                  int HoraReloj = rso.getInt(5)+90;
-                 int HoraAcademica = rso.getInt(4)+45;
-                 InsertarDescargarEliminar.setData("update laboratorio set horaReloj ='"+HoraReloj+"',horaAcademica = '"+HoraAcademica+"' WHERE laboratorio.ID = '"+laboratorio+"'", "reserva");
+                 double HoraAcademica = rso.getInt(4)+67.5;
+                 InsertarDescargarEliminar.setData("update laboratorio set horaReloj ='"+HoraReloj+"',horaAcademica = '"+HoraAcademica+"' WHERE laboratorio.idlabo = '"+laboratorio+"'", "reserva");
             }
         } catch (Exception e) {
         }
@@ -73,7 +67,6 @@ Object laboratorio;
         jButton6 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         UMSS = new javax.swing.JLabel();
@@ -120,7 +113,7 @@ Object laboratorio;
 
             },
             new String [] {
-                "ID", "Descripcion", "Fecha", "Hora Ingreso", "Hora Salida", "Estado", "Descripcion Hora"
+                "ID", "Dia", "Semana", "mes", "Hora Ingreso", "Hora Salida", "Estado", "Descripcion Hora"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -188,15 +181,6 @@ Object laboratorio;
         });
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 420, -1, -1));
 
-        jButton3.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
-        jButton3.setText("soporte");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 210, 210, 40));
-
         jLabel6.setFont(new java.awt.Font("Tahoma", 3, 13)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("ID:");
@@ -227,18 +211,13 @@ Object laboratorio;
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Soporte a= new Soporte();
-        a.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_jButton3ActionPerformed
-
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         laboratorio = laboSeleccionado();
-        ResultSet rs = seleccionar.getDatos("SELECT laboratorio.descripcion ,ambientes.IDambiente,fecha,horaIngreso,horaSalida,estado,descripcionhora\n" +
-                                            "FROM laboratorio,ambientes\n" +
-                                            "WHERE laboratorio.ID="+laboratorio+"");
+        ResultSet rs = seleccionar.getDatos("SELECT laboratorio.descripcionLabo,nombreLabo ,reservaperiodo.idRP, DIA, semanaRP, mes, HORA, HORAFIN, descripcionRP, estadoRP\n" +
+                                            "FROM laboratorio,reservaperiodo\n" +
+                                            "INNER JOIN dia ON diaRP = idDIa INNER JOIN mes ON mesRP = idmes INNER JOIN hora ON horaIniRP = idHora INNER JOIN horafin ON horaFinRP = idHoraFin\n" +
+                                            "WHERE laboratorio.idLabo= '"+laboratorio+"' and reservaperiodo.laboRP = '"+laboratorio+"' ");
                                             
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
@@ -246,7 +225,7 @@ Object laboratorio;
         try {
             while(rs.next())
             {
-                model.addRow(new Object[]{rs.getString(2),rs.getString(1),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7)});
+                model.addRow(new Object[]{rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(10),rs.getString(9)});
                 jTextField1.setText(rs.getString(1));
                 jLabel9.setText(rs.getString(2));
             }
@@ -254,6 +233,7 @@ Object laboratorio;
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e);
         }
+       
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
@@ -264,9 +244,9 @@ Object laboratorio;
         // TODO add your handling code here:
         int a = JOptionPane.showConfirmDialog(null, "Quiere cerrar sesion ?","Select",JOptionPane.YES_NO_OPTION);
         if (a == 0) {
-        InsertarDescargarEliminar.setData("update inicio set IDdocente= '' , correo='' , contra = '', sesion = 'NO' where ID ='1'", "Sesion Cerrada");
+        InsertarDescargarEliminar.setData("UPDATE usuarioactivo set estadoUA= 'desconectado', idUsuario = '0'  WHERE idUserA ='1'", "Sesion Cerrada");
         setVisible(false);
-        new vistaUsuario().setVisible(true);
+        new Home().setVisible(true);
         }
     }//GEN-LAST:event_jButton6ActionPerformed
 
@@ -279,15 +259,15 @@ Object laboratorio;
             if(rsp.getString(2).equals("ON")){
                 String IDestado = jTextField4.getText();
                 String descripcion = jTextField2.getText();
-                ResultSet rs = seleccionar.getDatos("SELECT * FROM inicio"); 
+                ResultSet rs = seleccionar.getDatos("SELECT * FROM usuarioactivo"); 
                 try {
                     if(rs.next()){
-                    ResultSet rsl = seleccionar.getDatos("SELECT * FROM ambientes");
+                    ResultSet rsl = seleccionar.getDatos("SELECT * FROM reservaperiodo WHERE estadoRP = 'libre'");
                     try {
                         if(rsl.next()){
                             if(!descripcion.equals("")){
-                                if(rsl.getString(7).equals("libre")){
-                                    InsertarDescargarEliminar.setData("update ambientes set IDdocentea = '"+rs.getString(2)+"', estado='reservado' , descripcionhora='"+descripcion+"' where ambientes.ID ='"+IDestado+"'", "reservado exitosamente");
+                                if(rsl.getString(9).equals("libre")){
+                                    InsertarDescargarEliminar.setData("update reservaperiodo set docenteRP = '"+rs.getString(3)+"', estadoRP ='reservado' , descripcionRP='"+descripcion+"' where reservaperiodo.idRP ='"+IDestado+"'", "reservado exitosamente");
                                     aumentarhoras();
                                     setVisible(false);
                                     new vistaDocente().setVisible(true);
@@ -371,7 +351,6 @@ Object laboratorio;
     private javax.swing.JLabel imagen;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;

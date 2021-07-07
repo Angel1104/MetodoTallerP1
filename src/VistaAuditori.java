@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import proyecto.InsertarDescargarEliminar;
@@ -34,15 +35,66 @@ ResultSet rs;
         this.setLocationRelativeTo(null);
     }
     private void aumentarhoras(){
-    ResultSet rso = seleccionar.getDatos("SELECT * FROM laboratorio WHERE laboratorio.ID = '6' ");
+        laboSeleccionado();
+    ResultSet rso = seleccionar.getDatos("SELECT * FROM laboratorio WHERE laboratorio.idLabo = '"+laboratorio+"' ");
         try {
              if(rso.next()){
-                 int HoraReloj = rso.getInt(5)+90;
-                 int HoraAcademica = rso.getInt(4)+45;
-                 InsertarDescargarEliminar.setData("update laboratorio set horaReloj ='"+HoraReloj+"',horaAcademica = '"+HoraAcademica+"' WHERE laboratorio.ID = '6'", "reserva");
+                 double HoraReloj = rso.getInt(5)+90;
+                 double HoraAcademica = rso.getInt(4)+67.5;
+                 InsertarDescargarEliminar.setData("update laboratorio set horaReloj ='"+HoraReloj+"',horaAcademica = '"+HoraAcademica+"' WHERE laboratorio.idLabo = '"+laboratorio+"'", "reserva");
             }
         } catch (Exception e) {
         }
+    }
+    Object laboratorio;
+    private Object laboSeleccionado(){
+       laboratorio = jComboBox3.getSelectedIndex()+5; 
+       return laboratorio;
+    
+    }
+    Object horaIngreso;
+    private Object horaIngreso(){
+       horaIngreso = jComboBox1.getSelectedIndex()+1; 
+       return horaIngreso;
+    
+    }
+    Object horaSalida;
+    private Object horaSalida(){
+       horaSalida = jComboBox2.getSelectedIndex()+1; 
+       return horaSalida;
+    
+    }
+    int semana;
+    private int semana(){
+       Date date = jDateChooser2.getDate();
+
+        Calendar calendario = Calendar.getInstance(); 
+        calendario.setTime(date);
+        semana = calendario.get(Calendar.WEEK_OF_MONTH);
+        
+        return semana;
+        
+    }
+    int mes;
+    private int mes(){
+        Date date = jDateChooser2.getDate();
+
+        Calendar calendario = Calendar.getInstance(); 
+        calendario.setTime(date);
+        mes = calendario.get(Calendar.MONTH);
+        
+        return mes;
+    }
+    
+    int diaDeSemana;
+    private int diaDeSemana (){
+       Date date = jDateChooser2.getDate();
+
+        Calendar calendario = Calendar.getInstance(); 
+        calendario.setTime(date);
+        diaDeSemana = calendario.get(Calendar.DAY_OF_WEEK) -1;
+        
+        return diaDeSemana; 
     }
 
     /**
@@ -64,16 +116,17 @@ ResultSet rs;
         jLabel5 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBox2 = new javax.swing.JComboBox<>();
+        jComboBox3 = new javax.swing.JComboBox<>();
         jTextField4 = new javax.swing.JTextField();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jDateChooser2 = new com.toedter.calendar.JDateChooser();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jLabel10 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -125,8 +178,17 @@ ResultSet rs;
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("FECHA RESERVA");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 90, 170, 20));
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "6:45", "8:15", "9:45", "11:15", "12:45", "14:15", "15:45", "17:15", "18:45", "20:15", " ", " " }));
+        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 130, 150, -1));
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "6:45", "8:15", "9:45", "11:15", "12:45", "14:15", "15:45", "17:15", "18:45", "20:15" }));
+        getContentPane().add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 160, 150, -1));
+
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "laboratorio de redes", "auditorio" }));
+        getContentPane().add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 90, 130, 40));
         getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 180, 240, -1));
-        getContentPane().add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 90, 240, -1));
+        getContentPane().add(jDateChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 90, 230, 30));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
@@ -135,8 +197,8 @@ ResultSet rs;
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 3, 36)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("RESERVA DE AUDITORIO");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 30, 520, 50));
+        jLabel8.setText("RESERVA DE AUDITORIO o LABORATORIO DE REDES");
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 990, 50));
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -149,21 +211,10 @@ ResultSet rs;
         jLabel10.setText("Hora Ingreso");
         getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 130, 110, 20));
 
-        jTextField5.setText("00:00:00");
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 130, 240, -1));
-
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Hora Salida");
         getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 160, 80, 20));
-
-        jTextField6.setText("00:00:00");
-        getContentPane().add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 160, 240, -1));
 
         jButton1.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
         jButton1.setText("ENVIAR");
@@ -195,55 +246,65 @@ ResultSet rs;
         try {
             if(rsp.next()){
                 if(rsp.getString(2).equals("ON")){
-                String horaIngreso = jTextField5.getText();
-                String horaSalida = jTextField6.getText();
+                
+                
                 String nombre = jTextField1.getText();
                 String apellido = jTextField2.getText();
                 String celular = jTextField3.getText();
                 String ci = jTextField4.getText();
                 String carta = jTextArea1.getText();
          
-                Date fecha = jDateChooser1.getDate(); 
-                SimpleDateFormat  formato = new SimpleDateFormat("yyyy-MM-d");     
-                String Fecha = formato.format(fecha);
-        
-        
+                diaDeSemana();
+                mes();
+                semana();
+                laboSeleccionado();
+                horaIngreso();
+                horaSalida();
+                
                 if (horaIngreso.equals (horaSalida)) {
                     JOptionPane.showMessageDialog(null, "Hora de Ingreso y Salida Incorrectos");
 
                 }else {
-                    String sesion = "select * from inicio";
+                    String sesion = "select * from usuarioactivo";
                     ResultSet rs = seleccionar.getDatos(sesion);
                     try{
                     if(rs.next()){
-                        if(rs.getString(5).equals("SI")){
+                        if(rs.getString(2).equals("SI")){
                             String Query;
-                            Query = "insert into formulario(ID_docente,nombref, apellido, ci, celular, fecha, horaIngreso, horaSalida, carta)" + " values('"+rs.getString(2)+"','"+nombre+"','"+apellido+"','"+ci+"','"+celular+"','"+Fecha+"', '"+horaIngreso+"','"+horaSalida+"', '"+carta+"')";
+                            Query = "insert into formularioauditorioyredes (nombreForm, apellidoForm, ci, celular, carta, idDocenteF)" + " values('"+nombre+"','"+apellido+"','"+ci+"','"+celular+"', '"+carta+"','"+rs.getString(3)+"')";
                             InsertarDescargarEliminar.setData(Query, "Registrado con exito");
+                            
                             aumentarhoras();
+                            ResultSet rs1 = seleccionar.getDatos("select * from formularioauditorioyredes where ci='"+ci+"' ");
+                            while(rs1.next()){
+                                Query = "insert into reservaperiodo (diaRP, mesRP, semanaRP,horaIniRP,horaFinRP,docenteRP,laboRP,descripcionRP,formularioRP)"+"values('"+diaDeSemana+"','"+mes+"','"+semana+"','"+horaIngreso+"', '"+horaSalida+"', '"+rs.getString(3)+"','"+laboratorio+"','"+carta+"','"+rs1.getString(1)+"')";
+                            InsertarDescargarEliminar.setData(Query, "Registrado con exito");
+                            }rs.close();
                         }else{
                             String Query;
-                            Query = "insert into formulario(nombref, apellido, ci, celular, fecha, horaIngreso, horaSalida, carta)" + " values('"+nombre+"','"+apellido+"','"+ci+"','"+celular+"','"+Fecha+"', '"+horaIngreso+"','"+horaSalida+"', '"+carta+"')";
+                            Query = "insert into formularioauditorioyredes (nombreForm, apellidoForm, ci, celular, carta)" + " values('"+nombre+"','"+apellido+"','"+ci+"','"+celular+"', '"+carta+"')";
                             InsertarDescargarEliminar.setData(Query, "Registrado con exito");
+                            
                             aumentarhoras();
+                            ResultSet rs1 = seleccionar.getDatos("select * from formularioauditorioyredes where ci='"+ci+"' ");
+                            while(rs1.next()){
+                                Query = "insert into reservaperiodo (diaRP, mesRP, semanaRP,horaIniRP,horaFinRP,laboRP,descripcionRP,formularioRP)"+"values('"+diaDeSemana+"','"+mes+"','"+semana+"','"+horaIngreso+"', '"+horaSalida+"','"+laboratorio+"','"+carta+"','"+rs1.getString(1)+"')";
+                            InsertarDescargarEliminar.setData(Query, "Registrado con exito");
+                            }rs.close();
                         }
-                    }
+                    }rs.close();
                     } catch (Exception e) {}
         
                 }
             }else{
                 JOptionPane.showMessageDialog(null,"El sistema no esta abierto");
             }
-        }
+        }rsp.close();
         } catch (Exception e) {
         }
         
         
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
@@ -264,13 +325,13 @@ ResultSet rs;
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         setVisible(false);
-        ResultSet rs = seleccionar.getDatos("Select * From inicio");
+        ResultSet rs = seleccionar.getDatos("Select * From usuarioactivo");
                 try {
                     if(rs.next()){
-                        if(rs.getString(5).equals("SI")){
+                        if(rs.getString(2).equals("activo")){
                             new vistaDocente().setVisible(true);
                         }else{
-                            new vistaUsuario().setVisible(true);
+                            new Home().setVisible(true);
                         }
                     }
                 } catch (Exception e) {}
@@ -316,7 +377,10 @@ ResultSet rs;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> jComboBox3;
+    private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -333,7 +397,5 @@ ResultSet rs;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
     // End of variables declaration//GEN-END:variables
 }
