@@ -973,7 +973,7 @@ ResultSet rs;
         {
             ResultSet rs0 = seleccionar.getDatos("SELECT reservaasignada.descripcionRA, diaRA, docente\n" +
                                         "FROM reservaasignada\n" +
-                                        "WHERE  laboRA='"+laboratorio+"' AND( horaIngresoRA='"+i+"' or horaFinRA='"+i+"')");
+                                        "WHERE  estadoRA = 'true' AND laboRA='"+laboratorio+"' AND( horaIngresoRA='"+i+"' or horaFinRA='"+i+"')");
             try {
                 while(rs0.next())    
                 {
@@ -1339,7 +1339,7 @@ ResultSet rs;
                 {
                     ResultSet rs1 = seleccionar.getDatos("SELECT descripcionRA\n" +
                                         "FROM reservaasignada\n" +
-                                        "WHERE docente='"+rs0.getString(1)+"' ");
+                                        "WHERE estadoRA = 'true' AND docente='"+rs0.getString(1)+"' ");
                     while(rs1.next()){
                         //lunes
                         if(rs0.getString(2).equals("1")){

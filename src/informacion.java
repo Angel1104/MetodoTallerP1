@@ -940,7 +940,7 @@ ResultSet rs;
         {
             ResultSet rs0 = seleccionar.getDatos("SELECT reservaasignada.laboRA, diaRA\n" +
                                         "FROM reservaasignada\n" +
-                                        "WHERE  docente='"+rs3.getString(3)+"' AND( horaIngresoRA='"+i+"' or horaFinRA='"+i+"')");
+                                        "WHERE estadoRA='true' AND docente='"+rs3.getString(3)+"' AND( horaIngresoRA='"+i+"' or horaFinRA='"+i+"')");
             try {
                 while(rs0.next())    
                 {

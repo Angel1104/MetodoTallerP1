@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import proyecto.*;
 /**
  *
@@ -81,9 +82,14 @@ ResultSet rs;
 
             },
             new String [] {
-                "ID", "Dia", "Hora Ingreso", "Hora Salida", "id docente", "Laboratiorio", "Descripcion"
+                "ID", "Dia", "Hora Ingreso", "Hora Salida", "id docente", "Laboratiorio", "Descripcion", "estado"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 360, 1300, 240));
@@ -225,7 +231,7 @@ ResultSet rs;
         try {
             while(rs.next())
             {
-                model.addRow(new Object[]{rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7)});
+                model.addRow(new Object[]{rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8)});
 
             }
             rs.close();
@@ -298,6 +304,31 @@ ResultSet rs;
     private void jComboBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox4ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        int index = jTable1.getSelectedRow();
+        TableModel model=jTable1.getModel();
+        String nombres=model.getValueAt(index, 4).toString();
+        String estado=model.getValueAt(index, 7).toString();
+        String id=model.getValueAt(index, 0).toString();
+        if(estado.equals("true"))
+            estado="false";
+        else
+            estado="true";
+        
+        try {
+            int a = JOptionPane.showConfirmDialog(null, "Quiere aceptar la reserva a "+nombres+"", "selecionar", JOptionPane.YES_NO_OPTION);
+            if (a==0)
+            {
+                InsertarDescargarEliminar.setData("update reservaasignada set estadoRA='"+estado+"' where idRA='"+id+"'", "hora aceptado");
+                setVisible(false);
+                new vistaRootClaseseditar().setVisible(true);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments
