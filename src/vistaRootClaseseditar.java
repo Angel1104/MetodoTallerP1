@@ -5,6 +5,7 @@
  */
 import java.sql.*;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import proyecto.*;
@@ -28,13 +29,7 @@ ResultSet rs;
     
     Object laboratorio;
     private Object laboSeleccionado(){
-       laboratorio = jComboBox1.getSelectedItem(); 
-
-       if(laboratorio.equals("laboratorio1")){laboratorio = 1;}
-       if(laboratorio.equals("laboratorio2")){laboratorio = 2;}
-       if(laboratorio.equals("laboratorio3")){laboratorio = 3;}
-       if(laboratorio.equals("laboratorio4")){laboratorio = 4;}
-       if(laboratorio.equals("laboratorio5")){laboratorio = 5;}
+       laboratorio = jComboBox1.getSelectedIndex()+1; 
        return laboratorio;
     
     }
@@ -51,23 +46,21 @@ ResultSet rs;
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
         jButton5 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jComboBox2 = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
         jButton3 = new javax.swing.JButton();
-        jLabel13 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
+        jComboBox5 = new javax.swing.JComboBox<>();
+        jComboBox3 = new javax.swing.JComboBox<>();
+        jComboBox4 = new javax.swing.JComboBox<>();
         jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -82,12 +75,13 @@ ResultSet rs;
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jTable1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "ID Docente", "Docente", "Dia", "Hora Ingreso", "Hora Salida", "Laboratiorio", "Descripcion"
+                "ID", "Dia", "Hora Ingreso", "Hora Salida", "id docente", "Laboratiorio", "Descripcion"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -101,31 +95,30 @@ ResultSet rs;
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 240, 250, 30));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 270, 250, 30));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("SELECCIONAR POR ID");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 30, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 50, -1, -1));
 
-        jTextField6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField6ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 230, 120, -1));
-
+        jButton5.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
         jButton5.setText("BUSCAR");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 30, 140, -1));
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 30, 200, -1));
+        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 50, 140, -1));
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 50, 200, -1));
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "laboratorio1", "laboratorio2", "laboratorio3", "laboratorio4", "laboratorio5" }));
-        getContentPane().add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 280, 180, -1));
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 270, 230, -1));
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/unknown-01.png"))); // NOI18N
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -135,70 +128,58 @@ ResultSet rs;
         });
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1320, 20, 59, 63));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "laboratorio1", "laboratorio2", "laboratorio3", "laboratorio4", "laboratorio5" }));
-        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, 180, -1));
+        jComboBox1.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "laboratorio1", "laboratorio2", "laboratorio3", "laboratorio4" }));
+        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 180, -1));
 
+        jButton3.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
         jButton3.setText("BUSCAR");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 40, 140, -1));
-
-        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("Docente");
-        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 200, -1, -1));
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 60, 140, -1));
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel16.setText("Laboratorio");
-        getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, -1, -1));
-        getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 240, 120, -1));
+        jLabel16.setText("Laboratorio:");
+        getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 270, -1, -1));
 
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "lunes", "martes", "miercoles", "jueves", "viernes", "sabado" }));
+        getContentPane().add(jComboBox5, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 230, 230, -1));
+
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "6:45", "8:15", "9:45", "11:15", "12:45", "14:15", "15:45", "17:15", "18:45", "20:15", " ", " " }));
+        getContentPane().add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 170, 150, -1));
+
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "6:45", "8:15", "9:45", "11:15", "12:45", "14:15", "15:45", "17:15", "18:45", "20:15", " ", " " }));
+        jComboBox4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
+                jComboBox4ActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 200, 120, -1));
+        getContentPane().add(jComboBox4, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 210, 150, -1));
+        getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 250, 150, -1));
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel15.setText("Dia");
+        jLabel15.setText("Dia:");
         getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, -1, -1));
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("ID Docente");
-        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 240, -1, -1));
+        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 250, -1, -1));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("horaingreso");
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 120, -1, -1));
+        jLabel9.setText("Horaingreo");
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 170, -1, -1));
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("horasalida");
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 160, -1, -1));
-
-        jTextField2.setText("00:00:00");
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 120, 120, -1));
-
-        jTextField3.setText("00:00:00");
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 160, 120, -1));
+        jLabel10.setText("Horasalida");
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 210, -1, -1));
 
         jButton4.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
         jButton4.setText("actualizar");
@@ -207,12 +188,12 @@ ResultSet rs;
                 jButton4ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 140, 251, 81));
+        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 170, 251, 81));
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("descripcion ");
-        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, 163, -1));
+        jLabel11.setText("Descripcion:");
+        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 163, -1));
 
         jTextArea2.setColumns(20);
         jTextArea2.setRows(5);
@@ -221,14 +202,10 @@ ResultSet rs;
         getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 110, 350, 100));
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/vista editar-01.jpg"))); // NOI18N
-        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 1400, 640));
+        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1400, 640));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         // TODO add your handling code here:
@@ -237,10 +214,10 @@ ResultSet rs;
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        laboratorio = laboSeleccionado();
+        laboSeleccionado();
         ResultSet rs = seleccionar.getDatos("SELECT *\n" +
-                                            "FROM claseregular\n" +
-                                            "WHERE claseregular.laboratorio = '"+laboratorio+"'");
+                                            "FROM reservaasignada\n" +
+                                            "WHERE laboRA = '"+laboratorio+"'");
                                             
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
@@ -248,7 +225,7 @@ ResultSet rs;
         try {
             while(rs.next())
             {
-                model.addRow(new Object[]{rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8)});
+                model.addRow(new Object[]{rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7)});
 
             }
             rs.close();
@@ -265,24 +242,18 @@ ResultSet rs;
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
        Object laboratorio2;
-       laboratorio2 = jComboBox2.getSelectedItem(); 
-       if(laboratorio2.equals("laboratorio1")){laboratorio2 = 1;}
-       if(laboratorio2.equals("laboratorio2")){laboratorio2 = 2;}
-       if(laboratorio2.equals("laboratorio3")){laboratorio2 = 3;}
-       if(laboratorio2.equals("laboratorio4")){laboratorio2 = 4;}
-       if(laboratorio2.equals("laboratorio5")){laboratorio2 = 5;}
+       laboratorio2 = jComboBox2.getSelectedIndex()+1;
         
         String ID = jTextField1.getText();
-        String Docente = jTextField5.getText();
-        String horaIngreso=jTextField2.getText();
-        String horaSalida=jTextField3.getText();
+        int horaIngreso=jComboBox3.getSelectedIndex()+1;
+        int horaSalida=jComboBox4.getSelectedIndex()+1;
         String descripcionhorario=jTextArea2.getText();
         String IDdocente = jTextField4.getText();
-        String Dia = jTextField6.getText();
+        int Dia = jComboBox5.getSelectedIndex()+1;
         
         try {
-         InsertarDescargarEliminar.setData("update claseregular set IDdocente = '"+IDdocente+"', docente = '"+Docente+"', dia = '"+Dia+"', horaIngreso = '"+horaIngreso+"', horaSalida = '"+horaSalida+"', laboratorio = '"+laboratorio2+"', descripcioncl = '"+descripcionhorario+"'\n"+
-                                           "where claseregular.ID ='"+ID+"'", "horario actualizado exitosamente");
+         InsertarDescargarEliminar.setData("update reservaasignada set diaRA = '"+Dia+"', horaIngresoRA = '"+horaIngreso+"', horaFinRA = '"+horaSalida+"', docente = '"+IDdocente+"', laboRA = '"+laboratorio2+"',  descripcionRA = '"+descripcionhorario+"'\n"+
+                                           "where idRA='"+ID+"'", "horario actualizado exitosamente");
                     
          
                 
@@ -292,42 +263,41 @@ ResultSet rs;
         setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
-
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
-
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         String ID = jTextField1.getText();
-        ResultSet rs = seleccionar.getDatos("SELECT * FROM claseregular where claseregular.ID = '"+ID+"'");
         
+        ResultSet rs1 = seleccionar.getDatos("SELECT idRA, diaRA, horaIngresoRA, horaFinRA , docente, laboRA , descripcionRA FROM reservaasignada WHERE idRA = '"+ID+"'");
         try {
-            if(rs.next()){
-                jTextField2.setText(rs.getString(5));
-                jTextField3.setText(rs.getString(6));
-                jTextField4.setText(rs.getString(2));
-                jTextField5.setText(rs.getString(3));
-                jTextField6.setText(rs.getString(4));
-                jTextArea2.setText(rs.getString(8));
-            }
-        } catch (Exception e) {
+            while(rs1.next()){
+                jTextArea2.setText(rs1.getString(7));
+                jTextField4.setText(rs1.getString(5));
+                
+                jComboBox5.setSelectedIndex(rs1.getInt(2)-1);
+                jComboBox2.setSelectedIndex(rs1.getInt(6)-1);
+                
+                jComboBox3.setSelectedIndex(rs1.getInt(3)-1);
+                jComboBox4.setSelectedIndex(rs1.getInt(4)-1);
+                
+            }rs1.close();
+        } catch (SQLException e) {
         }
         
     }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         setVisible(false);
         new vistaRootLaboEditar().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox2ActionPerformed
+
+    private void jComboBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -372,11 +342,13 @@ ResultSet rs;
     private javax.swing.JButton jButton5;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JComboBox<String> jComboBox4;
+    private javax.swing.JComboBox<String> jComboBox5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
@@ -386,10 +358,6 @@ ResultSet rs;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
     // End of variables declaration//GEN-END:variables
 }

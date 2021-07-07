@@ -57,24 +57,26 @@ ResultSet rs;
         jLabel2.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("BUSCAR USUARIO POR NOMBRE O ID");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 40, 320, 26));
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 280, 30));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 46, 320, 30));
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 320, 30));
 
+        jButton5.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
         jButton5.setText("BUSCAR");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 70, 120, 30));
+        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 70, 120, 30));
 
+        jButton6.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         jButton6.setText("VACIAR");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 70, 120, 30));
+        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 70, 190, 30));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -91,7 +93,7 @@ ResultSet rs;
         });
         jScrollPane1.setViewportView(jTable1);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, 1212, 395));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 140, 1212, 395));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/unknown-01.png"))); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -99,7 +101,7 @@ ResultSet rs;
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1310, 20, 50, 49));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1320, 30, 50, 49));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/new view 22-01-01.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -133,7 +135,7 @@ ResultSet rs;
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         String nombreOID = jTextField1.getText();
-        ResultSet rs = seleccionar.getDatos("select *from usuarios where Nombres like '%"+nombreOID+"%' or ID like '%"+nombreOID+"%'");
+        ResultSet rs = seleccionar.getDatos("select *from usuarios where nombreUser like '%"+nombreOID+"%' or idUser like '%"+nombreOID+"%'");
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
         
@@ -163,7 +165,7 @@ ResultSet rs;
             int a = JOptionPane.showConfirmDialog(null, "Quiere cambiar el estado de docente a "+nombres+"", "selecionar", JOptionPane.YES_NO_OPTION);
             if (a==0)
             {
-                InsertarDescargarEliminar.setData("update usuarios set docente='"+docente+"' where Nombres='"+nombres+"'", "Estado de docente cambiado exitosamente");
+                InsertarDescargarEliminar.setData("update usuarios set estadoUser='"+docente+"' where nombreUser='"+nombres+"'", "Estado de docente cambiado exitosamente");
                 setVisible(false);
                 new vistaRootUsuarios().setVisible(true);
             }

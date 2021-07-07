@@ -155,7 +155,7 @@ Statement sent;
         }
         else if (contrasena.equals(contrasena2)) {
             String Query;
-            Query = "insert into usuarios(Nombres, Apellidos, Contrasena, mail)"+" values('"+nombres+"','"+apellidos+"','"+contrasena+"','"+mail+"')";
+            Query = "insert into usuarios(nombreUser, apellidoUser, contrasena, codSis)"+" values('"+nombres+"','"+apellidos+"','"+contrasena+"','"+mail+"')";
             InsertarDescargarEliminar.setData(Query, "Registrado exitosamente");
             setVisible(false);
             new IniciarSesion().setVisible(true);

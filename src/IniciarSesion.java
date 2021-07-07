@@ -53,20 +53,20 @@ ResultSet rs;
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 470, 430, 40));
+        getContentPane().add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 440, 430, 40));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("E-MAIL");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 360, 80, -1));
+        jLabel1.setText("cod SIS");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 320, 80, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("CONTRASENA");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 450, 120, -1));
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 380, 430, 40));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 420, 120, -1));
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 350, 430, 40));
 
-        jButton5.setBackground(new java.awt.Color(86, 10, 10));
+        jButton5.setBackground(new java.awt.Color(204, 255, 255));
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/unknown-01.png"))); // NOI18N
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -83,7 +83,7 @@ ResultSet rs;
                 jButton6ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 820, 120, -1));
+        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 831, 140, 30));
 
         jButton2.setBackground(new java.awt.Color(255, 255, 255));
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -103,7 +103,7 @@ ResultSet rs;
                 jButton3ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 540, -1, -1));
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 510, 200, -1));
 
         jButton4.setBackground(new java.awt.Color(255, 255, 255));
         jButton4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -113,7 +113,7 @@ ResultSet rs;
                 jButton4ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 540, 120, -1));
+        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 510, 210, -1));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/inisio de sesion-01-01.png"))); // NOI18N
         jLabel4.setText("jLabel4");
@@ -125,28 +125,28 @@ ResultSet rs;
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         int check = 0 ;
-        String mail =jTextField1.getText();
+        String sis =jTextField1.getText();
         String contrasena =jPasswordField1.getText();
         
         
-        if ( mail.equals("")|| contrasena.equals("")) {
+        if ( sis.equals("")|| contrasena.equals("")) {
             JOptionPane.showMessageDialog(null, "DEBE LLENAR TODOS LOS CAMPOS");
             check = 1;
         }
-        else if (mail.equals("root")&& contrasena.equals("root"))
+        else if (sis.equals("root")&& contrasena.equals("root"))
         {
-           InsertarDescargarEliminar.setData("update inicio set IDdocente= '0' , correo='"+mail+"' , contra = '"+contrasena+"', sesion = 'SI' where ID ='1'", "Sesion Iniciada");
+           InsertarDescargarEliminar.setData("update usuarioActivo set idUsuario='0', estadoUA = 'activo' where idUserA= '1'", "Sesion Iniciada");
            check=1;
            setVisible(false);
            new vistaRoot().setVisible(true);
         }
         else  {
-            String Query = " select * from usuarios where mail='"+mail+"' and Contrasena = '"+contrasena+"' ";
+            String Query = " select * from usuarios where codSIS='"+sis+"' and contrasena = '"+contrasena+"' and estadoUser = 'true'";
             ResultSet rs = seleccionar.getDatos(Query);
             try {
                 if (rs.next())
                 { 
-                    InsertarDescargarEliminar.setData("update inicio set IDdocente= '"+rs.getString(1)+"' , correo='"+mail+"' , contra = '"+contrasena+"', sesion = 'SI' where ID ='1'", "Sesion Iniciada");
+                    InsertarDescargarEliminar.setData("update usuarioActivo set idUsuario='"+rs.getString(1)+"', estadoUA = 'activo' where idUserA= '1'", "Sesion Iniciada");
                     check=1;
                     setVisible(false);
                     new vistaDocente().setVisible(true);
@@ -156,7 +156,7 @@ ResultSet rs;
             }
         }
         if(check ==0){
-            JOptionPane.showMessageDialog(null, "email o password incorrectos");
+            JOptionPane.showMessageDialog(null, "sis o password incorrectos");
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -183,7 +183,7 @@ ResultSet rs;
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
         setVisible(false);
-        new vistaUsuario().setVisible(true);
+        new Home().setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
