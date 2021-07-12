@@ -952,7 +952,6 @@ ResultSet rs;
     }// </editor-fold>//GEN-END:initComponents
 
     private void busarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_busarActionPerformed
-        // TODO add your handling code here:
         
         semana();
         mes();
@@ -980,7 +979,7 @@ ResultSet rs;
                 {
                     ResultSet rs1 = seleccionar.getDatos("SELECT reservaasignada.descripcionRA\n" +
                                         "FROM reservaasignada\n" +
-                                        "WHERE docente='"+rs0.getString(3)+"' ");
+                                        "WHERE docente='"+rs0.getString(3)+"' AND  estadoRA = 'true'");
                     while(rs1.next()){
                         //lunes
                         if(rs0.getString(2).equals("1")){
@@ -1138,8 +1137,8 @@ ResultSet rs;
                 while(rs.next())    
                 {
                     ResultSet rs1 = seleccionar.getDatos("SELECT descripcionRP\n" +
-                                        "FROM reservaperiodo\n" +
-                                        "WHERE docenteRP='"+rs.getString(1)+"' ");
+                                                        "FROM reservaperiodo\n" +
+                                                        "WHERE docenteRP='"+rs.getString(1)+"' AND estadoRP='reservado' AND semanaRP='"+semana+"'");
                     while(rs1.next()){
                         //lunes
                         if(rs.getString(2).equals("1")){
@@ -1324,12 +1323,11 @@ ResultSet rs;
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        int semana = jComboBox1.getSelectedIndex()+1;
+        int semanaCombo = jComboBox1.getSelectedIndex()+1;
         mes();
         diaDeSemana();
         vaciar();
         laboSeleccionado();
-        JOptionPane.showConfirmDialog(null, mes);
         //hora1
         for(int i = 1 ; i <= 10; i = i + 1)
         {
@@ -1494,13 +1492,13 @@ ResultSet rs;
         {
             rs = seleccionar.getDatos("SELECT reservaperiodo.docenteRP, diaRP\n" +
                                         "FROM reservaperiodo\n" +
-                                        "WHERE estadoRP='reservado' AND laboRP='"+laboratorio+"' AND( horaIniRP='"+i+"' or horaFinRP='"+i+"') AND mesRP= '"+mes+"' AND semanaRP='"+semana+"'");
+                                        "WHERE estadoRP='reservado' AND laboRP='"+laboratorio+"' AND( horaIniRP='"+i+"' or horaFinRP='"+i+"') AND mesRP= '"+mes+"' AND semanaRP='"+semanaCombo+"'");
             try {
                 while(rs.next())    
                 {
                     ResultSet rs1 = seleccionar.getDatos("SELECT descripcionRP\n" +
                                         "FROM reservaperiodo\n" +
-                                        "WHERE docenteRP='"+rs.getString(1)+"' ");
+                                        "WHERE docenteRP='"+rs.getString(1)+"' AND estadoRP='reservado' AND semanaRP='"+semanaCombo+"'");
                     while(rs1.next()){
                         //lunes
                         if(rs.getString(2).equals("1")){
@@ -1648,6 +1646,16 @@ ResultSet rs;
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, e);
             }
+        }
+        ResultSet rsp = seleccionar.getDatos("SELECT * FROM sistema");
+        try {
+            while(rsp.next()){
+                if(rsp.getString(2).equals("ON")){
+                jDateChooser1.setDate(rsp.getDate(3));
+                jDateChooser2.setDate(rsp.getDate(4));
+                }
+            }rsp.close();
+        } catch (Exception e) {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

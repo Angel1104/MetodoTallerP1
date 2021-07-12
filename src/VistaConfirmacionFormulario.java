@@ -27,6 +27,18 @@ ResultSet rs;
         con = ProveedorConecciones.getConexion();
         this.setLocationRelativeTo(null);
     }
+    private void aumentarhoras(String ambiente){
+        
+        ResultSet rso = seleccionar.getDatos("SELECT * FROM laboratorio WHERE laboratorio.idLabo = '"+ambiente+"' ");
+        try {
+             if(rso.next()){
+                 double HoraReloj = rso.getInt(5)+90;
+                 double HoraAcademica = rso.getInt(4)+67.5;
+                 InsertarDescargarEliminar.setData("update laboratorio set horaReloj ='"+HoraReloj+"',horaAcademica = '"+HoraAcademica+"' WHERE laboratorio.idLabo = '"+ambiente+"'", "reserva");
+            }
+        } catch (Exception e) {
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -68,7 +80,7 @@ ResultSet rs;
 
             },
             new String [] {
-                "idFormAudi", "nombreForm", "apellidoForm", "celular", "cartai", "ci", "idDocente", "estadoForm"
+                "idFormAudi", "nombreForm", "apellidoForm", "celular", "cartai", "ci", "idDocente", "estadoForm", "hora ingreso", "hora salida", "ambiente"
             }
         ));
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -78,7 +90,7 @@ ResultSet rs;
         });
         jScrollPane1.setViewportView(jTable1);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, 1280, 395));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, 1290, 395));
 
         jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/unknown-01.png"))); // NOI18N
@@ -103,14 +115,17 @@ ResultSet rs;
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         // TODO add your handling code here:
-        ResultSet rs = seleccionar.getDatos("select *from formularioauditorioyredes");
+        ResultSet rs = seleccionar.getDatos("select * from formularioauditorioyredes");
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
         
         try {
             while(rs.next())
-            {
-                 model.addRow(new Object[]{rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8)});
+            {   
+                ResultSet rs1 = seleccionar.getDatos("select HORA, HORAFIN, nombreLabo,estadoRP from reservaperiodo INNER JOIN laboratorio ON laboRP = idLabo INNER JOIN hora ON horaIniRP = idHora INNER JOIN horafin ON horaFinRP = idHoraFin where  formularioRP = '"+rs.getString(1)+"'");
+                while(rs1.next()){
+                    model.addRow(new Object[]{rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs1.getString(1),rs1.getString(2),rs1.getString(3),});
+                }rs1.close();
             }
             rs.close();
         } catch (Exception e) {
@@ -125,6 +140,14 @@ ResultSet rs;
         String nombres=model.getValueAt(index, 1).toString();
         String estado=model.getValueAt(index, 7).toString();
         String id=model.getValueAt(index, 0).toString();
+        
+        String ambiente=model.getValueAt(index, 10).toString();
+        if(ambiente.equals("auditorio")){
+            ambiente = "6";
+        }else{ambiente="5";}
+        
+        aumentarhoras(ambiente);
+        
         if(estado.equals("true"))
             estado="false";
         else

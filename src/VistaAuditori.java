@@ -34,18 +34,7 @@ ResultSet rs;
         con = ProveedorConecciones.getConexion();
         this.setLocationRelativeTo(null);
     }
-    private void aumentarhoras(){
-        laboSeleccionado();
-    ResultSet rso = seleccionar.getDatos("SELECT * FROM laboratorio WHERE laboratorio.idLabo = '"+laboratorio+"' ");
-        try {
-             if(rso.next()){
-                 double HoraReloj = rso.getInt(5)+90;
-                 double HoraAcademica = rso.getInt(4)+67.5;
-                 InsertarDescargarEliminar.setData("update laboratorio set horaReloj ='"+HoraReloj+"',horaAcademica = '"+HoraAcademica+"' WHERE laboratorio.idLabo = '"+laboratorio+"'", "reserva");
-            }
-        } catch (Exception e) {
-        }
-    }
+    
     Object laboratorio;
     private Object laboSeleccionado(){
        laboratorio = jComboBox3.getSelectedIndex()+5; 
@@ -275,23 +264,25 @@ ResultSet rs;
                             Query = "insert into formularioauditorioyredes (nombreForm, apellidoForm, ci, celular, carta, idDocenteF)" + " values('"+nombre+"','"+apellido+"','"+ci+"','"+celular+"', '"+carta+"','"+rs.getString(3)+"')";
                             InsertarDescargarEliminar.setData(Query, "Registrado con exito");
                             
-                            aumentarhoras();
-                            ResultSet rs1 = seleccionar.getDatos("select * from formularioauditorioyredes where ci='"+ci+"' ");
-                            while(rs1.next()){
-                                Query = "insert into reservaperiodo (diaRP, mesRP, semanaRP,horaIniRP,horaFinRP,docenteRP,laboRP,descripcionRP,formularioRP)"+"values('"+diaDeSemana+"','"+mes+"','"+semana+"','"+horaIngreso+"', '"+horaSalida+"', '"+rs.getString(3)+"','"+laboratorio+"','"+carta+"','"+rs1.getString(1)+"')";
-                            InsertarDescargarEliminar.setData(Query, "Registrado con exito");
-                            }rs.close();
+                           
+                            try (ResultSet rs1 = seleccionar.getDatos("select * from formularioauditorioyredes where ci='"+ci+"' ")) {
+                                while(rs1.next()){
+                                    Query = "insert into reservaperiodo (diaRP, mesRP, semanaRP,horaIniRP,horaFinRP,docenteRP,laboRP,descripcionRP,formularioRP)"+"values('"+diaDeSemana+"','"+mes+"','"+semana+"','"+horaIngreso+"', '"+horaSalida+"', '"+rs.getString(3)+"','"+laboratorio+"','"+carta+"','"+rs1.getString(1)+"')";
+                                    InsertarDescargarEliminar.setData(Query, "Registrado con exito");
+                                }
+                            }
                         }else{
                             String Query;
                             Query = "insert into formularioauditorioyredes (nombreForm, apellidoForm, ci, celular, carta)" + " values('"+nombre+"','"+apellido+"','"+ci+"','"+celular+"', '"+carta+"')";
                             InsertarDescargarEliminar.setData(Query, "Registrado con exito");
                             
-                            aumentarhoras();
-                            ResultSet rs1 = seleccionar.getDatos("select * from formularioauditorioyredes where ci='"+ci+"' ");
-                            while(rs1.next()){
-                                Query = "insert into reservaperiodo (diaRP, mesRP, semanaRP,horaIniRP,horaFinRP,laboRP,descripcionRP,formularioRP)"+"values('"+diaDeSemana+"','"+mes+"','"+semana+"','"+horaIngreso+"', '"+horaSalida+"','"+laboratorio+"','"+carta+"','"+rs1.getString(1)+"')";
-                            InsertarDescargarEliminar.setData(Query, "Registrado con exito");
-                            }rs.close();
+                           
+                            try (ResultSet rs1 = seleccionar.getDatos("select * from formularioauditorioyredes where ci='"+ci+"' ")) {
+                                while(rs1.next()){
+                                    Query = "insert into reservaperiodo (diaRP, mesRP, semanaRP,horaIniRP,horaFinRP,laboRP,descripcionRP,formularioRP)"+"values('"+diaDeSemana+"','"+mes+"','"+semana+"','"+horaIngreso+"', '"+horaSalida+"','"+laboratorio+"','"+carta+"','"+rs1.getString(1)+"')";
+                                    InsertarDescargarEliminar.setData(Query, "Registrado con exito");
+                                }
+                            }
                         }
                     }rs.close();
                     } catch (Exception e) {}
