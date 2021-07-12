@@ -80,7 +80,7 @@ ResultSet rs;
 
             },
             new String [] {
-                "idFormAudi", "nombreForm", "apellidoForm", "celular", "cartai", "ci", "idDocente", "estadoForm", "hora ingreso", "hora salida", "ambiente"
+                "idFormAudi", "nombreForm", "apellidoForm", "celular", "cartai", "ci", "idDocente", "estadoForm", "hora ingreso", "hora salida", "ambiente", "dia", "mes", "semana"
             }
         ));
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -122,9 +122,12 @@ ResultSet rs;
         try {
             while(rs.next())
             {   
-                ResultSet rs1 = seleccionar.getDatos("select HORA, HORAFIN, nombreLabo,estadoRP from reservaperiodo INNER JOIN laboratorio ON laboRP = idLabo INNER JOIN hora ON horaIniRP = idHora INNER JOIN horafin ON horaFinRP = idHoraFin where  formularioRP = '"+rs.getString(1)+"'");
+                ResultSet rs1 = seleccionar.getDatos("select HORA, HORAFIN, nombreLabo, DIA, mes, semanaRP \n"
+                                                     + "from reservaperiodo \n"
+                                                     + "INNER JOIN laboratorio ON laboRP = idLabo INNER JOIN hora ON horaIniRP = idHora INNER JOIN horafin ON horaFinRP = idHoraFin INNER JOIN dia ON diaRP = idDIa INNER JOIN mes ON mesRP = idmes \n"
+                                                     + "where  formularioRP = '"+rs.getString(1)+"'");
                 while(rs1.next()){
-                    model.addRow(new Object[]{rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs1.getString(1),rs1.getString(2),rs1.getString(3),});
+                    model.addRow(new Object[]{rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs1.getString(1),rs1.getString(2),rs1.getString(3),rs1.getString(4),rs1.getString(5),rs1.getString(6)});
                 }rs1.close();
             }
             rs.close();
